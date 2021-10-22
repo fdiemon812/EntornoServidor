@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert </title>
+
 </head>
 <body>
-<p>HOLA!!!!
-</p>
+<footer><p>Copyright © 2021</p></footer>
 </body>
 </html>
