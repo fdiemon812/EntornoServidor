@@ -1,7 +1,16 @@
 package proyectoJsp;
 
+
+/**
+ * Clase para recoger la información del usuario al registrarse
+ * @author Flavio
+ *
+ */
 public class Persona {
 
+	
+	
+	
 	
 	private String nombre;
 	private String nif;
@@ -11,7 +20,9 @@ public class Persona {
 	private Double imc;
 	
 	
-	
+	/**
+	 * Crea una persona sin datos
+	 */
 	public Persona() {
 		
 	}
@@ -20,7 +31,7 @@ public class Persona {
 
 	/**
 	 * Calcula automaticamente la letra del dni y la añade. Devuelve String. 
-	 * @return String 
+	 * @return String del numero introducido junto a la letra
 	 */
 	public String getNif() {
 		
@@ -41,13 +52,20 @@ public class Persona {
 
 
 
-
+/**
+ *  Modifica el atributo nif
+ * @param nif
+ */
 	public void setNif(String nif) {
 		this.nif = nif;
 	}
 
 
 
+	/**
+	 * 
+	 * @return Double imc
+	 */
 	public Double getImc() {
 		return imc;
 	}
@@ -62,12 +80,19 @@ public class Persona {
 
 
 
+	/**
+	 * 
+	 * @return String nombre
+	 */
 	public String getNombre() {
 		return nombre;
 	}
 
 
-
+	/**
+	 *  Modifica el atributo nombre
+	 * @param nombre
+	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -75,6 +100,10 @@ public class Persona {
 	
 
 
+	/**
+	 * 
+	 * @return int edad
+	 */
 	public int getEdad() {
 		return edad;
 	}
@@ -97,34 +126,44 @@ public class Persona {
 
 
 
+	/**
+	 * 
+	 * @return Double peso
+	 */
 	public Double getPeso() {
 		return peso;
 	}
 
 
-
+	/**
+	 *  Modifica el atributo peso
+	 * @param peso
+	 */
 	public void setPeso(Double peso) {
 		this.peso = peso;
 	}
 
 
-
+	/**
+	 * 
+	 * @return Double altura
+	 */
 	public Double getAltura() {
 		return altura;
 	}
 
 
-
+	/**
+	 *  Modifica el atributo altura
+	 * @param altura
+	 */
 	public void setAltura(Double altura) {
 		this.altura = altura;
 	}
 
 
 
-	@Override
-	public String toString() {
-		return "Persona [nombre=" + nombre + ", edad=" + edad + ", peso=" + peso + ", altura=" + altura + "]";
-	}
+	
 
 
 
