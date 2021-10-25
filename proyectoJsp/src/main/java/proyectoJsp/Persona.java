@@ -17,23 +17,11 @@ public class Persona {
 	}
 
 	
-	
-//	public String getNif() {
-//		
-//		StringBuilder sb = new StringBuilder();
-//		
-//		//agregamos letra del dni
-//			
-//		int modulo = this.nif % 23;
-//		String[] letras= {"T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E"};
-//		
-//		sb.append(this.nif);
-//
-//		sb.append(letras[modulo]);
-//		
-//		return sb.toString();
-//	}
 
+	/**
+	 * Calcula automaticamente la letra del dni y la añade. Devuelve String. 
+	 * @return String 
+	 */
 	public String getNif() {
 		
 		StringBuilder sb = new StringBuilder();
@@ -65,7 +53,9 @@ public class Persona {
 	}
 
 
-
+	/**
+	 * Calcula imc basandose en peso y altura. 
+	 */
 	public void setImc() {
 		this.imc = this.peso/(this.altura*this.altura);
 	}
@@ -90,11 +80,15 @@ public class Persona {
 	}
 
 
-
+/**
+ * Modifica la edad, lanza excepcion si edad>=0;
+ * @param edad
+ * @throws Exception
+ */
 	public void setEdad(int edad) throws Exception {
 		
 		if(edad<=0) {
-			throw new Exception("Edad no válida");
+			throw new Exception();
 		}else {
 			
 			this.edad = edad;

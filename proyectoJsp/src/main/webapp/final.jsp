@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
     
     <%@ page errorPage="error.jsp" %>
+    
+    
+    <!-- Esta página va a mostrar los datos resultantes y la recomendación médica en función del imc de la 
+    persona. También muestra el dni con la letra generada automaticamente. -->
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +15,7 @@
 
 </head>
 
+<link rel="stylesheet" href="css/estilo.css">
 
 <body>
 
@@ -19,36 +25,51 @@
 	
 			
 			 
-
-<div>
+<div class="marcoCentrado">
+<div id="datos">
 
 Nombre:
+
+<b>
 	<jsp:getProperty name="persona" property="nombre"/>
+</b>
 
 </div>
 	
 	
-<div>
+<div id="datos">
 
 Edad:
+
+
+<b>
 <jsp:getProperty name="persona" property="edad"/>
+</b>
 </div>
 
-<div>
+<div id="datos">
 
 DNI CON la letra:
+
+
+<b>
 <jsp:getProperty name="persona" property="nif"/>
+</b>
 </div>
 
-<div>
+<div id="datos">
 
 Indice de Masa Corporal:
 <% persona.setImc();%>
+
+
+<b>
 <jsp:getProperty name="persona" property="imc"/>
+</b>
 </div>
 
-
-<div>
+<br>
+<div id="datos">
 
 Observaciones:
 <% if(persona.getImc()>29.9){
@@ -71,25 +92,16 @@ Observaciones:
 
 }
 %>
+</div>
 	
-
-
-	
-	
-
-
-		
-
-
-
-
-
-
 
 
 </div>
 	
+<div align="center" >
 
+<%@ include file="footer.jsp" %>
+</div>
 
 
 </body>

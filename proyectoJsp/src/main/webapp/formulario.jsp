@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<!-- Formulario para recabar información del usuario y poder trabajar con ella posteriormente  -->
+
 
 <!DOCTYPE html>
 <html>
+
+<link rel="stylesheet" href="css/estilo.css">
+
 <head>
 <meta charset="UTF-8">
 <title>Formulario de Registro</title>
@@ -12,7 +17,9 @@
 	
 	
 	
-	<form action="final.jsp" method="POST">
+	<form action="final.jsp" method="POST" class="marco">
+	
+	
 	
 	<div>
 		
@@ -57,7 +64,10 @@
 	</div>
 	
 	</form>
-	
+	<div align="center" >
+
+<%@ include file="footer.jsp" %>
+</div>
 	
 </body>
 </html>

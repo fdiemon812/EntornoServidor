@@ -1,0 +1,51 @@
+body{
+ 
+    background: #33d17a;
+    font-family:helvética;
+}
+
+.marco{
+    background:#f6f5f4;
+    margin-left: 18%;
+    margin-right: 10%;
+    margin-top: 5%;
+    border: 3px solid black;
+    text-align: center;
+    border-radius: 20px;
+        padding: 10px;
+    
+
+}
+
+.marcoCentrado{
+	
+	
+    background:#d8d6b8;
+    margin-left: 23%;
+    margin-right: 23%;
+    margin-top: 5%;
+    border: 3px solid black;
+    text-align: left;
+    border-radius: 20px;
+    padding: 20px;
+
+
+}
+
+#datos{
+	
+	padding: 3px;
+}
+
+
+
+input, img, a{
+    margin: 3px;
+
+}
+
+div label{
+    width: 200px;
+    display: inline-block;
+    margin-left: 15%;
+}
