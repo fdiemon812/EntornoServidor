@@ -72,7 +72,7 @@ Indice de Masa Corporal:
 <div id="datos">
 
 Observaciones:
-<% if(persona.getImc()>29.9){
+<% if(persona.getImc()>29.0){
 	
 %> Tiene que bajar de peso. Coma sano y haga deporte. <%
 
