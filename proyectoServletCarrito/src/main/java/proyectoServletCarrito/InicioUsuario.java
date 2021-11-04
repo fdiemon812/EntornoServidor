@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class InicioUsuario
@@ -16,9 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class InicioUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+   
     public InicioUsuario() {
         super();
         // TODO Auto-generated constructor stub
@@ -39,46 +38,27 @@ public class InicioUsuario extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession sesion = request.getSession(true);         //Obtengo la sesión, si no existe crea una
+		sesion.setAttribute("usuario", request.getParameter("usuario"));  //Almaceno el nombre de usuario en la sesion
+		sesion.setMaxInactiveInterval(10);									//Establezco 10 seg de expiracion de sesion
+		
+		
 		
 		Usuario user = new Usuario();
-		PrintWriter out = response.getWriter();
 		
-		if(user.compruebaUsuario(request.getParameter("usuario"), request.getParameter("pass"))) {
+		
+		if(user.compruebaUsuario(request.getParameter("usuario"), request.getParameter("pass"))) { //Si se introduce un usario existente pasa
 			
-			out.println ("<HTML>");
-			out.println ("<BODY>");
-			out.println ("<H1>Datos del formulario</H1>");
-			out.println ("<BR>");
+			//No hay que comprobar la sesion, poruqe justo esta creada si no existe.
 			
-			
-			
-			out.println ("Valor 1:" );
-			out.println ("<BR>");
-			out.println ("Valor 2:" );
-			out.println ("<BR>");
-			out.println ("Valor 3:");
-			out.println ("<BR>");
-			
-			out.println ("</BODY>");
-			out.println ("</HTML>");
+			response.sendRedirect("HTML/catalogo.html");   //Redirige al siguiente catalogo
 			
 			
 			
 			
 		}else {
-			
-			out.println ("<HTML>");
-			out.println ("<BODY>");
-			out.println ("<H1>Datos del formulario</H1>");
-			out.println ("<BR>");
-			
-			
-			
-			out.println ("no entra" );
-			
-			
-			out.println ("</BODY>");
-			out.println ("</HTML>");
+			sesion.invalidate();  //Si no existe el usuario, invalidamos la sesion y al volver a la pagina se creara de nuevo. 
+			response.sendRedirect("HTML/error.html");
 		}
 
 		
