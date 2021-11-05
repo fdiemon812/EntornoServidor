@@ -15,32 +15,41 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet("/Catalogo")
 public class Catalogo extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
+	
+	//Esto en realidad, podría estar todo en una clase Producto, y luego crear objetos y usarlos. 
+	
+	private int PRECIO_MORDE=19;
+	private int PRECIO_MORDE_A=14;
+	private int PRECIO_MORDE_S=10;
+	
+	private int[] listaPrecios= {PRECIO_MORDE, PRECIO_MORDE_A,PRECIO_MORDE_S};
+	
+	private String NOMBRE_MORDE ="Mordedor";
+	private String NOMBRE_MORDE_A ="Mordedor - A";
+	private String NOMBRE_MORDE_S ="Mordedor - S";
+	
+	private String[] listaNombres= {NOMBRE_MORDE, NOMBRE_MORDE_A, NOMBRE_MORDE_S};
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public Catalogo() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
 		
 		
-		
+		doPost(request, response);
 		
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sesion= request.getSession(false);
@@ -48,7 +57,49 @@ public class Catalogo extends HttpServlet {
 		if(sesion!=null) {
 			
 			
+			String udMorde = request.getParameter("morde")+"";
+			String udMordeA = request.getParameter("mordeA")+"";
+			String udMordeS = request.getParameter("mordeS")+"";
+			
+			String[] listaUd= {udMorde, udMordeA, udMordeS};
+
+			
+			
+			sesion.setAttribute("udMordeA", udMordeA);
+			sesion.setAttribute("udMorde", udMorde);
+			sesion.setAttribute("udMordeS", udMordeS);
+			
+			
+			
+			StringBuilder filas = new StringBuilder();
+			for(int i= 0; i<listaUd.length;i++) {
+				
+				if(Integer.parseInt(listaUd[i])>0) {
+					
+					
+					filas.append(""
+							+ " <tr>\n"
+							+ "<td>"+listaNombres[i]+" </td>\n"
+							+ "<td>"+Integer.parseInt(listaUd[i])+"</td>\n"
+							+ "   <td>"+listaPrecios[i]+"</td>\n"
+							+ "                    </tr>"
+							+ "");
+					
+				
+					
+				}
+				
+			}
+			
 			PrintWriter out = response.getWriter();
+			
+			
+					if(filas.toString().equalsIgnoreCase("")) {
+						
+						response.sendRedirect("HTML/catalogo.html");
+					}else{
+			
+			
 			out.print("<!DOCTYPE html><html>"
 					+ "<head>\n"
 					+ "<meta charset=\"UTF-8\">\n"
@@ -59,42 +110,27 @@ public class Catalogo extends HttpServlet {
 					+ "	<body>\n"
 					+ "		\n"
 					+ "		\n"
-					+ "		 <form action=\"/proyectoServletCarrito/Catalogo\" method=\"post\">\n"
+					+ "		 <form action=\"/proyectoServletCarrito/FinalPedido\" method=\"post\">\n"
 					+ "			\n"
 					+ "			\n"
 					+ "			<div class=\"container\">\n"
 					+ "				<h3>Resumen</h3>\n"
 					+ "				\n"
 					+ "				<table align=\"center\">\n"
-					+ "                    <tr>\n"
-					+ "                        <td><b>Descripción</b></td>\n"
+					+ " <tr>\n"
+					+ "                        <td><b>Descripcion</b></td>\n"
 					+ "                        <td>Uds</td>\n"
 					+ "                        <td>Precio</td>\n"
-					+ "                    </tr>\n"
-					+ "                    <tr>\n"
-					+ "                        <td>Mordedor </td>\n"
-					+ "                        <td>Ud</td>\n"
-					+ "                        <td>19</td>\n"
-					+ "                    </tr>\n"
-					+ "                    <tr>\n"
-					+ "                        <td>MordedorAma </td>\n"
-					+ "                        <td>Ud</td>\n"
-					+ "                        <td>14</td>\n"
-					+ "                    </tr>\n"
-					+ "                    <tr>\n"
-					+ "                        <td>Mordedor - S</td>\n"
-					+ "                        <td>Ud</td>\n"
-					+ "                        <td>10</td>\n"
-					+ "                    </tr>\n"
+					+ "                    </tr>"+filas.toString()+""
 					+ "\n"
 					+ "\n"
 					+ "                </table>\n"
 					+ "		\n"
 					+ "		\n"
-					+ "                   <b><p>Envío</p></b>\n"
+					+ "                   <b><p>Envio</p></b>\n"
 					+ "                \n"
 					+ "                   <input type=\"radio\" id=\"int\" name=\"place\" value=\"int\">\n"
-					+ "                <label for=\"int\">10 días - Gratis </label> <br>\n"
+					+ "                <label for=\"int\">10 dias - Gratis </label> <br>\n"
 					+ "                <input type=\"radio\" id=\"ext\" name=\"place\" value=\"ext\">\n"
 					+ "                <label for=\"ext\">48H - 3.95€</label>\n"
 					+ "                    \n"
@@ -112,6 +148,14 @@ public class Catalogo extends HttpServlet {
 					+ "			  </form>"
 					+ "		</body></html>");
 			
+		
+		
+				}
+		
+		
+		
+		
+		
 		}else {
 			
 			

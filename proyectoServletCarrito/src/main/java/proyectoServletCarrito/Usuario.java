@@ -7,16 +7,11 @@ public class Usuario {
 	HashMap<String, String> usuarios = new HashMap<String, String>();
 	
 	
-	
-	
 	public Usuario() {
 		
 		usuarios.put("user", "user");
 		usuarios.put("admin", "admin");
 		usuarios.put("flavio", "flavio");
-
-		
-		
 		
 	}
 	
@@ -30,18 +25,11 @@ public class Usuario {
 				
 				result=true;
 				
-			}
-			
-			
+			}			
 		}
-		
 		
 		return result;
 		
 	}
-	
-	
-	
-	
 
 }
