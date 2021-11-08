@@ -19,26 +19,26 @@ public class Catalogo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	
-	//Esto en realidad, podría estar todo en una clase Producto, y luego crear objetos y usarlos. 
+
 	
-	private int PRECIO_MORDE=19;
-	private int PRECIO_MORDE_A=14;
-	private int PRECIO_MORDE_S=10;
+	private static final int PRECIO_MORDE=19;
+	private static final int PRECIO_MORDE_A=14;
+	private static final int PRECIO_MORDE_S=10;
 	
-	private int[] listaPrecios= {PRECIO_MORDE, PRECIO_MORDE_A,PRECIO_MORDE_S};
+	private static final int[] listaPrecios= {PRECIO_MORDE, PRECIO_MORDE_A,PRECIO_MORDE_S};
 	
-	private String NOMBRE_MORDE ="Mordedor";
-	private String NOMBRE_MORDE_A ="Mordedor - A";
-	private String NOMBRE_MORDE_S ="Mordedor - S";
+	private static final String NOMBRE_MORDE ="Mordedor";
+	private static final String NOMBRE_MORDE_A ="Mordedor - A";
+	private static final String NOMBRE_MORDE_S ="Mordedor - S";
 	
-	private String[] listaNombres= {NOMBRE_MORDE, NOMBRE_MORDE_A, NOMBRE_MORDE_S};
+	private final String[] listaNombres= {NOMBRE_MORDE, NOMBRE_MORDE_A, NOMBRE_MORDE_S};
        
     
     public Catalogo() {
         super();
     }
 
-	
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
@@ -49,7 +49,7 @@ public class Catalogo extends HttpServlet {
 		
 	}
 
-	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sesion= request.getSession(false);
@@ -65,9 +65,9 @@ public class Catalogo extends HttpServlet {
 
 			
 			
-			sesion.setAttribute("udMordeA", udMordeA);
-			sesion.setAttribute("udMorde", udMorde);
-			sesion.setAttribute("udMordeS", udMordeS);
+			sesion.setAttribute("listaUd", listaUd);
+			sesion.setAttribute("listaPrecios", listaPrecios);
+			sesion.setAttribute("listaNombres", listaNombres);
 			
 			
 			
@@ -107,17 +107,16 @@ public class Catalogo extends HttpServlet {
 					+ "</head>\n"
 					+ "\n"
 					+ "<link rel='stylesheet' href='HTML/resumen.css'>\n"
-					+ "	<body>\n"
-					+ "		\n"
-					+ "		\n"
-					+ "		 <form action=\"/proyectoServletCarrito/FinalPedido\" method=\"post\">\n"
-					+ "			\n"
-					+ "			\n"
-					+ "			<div class=\"container\">\n"
-					+ "				<h3>Resumen</h3>\n"
-					+ "				\n"
-					+ "				<table align=\"center\">\n"
-					+ " <tr>\n"
+					+ "<body>\n"
+					+ "\n"
+					+ "\n"
+					+ "<form action=\"/proyectoServletCarrito/FinalPedido\" method=\"post\">\n"
+					+ "\n"
+					+ "\n"
+					+ "<div class=\"container\">\n"
+					+ "<h3>Resumen</h3>\n"
+					+ "<table align=\"center\">\n"
+					+ "<tr>\n"
 					+ "                        <td><b>Descripcion</b></td>\n"
 					+ "                        <td>Uds</td>\n"
 					+ "                        <td>Precio</td>\n"
@@ -125,28 +124,28 @@ public class Catalogo extends HttpServlet {
 					+ "\n"
 					+ "\n"
 					+ "                </table>\n"
-					+ "		\n"
-					+ "		\n"
+					+ "\n"
+					+ "\n"
 					+ "                   <b><p>Envio</p></b>\n"
 					+ "                \n"
-					+ "                   <input type=\"radio\" id=\"int\" name=\"place\" value=\"int\">\n"
+					+ "                <input type=\"radio\" id=\"int\" name=\"envio\" value=\"10-Dias\">\n"
 					+ "                <label for=\"int\">10 dias - Gratis </label> <br>\n"
-					+ "                <input type=\"radio\" id=\"ext\" name=\"place\" value=\"ext\">\n"
+					+ "                <input type=\"radio\" id=\"ext\" name=\"envio\" value=\"48H\">\n"
 					+ "                <label for=\"ext\">48H - 3.95€</label>\n"
 					+ "                    \n"
-					+ "					\n"
-					+ "					\n"
-					+ "					<fieldset>\n"
-					+ "						\n"
-					+ "		\n"
-					+ "					<button type=\"submit\" class=\"registerbtn\">Finalizar compra</button>\n"
-					+ "		\n"
-					+ "				</fieldset>\n"
-					+ "				</div>\n"
-					+ "				\n"
-					+ "			   \n"
-					+ "			  </form>"
-					+ "		</body></html>");
+					+ "\n"
+					+ "\n"
+					+ "<fieldset>\n"
+					+ "\n"
+					+ "\n"
+					+ "<button type=\"submit\" class=\"registerbtn\">Finalizar compra</button>\n"
+					+ "\n"
+					+ "</fieldset>\n"
+					+ "</div>\n"
+					+ "\n"
+					+ "\n"
+					+ "</form>"
+					+ "</body></html>");
 			
 		
 		

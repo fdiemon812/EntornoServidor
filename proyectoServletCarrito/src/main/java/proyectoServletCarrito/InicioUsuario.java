@@ -1,7 +1,7 @@
 package proyectoServletCarrito;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class InicioUsuario
- */
+
 @WebServlet("/InicioUsuario")
 public class InicioUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,12 +18,9 @@ public class InicioUsuario extends HttpServlet {
    
     public InicioUsuario() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
@@ -34,13 +29,11 @@ public class InicioUsuario extends HttpServlet {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession sesion = request.getSession(true);         //Obtengo la sesión, si no existe crea una
-		sesion.setAttribute("usuario", request.getParameter("usuario"));  //Almaceno el nombre de usuario en la sesion
+		sesion.setAttribute("nombreUsuario", request.getParameter("usuario"));  //Almaceno el nombre de usuario en la sesion
 		sesion.setMaxInactiveInterval(10);									//Establezco 10 seg de expiracion de sesion
 		
 		
