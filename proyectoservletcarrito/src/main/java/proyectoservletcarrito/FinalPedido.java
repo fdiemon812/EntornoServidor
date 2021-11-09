@@ -1,4 +1,4 @@
-package proyectoServletCarrito;
+package proyectoservletcarrito;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,9 +42,13 @@ public class FinalPedido extends HttpServlet {
 			
 			PrintWriter out = response.getWriter();
 			
+			//Obtenemos los datos de la sesión
 			String[] listaUd= (String[]) sesion.getAttribute("listaUd");
-			String[] listaNombres = (String[]) sesion.getAttribute("listaNombres");
-			int[] listaPrecios= (int[]) sesion.getAttribute("listaPrecios");
+			
+			Producto product= new Producto();
+			String[] listaNombres = product.getListaNombres();
+			int[] listaPrecios = product.getListaPrecios();
+			
 			
 			String tipoEnvio = request.getParameter("envio");
 			double precioEnvio=0;
@@ -59,16 +63,16 @@ public class FinalPedido extends HttpServlet {
 			for(int i= 0; i<listaUd.length;i++) {
 				if(Integer.parseInt(listaUd[i])>0) {
 					
-					
+					//Creamos las filas finales para la factura
 					filas.append(""
 							+ " <tr>\n"
 							+ "<td>"+listaNombres[i]+" </td>\n"
 							+ "<td>"+listaUd[i]+"</td>\n"
-							+ "   <td>"+listaPrecios[i]+"</td>\n"
-							+ "  <td>"+(Math.round((IVA*listaPrecios[i])*100.0)/100.0)+"</td></tr>"
+							+ "   <td>"+(Integer.parseInt(listaUd[i])*listaPrecios[i])+"</td>\n"
+							+ "  <td>"+(Math.round((IVA*(Integer.parseInt(listaUd[i])*listaPrecios[i]))*100.0)/100.0)+"</td></tr>"
 							+ "");
 					
-					totalFactura=totalFactura+(Math.round((IVA*listaPrecios[i])*100.0)/100.0);
+					totalFactura=totalFactura+(Math.round((IVA*(Integer.parseInt(listaUd[i])*listaPrecios[i]))*100.0)/100.0);
 					
 				}
 				
@@ -87,7 +91,7 @@ public class FinalPedido extends HttpServlet {
 					+ "<body>\n"
 					+ "\n"
 					+ "\n"
-					+ "<form action=\"/proyectoServletCarrito/HTML/fin.html\" method=\"post\">\n"
+					+ "<form action=\"/proyectoservletcarrito/Fin\" method=\"post\">\n"
 					+ "\n"
 					+ "\n"
 					+ "<div class=\"container\">\n"

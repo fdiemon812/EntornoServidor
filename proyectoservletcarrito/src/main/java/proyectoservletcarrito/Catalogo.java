@@ -1,4 +1,4 @@
-package proyectoServletCarrito;
+package proyectoservletcarrito;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,20 +20,7 @@ public class Catalogo extends HttpServlet {
 	
 	
 
-	
-	private static final int PRECIO_MORDE=19;
-	private static final int PRECIO_MORDE_A=14;
-	private static final int PRECIO_MORDE_S=10;
-	
-	private static final int[] listaPrecios= {PRECIO_MORDE, PRECIO_MORDE_A,PRECIO_MORDE_S};
-	
-	private static final String NOMBRE_MORDE ="Mordedor";
-	private static final String NOMBRE_MORDE_A ="Mordedor - A";
-	private static final String NOMBRE_MORDE_S ="Mordedor - S";
-	
-	private final String[] listaNombres= {NOMBRE_MORDE, NOMBRE_MORDE_A, NOMBRE_MORDE_S};
-       
-    
+
     public Catalogo() {
         super();
     }
@@ -52,9 +39,9 @@ public class Catalogo extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession sesion= request.getSession(false);
+		HttpSession sesion= request.getSession(false); //si no existe la sesion, no la va a crear
 		
-		if(sesion!=null) {
+		if(sesion!=null) { //comprobamos que sigue existiendo la sesion
 			
 			
 			String udMorde = request.getParameter("morde")+"";
@@ -66,14 +53,17 @@ public class Catalogo extends HttpServlet {
 			
 			
 			sesion.setAttribute("listaUd", listaUd);
-			sesion.setAttribute("listaPrecios", listaPrecios);
-			sesion.setAttribute("listaNombres", listaNombres);
-			
+
+			Producto product= new Producto();
+			String[] listaNombres = product.getListaNombres();
+			int[] listaPrecios = product.getListaPrecios();
 			
 			
 			StringBuilder filas = new StringBuilder();
-			for(int i= 0; i<listaUd.length;i++) {
+			for(int i= 0; i<listaUd.length;i++) {   
 				
+				
+				//creamos las filas para meterlas en el resumen de pedido
 				if(Integer.parseInt(listaUd[i])>0) {
 					
 					
@@ -81,7 +71,7 @@ public class Catalogo extends HttpServlet {
 							+ " <tr>\n"
 							+ "<td>"+listaNombres[i]+" </td>\n"
 							+ "<td>"+Integer.parseInt(listaUd[i])+"</td>\n"
-							+ "   <td>"+listaPrecios[i]+"</td>\n"
+							+ "   <td>"+(listaPrecios[i] * Integer.parseInt(listaUd[i]))+"</td>\n"
 							+ "                    </tr>"
 							+ "");
 					
@@ -93,13 +83,17 @@ public class Catalogo extends HttpServlet {
 			
 			PrintWriter out = response.getWriter();
 			
-			
+			//Si no hay filas nos redirige de nuevo a la pagina
 					if(filas.toString().equalsIgnoreCase("")) {
-						
-						response.sendRedirect("HTML/catalogo.html");
+						try {
+							response.sendRedirect("HTML/catalogo.html");
+							
+						} catch (Exception e) {
+								e.printStackTrace();
+								}
 					}else{
 			
-			
+			//Creamos la siguiente pagina HTML con un formulario nuevo. 
 			out.print("<!DOCTYPE html><html>"
 					+ "<head>\n"
 					+ "<meta charset=\"UTF-8\">\n"
@@ -110,7 +104,7 @@ public class Catalogo extends HttpServlet {
 					+ "<body>\n"
 					+ "\n"
 					+ "\n"
-					+ "<form action=\"/proyectoServletCarrito/FinalPedido\" method=\"post\">\n"
+					+ "<form action=\"/proyectoservletcarrito/FinalPedido\" method=\"post\">\n"
 					+ "\n"
 					+ "\n"
 					+ "<div class=\"container\">\n"
@@ -128,9 +122,9 @@ public class Catalogo extends HttpServlet {
 					+ "\n"
 					+ "                   <b><p>Envio</p></b>\n"
 					+ "                \n"
-					+ "                <input type=\"radio\" id=\"int\" name=\"envio\" value=\"10-Dias\">\n"
+					+ "                <input type=\"radio\" id=\"int\" name=\"envio\" value=\"10-Dias\" required>\n"
 					+ "                <label for=\"int\">10 dias - Gratis </label> <br>\n"
-					+ "                <input type=\"radio\" id=\"ext\" name=\"envio\" value=\"48H\">\n"
+					+ "                <input type=\"radio\" id=\"ext\" name=\"envio\" value=\"48H\" required>\n"
 					+ "                <label for=\"ext\">48H - 3.95€</label>\n"
 					+ "                    \n"
 					+ "\n"
@@ -159,8 +153,15 @@ public class Catalogo extends HttpServlet {
 			
 			
 			
+			try {
+				
+				response.sendRedirect("HTML/sesionExpirada.html");
+			} catch (Exception e) {
 			
-			response.sendRedirect("HTML/sesionExpirada.html");
+				e.printStackTrace();
+				
+				
+			}
 			
 		}
 		

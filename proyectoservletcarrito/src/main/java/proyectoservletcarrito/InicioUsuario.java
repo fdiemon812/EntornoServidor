@@ -1,4 +1,4 @@
-package proyectoServletCarrito;
+package proyectoservletcarrito;
 
 import java.io.IOException;
 
@@ -23,8 +23,13 @@ public class InicioUsuario extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-		doPost(request, response);
+		try {
+			
+			doPost(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
 		
 		
 	}
@@ -43,16 +48,30 @@ public class InicioUsuario extends HttpServlet {
 		
 		if(user.compruebaUsuario(request.getParameter("usuario"), request.getParameter("pass"))) { //Si se introduce un usario existente pasa
 			
-			//No hay que comprobar la sesion, poruqe justo esta creada si no existe.
+			//No hay que comprobar la sesion, porque justo esta creada si no existe.
 			
-			response.sendRedirect("HTML/catalogo.html");   //Redirige al siguiente catalogo
+			
+			try {
+				
+				response.sendRedirect("HTML/catalogo.html");   //Redirige al siguiente catalogo
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			}
 			
 			
 			
 			
 		}else {
 			sesion.invalidate();  //Si no existe el usuario, invalidamos la sesion y al volver a la pagina se creara de nuevo. 
+			
+			try {		
+				
 			response.sendRedirect("HTML/error.html");
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			}
 		}
 
 
