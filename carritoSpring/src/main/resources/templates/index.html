@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<link rel="stylesheet" href="css/index.css">
+
+<header>
+
+    
+</header>
+
+
+<body>
+    
+
+    <form action="#" th:action="@{index.html}" th:object="${usuario}" method="post">
+    
+    
+        <div class="container">
+          <h3>Inicia Sesion</h3>
+         
+          <hr>
+      
+          <label for="usuario"><strong>Usuario</strong></label>
+          <input type="text" th:field="*{user}" placeholder="Enter user" name="usuario" id="usuario" required>
+
+        <br>
+
+          <label for="pass"><strong>Contraseña</strong></label>
+          <input type="password" th:field="*{password}" placeholder="Enter pass" name="pass" id="pass" required>
+      
+
+     
+            
+            
+            <fieldset>
+            
+            <legend></legend>
+                
+
+            <button type="submit" class="registerbtn">Enviar</button>
+
+        </fieldset>
+        </div>
+        
+       
+      </form>
+
+
+
+</body>
+
+<footer>
+
+
+   
+</footer>
+</html>

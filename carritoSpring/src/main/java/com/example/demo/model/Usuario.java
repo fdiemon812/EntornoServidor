@@ -1,43 +1,114 @@
 package com.example.demo.model;
 
+import java.util.HashSet;
 import java.util.Objects;
 
 public class Usuario {
 	
-	private String id;
-
+	private String nombre;
+	private String user;
+	private String apellidos;
+	private String direccion;
+	private String password;
+	private String mail;
+	private int tlf;
+	private HashSet<Pedido> listaPedidos;
 	
 	public Usuario() {
 		
 	}
 	
+	public Usuario(String user, String password ) {
+		this.user=user;
+		this.password=password;
+	}
+
+	public Usuario(String user, String nombre, String apellidos,
+			String password, String direccion, int tlf, String mail) {
+		
+	super();
+	this.user=user;
+	this.direccion=direccion;
+	this.nombre = nombre;
+	this.apellidos = apellidos;
+	this.password = password;
+	this.mail=mail;
+	this.tlf=tlf;
+	this.listaPedidos=new HashSet<Pedido>();
 	
-	public Usuario(String id) {
-		this.id=id;
 	}
 
-
-	public String getId() {
-		return id;
+	public String getMail() {
+		return mail;
 	}
 
-
-	public void setId(String id) {
-		this.id = id;
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + "]";
+	public int getTlf() {
+		return tlf;
 	}
 
+	public void setTlf(int tlf) {
+		this.tlf = tlf;
+	}
 
+	
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public HashSet<Pedido> getListaPedidos() {
+		return listaPedidos;
+	}
+
+	public void setListaPedidos(HashSet<Pedido> listaPedidos) {
+		this.listaPedidos = listaPedidos;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(user);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +119,9 @@ public class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(user, other.user);
 	}
-
+	
+	
+	
 }

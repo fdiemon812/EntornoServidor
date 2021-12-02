@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Pedido {
 	
-	private Usuario usuario;
+	
 	private ArrayList<Producto> listaProductos;
 
 	
@@ -15,14 +15,7 @@ public class Pedido {
 	}
 
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+	
 
 
 	public ArrayList<Producto> getListaProductos() {
@@ -37,13 +30,13 @@ public class Pedido {
 
 	@Override
 	public String toString() {
-		return "Pedido [usuario=" + usuario + ", listaProductos=" + listaProductos + "]";
+		return "Pedido [listaProductos=" + listaProductos + "]";
 	}
 
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(listaProductos, usuario);
+		return Objects.hash(listaProductos);
 	}
 
 
@@ -56,7 +49,7 @@ public class Pedido {
 		if (getClass() != obj.getClass())
 			return false;
 		Pedido other = (Pedido) obj;
-		return Objects.equals(listaProductos, other.listaProductos) && Objects.equals(usuario, other.usuario);
+		return Objects.equals(listaProductos, other.listaProductos);
 	}
 	
 	
