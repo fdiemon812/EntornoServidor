@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,29 +13,35 @@
 
     
 </header>
+<body>
 
+<p> hola</p>
+
+</body>
 
 <body>
     
 
-    <form action="#" th:action="@{index.html}" th:object="${usuario}" method="post">
+    <form action="#" th:action="@{/login/submit}" method="post" th:object="${usuario}">
     
     
         <div class="container">
           <h3>Inicia Sesion</h3>
          
+         
           <hr>
       
           <label for="usuario"><strong>Usuario</strong></label>
-          <input type="text" th:field="*{user}" placeholder="Enter user" name="usuario" id="usuario" required>
+         <input type="text" th:field="*{user}" placeholder="Enter user">
+         <p th:text="usuario.nombre"></p>
 
         <br>
-
+ 
           <label for="pass"><strong>Contraseña</strong></label>
-          <input type="password" th:field="*{password}" placeholder="Enter pass" name="pass" id="pass" required>
+          <input type="password" th:field="*{password}" placeholder="Enter pass">
       
 
-     
+ 
             
             
             <fieldset>
@@ -60,4 +66,5 @@
 
    
 </footer>
+
 </html>

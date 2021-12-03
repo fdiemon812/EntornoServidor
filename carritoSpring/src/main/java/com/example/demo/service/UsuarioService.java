@@ -6,9 +6,12 @@ import java.util.HashSet;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.stereotype.Service;
+
 import com.example.demo.model.Pedido;
 import com.example.demo.model.Usuario;
 
+@Service
 public class UsuarioService {
 	
 	
@@ -58,4 +61,14 @@ public class UsuarioService {
 		
 	}
 
+	
+	
+	//listarPedidos, AddPedido, getUsuario
+	
+	
+	
+	
+	
+	
+	
 }
