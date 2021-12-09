@@ -7,7 +7,7 @@
     <title>Login</title>
 </head>
 
-<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" type="text/css" href="login.css">
 
 <header>
 
@@ -15,14 +15,13 @@
 </header>
 <body>
 
-<p> hola</p>
 
-</body>
 
-<body>
+
+
     
 
-    <form action="#" th:action="@{/login/submit}" method="post" th:object="${usuario}">
+    <form action="#" th:action="@{/login/catalogo}" method="post" th:object="${usuario}">
     
     
         <div class="container">
@@ -33,7 +32,6 @@
       
           <label for="usuario"><strong>Usuario</strong></label>
          <input type="text" th:field="*{user}" placeholder="Enter user">
-         <p th:text="usuario.nombre"></p>
 
         <br>
  
