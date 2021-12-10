@@ -6,38 +6,40 @@
 <title>Insert title here</title>
 </head>
 
-<link rel="stylesheet" type="text/css" href="../static/login.css">
+<link rel="stylesheet" type="text/css" href="../static/catalogo.css">
 	<body>
 		
-		
-		 <form action="#" th:action="@{/login/pedido}" th:object="${pedido}" method="post">
-			
 			
 			<div class="container">
 				<h3>Catalogo</h3>
 				
+				
+				
+				<div th:each="producto : ${listaProductos}">
+				
 				<hr>
-				<img src="pesa.jpg" alt="">
+				<img src="${producto.getImg()}" alt="">
 				<br>
 				
-				<label for="morde"><strong>Mordedor - 19€</strong></label>
-				<input type="number" name="morde" id="morde" value="0" >
+				<form action="#" th:action="@{/login/pedido}" th:object="${producto}"  method="post">
+				
+				<label for="morde"><strong th:text="${producto.getNombre()}"></strong></label>
+				<input type="number" name="morde" id="morde" value="0" th:field="*{cantidad}">
+				<input type="hidden" value="${producto.getId()}" th:field="*{id}">
+				<input type="hidden" value="${producto.getNombre()}" th:field="*{nombre}">
+				<input type="hidden" value="${producto.getPrecio()}" th:field="*{precio}">
+				
+				
 
-
-				<hr>
-				<img src="pesa2.png" alt="">
-				<br>
-				<label for="mordeA"><strong>MordedorAma - 14€</strong></label>
-				<input type="number" placeholder="Cantidad" name="mordeA" id="mordeA"  value="0">
-			
-				
+				<button type="submit" class="registerbtn">Añadir al carrito</button>
 				
 				<hr>
-				<img src="pesa3.jpg" alt="">
-				<br>
-				<label for="mordeS"><strong>Mordedor-S 10€</strong></label>
-				<input type="number" placeholder="Cantidad" name="mordeS" id="mordeS" value="0" >
-			
+			  </form>
+				
+				</div>
+			  
+			  
+		
 				<br><br>
 		
 		
@@ -45,15 +47,17 @@
 					
 					
 					<fieldset><br>
-						<legend></legend>
+						<form action="#" th:action="@{/login/resumen}" method="post">
+				
+				
+				<button type="submit" class="registerbtn">Resumen Pedido</button>
 		
-					<button type="submit" class="registerbtn">Añadir al carrito</button>
+				
 		
 				</fieldset>
 				</div>
 				
 			   
-			  </form>
 		
 		
 		

@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Pedido;
+import com.example.demo.model.Producto;
 import com.example.demo.model.Usuario;
 
 @Service
@@ -16,12 +17,15 @@ public class UsuarioService {
 	
 	
 	private HashSet<Usuario> listaUsuarios = new HashSet<Usuario>();
+	private ArrayList<Producto> listaProductosDefecto = new ArrayList<Producto>();
 	
 	
 	
-	
-	public void addPedido(int id, Pedido pedido) {
-		
+	public void addPedido(int posicion, Pedido pedido, int cantidad) {
+		for(int i=0;i<cantidad;i++) {
+			
+			pedido.listaProductos.add(listaProductosDefecto.get(posicion));
+		}
 	}
 	
 	public boolean compruebaUsuario(String usuario, String password) {
@@ -60,14 +64,26 @@ public class UsuarioService {
 				);
 		
 	}
+	
+	
 
 	
 	
-	//listarPedidos, AddPedido, getUsuario
+	@PostConstruct
+	public void intiProductos() {
+		listaProductosDefecto.addAll(Arrays.asList(
+				new Producto("Mordedor-A", 20.0, 1, "../static/pesa.jpg"),
+				new Producto("Mordedor-B", 15.0, 1, "../static/pesa2.jpg"),
+				new Producto("Mordedor-C", 10.0, 1, "../static/pesa3.jpg")));
+	}
 	
 	
-	
-	
+	public ArrayList<Producto> findAll() {
+		
+		return listaProductosDefecto;
+		
+		
+	}
 	
 	
 	

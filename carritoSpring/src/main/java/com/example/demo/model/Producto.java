@@ -6,22 +6,33 @@ public class Producto {
 	
 	
 	private String nombre;
-	private int id;
 	private Double precio;
+	private int id;
+	private int cantidad;
+	private String img;
 	
 	
 	
+	
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	public Producto() {
 		
 		
 	}
 	
-	public Producto(String nombre, int id, Double precio) {
+	public Producto(String nombre, Double precio, int id, String img) {
 		
-		this.id= id;
 		this.nombre=nombre;
 		this.precio=precio;
-		
+		this.id=id;
+		this.img=img;
 	}
 
 	public String getNombre() {
@@ -32,6 +43,17 @@ public class Producto {
 		this.nombre = nombre;
 	}
 
+	
+
+	public Double getPrecio() {
+		return precio;
+	}
+
+
+	public void setPrecio(Double precio) {
+		this.precio = precio;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -40,17 +62,17 @@ public class Producto {
 		this.id = id;
 	}
 
-	public Double getPrecio() {
-		return precio;
+	public String getImg() {
+		return img;
 	}
 
-	public void setPrecio(Double precio) {
-		this.precio = precio;
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	@Override
 	public String toString() {
-		return "Producto [nombre=" + nombre + ", id=" + id + ", precio=" + precio + "]";
+		return "Producto [nombre=" + nombre + ", precio=" + precio + "]";
 	}
 
 	@Override
@@ -69,7 +91,11 @@ public class Producto {
 		Producto other = (Producto) obj;
 		return id == other.id && Objects.equals(nombre, other.nombre) && Objects.equals(precio, other.precio);
 	}
+
+		
+
 	
+
 	
 
 }

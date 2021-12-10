@@ -3,18 +3,22 @@ package com.example.demo.model;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import javax.annotation.PostConstruct;
+
 public class Pedido {
 	
 	
-	private ArrayList<Producto> listaProductos;
+	public ArrayList<Producto> listaProductos;
 
 	
 	public Pedido() {
 		
 		this.listaProductos = new ArrayList<Producto>();
+		
+
 	}
 
-
+	
 	
 
 

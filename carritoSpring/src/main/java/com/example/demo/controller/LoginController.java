@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.model.Pedido;
+import com.example.demo.model.Producto;
 import com.example.demo.model.Usuario;
 import com.example.demo.service.UsuarioService;
 
@@ -34,7 +35,9 @@ public class LoginController {
 	@PostMapping("/login/catalogo")
 	public String envio(@ModelAttribute("usuario") Usuario usuario, Model model) {
 		
-		model.addAttribute("pedido", new Pedido());
+		model.addAttribute("listaProductos", userServ.findAll());
+		model.addAttribute("producto", new Producto());
+
 		System.out.println("postCatalogo");
 		System.out.println(sesion.getAttribute("user"));
 
@@ -54,9 +57,10 @@ public class LoginController {
 	
 	
 	@PostMapping("/login/pedido")
-	public String resumenPedido(@ModelAttribute("pedido") Pedido pedido) {
-		
-		
+	public String resumenPedido(@ModelAttribute("producto") Producto producto) {
+		System.out.println(producto.getNombre()+producto.getCantidad());
+
+//		userServ.addPedido(0, pedido, producto)
 		
 		return "";
 		
