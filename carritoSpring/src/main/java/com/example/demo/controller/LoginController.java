@@ -63,7 +63,7 @@ public class LoginController {
 		model.addAttribute("producto2", new Producto());
 		
 		
-		
+		 
 		return "catalogo";
 		
 	}
