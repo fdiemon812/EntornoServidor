@@ -36,10 +36,10 @@ public class LoginController {
 	public String envio(@ModelAttribute("usuario") Usuario usuario, Model model) {
 		
 		model.addAttribute("listaProductos", userServ.findAll());
-		model.addAttribute("producto", new Producto());
+		model.addAttribute("producto2", new Producto());
 
-		System.out.println("postCatalogo");
-		System.out.println(sesion.getAttribute("user"));
+//		System.out.println("postCatalogo");
+//		System.out.println(sesion.getAttribute("user"));
 
 		String result="catalogo";
 		boolean isUser= userServ.compruebaUsuario(usuario.getUser(), usuario.getPassword());
@@ -57,12 +57,14 @@ public class LoginController {
 	
 	
 	@PostMapping("/login/pedido")
-	public String resumenPedido(@ModelAttribute("producto") Producto producto) {
-		System.out.println(producto.getNombre()+producto.getCantidad());
-
-//		userServ.addPedido(0, pedido, producto)
+	public String resumenPedido(@ModelAttribute("producto2") Producto producto, Model model) {
 		
-		return "";
+		model.addAttribute("listaProductos", userServ.findAll());
+		model.addAttribute("producto2", new Producto());
+		
+		
+		
+		return "catalogo";
 		
 	}
 	

@@ -18,16 +18,15 @@
 				<div th:each="producto : ${listaProductos}">
 				
 				<hr>
-				<img src="${producto.getImg()}" alt="">
+				<img src="${producto.img}" alt="">
 				<br>
 				
-				<form action="#" th:action="@{/login/pedido}" th:object="${producto}"  method="post">
+				<form action="#" th:action="@{/login/pedido}" th:object="${producto2}"  method="post">
 				
-				<label for="morde"><strong th:text="${producto.getNombre()}"></strong></label>
+				<label for="morde"><strong th:text="${producto.nombre}"></strong> - <strong th:text="${producto.precio}"></strong></label>
 				<input type="number" name="morde" id="morde" value="0" th:field="*{cantidad}">
-				<input type="hidden" value="${producto.getId()}" th:field="*{id}">
-				<input type="hidden" value="${producto.getNombre()}" th:field="*{nombre}">
-				<input type="hidden" value="${producto.getPrecio()}" th:field="*{precio}">
+				<input type="hidden" th:value="${producto.id}"  th:name="id" th:id="id">
+				
 				
 				
 
