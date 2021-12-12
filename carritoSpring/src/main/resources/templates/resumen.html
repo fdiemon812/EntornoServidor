@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Resumen Pedido</title>
+</head>
+
+<link rel="stylesheet" type="text/css" href="/catalogo.css">
+	<body>
+		
+		
+		<form action="#">
+			
+			<div class="container">
+				<h3>Resumen Pedido</h3>
+				
+				
+				
+				<table border="2">
+				
+					<tr>
+					
+						<td>Producto</td>
+						<td>Cantidad</td>
+						<td>Precio</td>
+						
+			
+					</tr>
+				
+					<tr th:each="producto: ${listaPedido}">
+					
+						<td th:text="${producto.key.nombre}">Producto</td>
+						<td th:text="${producto.value}">Cantidad</td>
+						<td th:text="${producto.key.precio}"></td>
+						
+						
+			
+					</tr>
+				
+				
+				</table>
+				
+				<input type="radio" value="Envio gratis">
+				
+			</div>
+		</form>
+		
+		</body>
+
+	
+</html>

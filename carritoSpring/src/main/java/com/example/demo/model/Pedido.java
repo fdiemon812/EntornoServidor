@@ -1,19 +1,25 @@
 package com.example.demo.model;
 
+import java.beans.JavaBean;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 
+
+
 public class Pedido {
 	
 	
-	public ArrayList<Producto> listaProductos;
+	public HashMap<Producto,Integer> listaProductos;
 
 	
 	public Pedido() {
 		
-		this.listaProductos = new ArrayList<Producto>();
+		this.listaProductos = new  HashMap<Producto,Integer>();
 		
 
 	}
@@ -22,19 +28,27 @@ public class Pedido {
 	
 
 
-	public ArrayList<Producto> getListaProductos() {
+	public  HashMap<Producto,Integer> getListaProductos() {
 		return listaProductos;
 	}
 
 
-	public void setListaProductos(ArrayList<Producto> listaProductos) {
+	public void setListaProductos( HashMap<Producto,Integer> listaProductos) {
 		this.listaProductos = listaProductos;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Pedido [listaProductos=" + listaProductos + "]";
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for(Map.Entry<Producto, Integer> producto: listaProductos.entrySet()) {
+			
+			sb.append(producto.getKey() + " - "+ producto.getValue());
+		}
+		
+		return sb.toString();
 	}
 
 

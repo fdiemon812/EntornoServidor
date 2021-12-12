@@ -6,7 +6,7 @@
 <title>Insert title here</title>
 </head>
 
-<link rel="stylesheet" type="text/css" href="../static/catalogo.css">
+<link rel="stylesheet" type="text/css" href="/catalogo.css">
 	<body>
 		
 			
@@ -18,12 +18,12 @@
 				<div th:each="producto : ${listaProductos}">
 				
 				<hr>
-				<img src="${producto.img}" alt="">
+				<img th:src="${producto.img}" alt="">
 				<br>
 				
-				<form action="#" th:action="@{/login/pedido}" th:object="${producto2}"  method="post">
+				<form action="#" th:action="@{/login/catalogo}" th:object="${producto2}"  method="post">
 				
-				<label for="morde"><strong th:text="${producto.nombre}"></strong> - <strong th:text="${producto.precio}"></strong></label>
+				<label for="morde"><strong th:text="${producto.nombre}"></strong> - <strong th:text="${producto.precio}"></label>
 				<input type="number" name="morde" id="morde" value="0" th:field="*{cantidad}">
 				<input type="hidden" th:value="${producto.id}"  th:name="id" th:id="id">
 				

@@ -11,6 +11,14 @@
     form * {
         box-sizing: border-box;
     }
+    
+     table, td{
+
+        border: solid 2px black;
+        border-collapse: collapse;
+        width: 100%;
+        padding: 5px;
+    }
 
     /* Add padding to containers */
     .container {

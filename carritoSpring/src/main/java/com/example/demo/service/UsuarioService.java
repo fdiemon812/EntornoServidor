@@ -8,8 +8,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.Pedido;
-import com.example.demo.model.Producto;
+
 import com.example.demo.model.Usuario;
 
 @Service
@@ -17,16 +16,9 @@ public class UsuarioService {
 	
 	
 	private HashSet<Usuario> listaUsuarios = new HashSet<Usuario>();
-	private ArrayList<Producto> listaProductosDefecto = new ArrayList<Producto>();
 	
 	
 	
-	public void addPedido(int posicion, Pedido pedido, int cantidad) {
-		for(int i=0;i<cantidad;i++) {
-			
-			pedido.listaProductos.add(listaProductosDefecto.get(posicion));
-		}
-	}
 	
 	public boolean compruebaUsuario(String usuario, String password) {
 		
@@ -54,6 +46,28 @@ public class UsuarioService {
 		
 	}
 	
+	
+	public Usuario obtenerUsuario(String nombreUsuario) {
+		ArrayList<Usuario> arrayUsuarios = new ArrayList<Usuario>(listaUsuarios);
+		
+
+		Usuario result = null;
+		
+		boolean isEncontrado = false;
+		int indice = 0;
+		
+		while(!isEncontrado && indice<arrayUsuarios.size()) {
+			if((nombreUsuario.equals(arrayUsuarios.get(indice).getUser()))) {
+				isEncontrado = true;
+				result = arrayUsuarios.get(indice);
+			}else {
+				indice++;
+			}
+		}
+		
+		return result;
+	}
+	
 	@PostConstruct
 	public void init() {
 		listaUsuarios.addAll(
@@ -69,21 +83,7 @@ public class UsuarioService {
 
 	
 	
-	@PostConstruct
-	public void intiProductos() {
-		listaProductosDefecto.addAll(Arrays.asList(
-				new Producto("Mordedor-A", 20.0, 1, "../static/pesa.jpg"),
-				new Producto("Mordedor-B", 15.0, 1, "../static/pesa2.jpg"),
-				new Producto("Mordedor-C", 10.0, 1, "../static/pesa3.jpg")));
-	}
-	
-	
-	public ArrayList<Producto> findAll() {
-		
-		return listaProductosDefecto;
-		
-		
-	}
+
 	
 	
 	
