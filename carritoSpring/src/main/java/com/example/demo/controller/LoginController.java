@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -170,6 +171,9 @@ public class LoginController {
 		model.addAttribute("gastoEnvio",envio);
 		
 		Double totalPedido=pedService.calculaPrecioTotal(pedido)+envio;
+		pedido.setTotalPedido(totalPedido);
+		pedido.setPrecioEnvio(envio);
+		
 		
 		model.addAttribute("total",totalPedido);
 		
@@ -198,7 +202,26 @@ public class LoginController {
 	
 	
 	
-	
+	@GetMapping("/login/pedidos")
+	public String listarPedidos(Model model) {
+		String result = "pedidos";
+		
+		
+		if(sesion.getAttribute("usuario")==null || sesion.getAttribute("pedido")==null){
+			sesion.invalidate();
+			result="redirect:/login";
+		
+		}else {
+			Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+			
+			model.addAttribute("listaPedidos", usuario.getListaPedidos());
+			model.addAttribute("usuario", usuario);
+			
+			
+		}
+		
+		return result;
+	}
 	
 	@GetMapping({"/login/catalogo","/login/catalogo/", "/login/resumen"})
 	public String forzarInicio(@ModelAttribute("usuario") Usuario usuario) {
@@ -214,6 +237,37 @@ public class LoginController {
 		
 		sesion.invalidate();
 		return "redirect:/login";
+	}
+	
+	
+	@GetMapping("/login/edit/{id}")
+	public String editarEmpleadoForm(@PathVariable int id, Model model) {
+		
+		Pedido pedido = pedService.findPedido(id, (Usuario) sesion.getAttribute("usuario") );
+		
+		return "";
+	}
+	
+	
+	@GetMapping("/login/eliminar/{id}")
+	public String eliminarPedido(@PathVariable int id, Model model) {
+		
+		String result="redirect:/login/pedidos";
+		
+		if(sesion.getAttribute("usuario")==null || sesion.getAttribute("pedido")==null){
+			sesion.invalidate();
+			result="redirect:/login";
+			}else {
+				
+				Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
+				System.out.println(userLogado.getNombre());
+				pedService.borrarPedido(userLogado, id);
+			}
+		
+		
+		
+		
+		return result;
 	}
 	
 	

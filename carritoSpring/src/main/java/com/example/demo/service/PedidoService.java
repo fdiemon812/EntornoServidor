@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Pedido;
 import com.example.demo.model.Producto;
+import com.example.demo.model.Usuario;
 
 @Service
 public class PedidoService {
@@ -47,6 +48,22 @@ public class PedidoService {
 		}
 		
 		return result;
+		
+	}
+	
+	public Pedido findPedido(int id, Usuario usuario) {
+		Pedido pedido = new Pedido(id);
+		ArrayList<Pedido> listaPedidos = new ArrayList<Pedido>(usuario.getListaPedidos());
+		
+		return  listaPedidos.get(listaPedidos.indexOf(pedido));
+	}
+	
+	public void borrarPedido(Usuario usuario, int id) {
+		Pedido pedido = new Pedido(id);
+		System.out.println(id + "el ID ES");
+		System.out.println(pedido.getId() + " borrado en teoria");
+		
+		usuario.getListaPedidos().remove(pedido);
 		
 	}
 	
