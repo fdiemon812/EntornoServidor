@@ -15,11 +15,15 @@ public class Pedido {
 	
 	
 	public HashMap<Producto,Integer> listaProductos;
+	private static int contador=0;
+	private int id;
 
 	
 	public Pedido() {
 		
 		this.listaProductos = new  HashMap<Producto,Integer>();
+		this.id=contador;
+		contador++;
 		
 
 	}

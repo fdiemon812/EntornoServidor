@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -35,6 +36,17 @@ public class PedidoService {
 				
 				map.put(listaProductosDefecto.get(posicion), cantidad);
 			}
+		
+	}
+	
+	public Double calculaPrecioTotal(Pedido pedido) {
+		Double result=0.0;
+		for (Map.Entry<Producto, Integer> producto : pedido.listaProductos.entrySet()) {
+			
+			result=result+(((Producto) producto.getKey()).getPrecio())*producto.getValue();
+		}
+		
+		return result;
 		
 	}
 	

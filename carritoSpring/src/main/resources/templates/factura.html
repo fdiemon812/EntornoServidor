@@ -3,17 +3,17 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Resumen Pedido</title>
+<title>FACTURA</title>
 </head>
 
 <link rel="stylesheet" type="text/css" href="/catalogo.css">
 	<body>
 		
 		
-		<form th:action="@{/login/factura}" method="post" >
+		<form th:action="@{/login//factura/fin}" method="post" >
 			
 			<div class="container">
-				<h3>Resumen Pedido</h3>
+				<h3>FACTURA</h3>
 				
 				
 				
@@ -38,19 +38,24 @@
 			
 					</tr>
 				
-				
+					<tr>
+						<td>ENVIO:</td>
+						<td><strong th:text="${gastoEnvio}"></td>
+					</tr>
+					
+					<tr>
+						<td>TOTAL PEDIDO:</td>
+						<td><strong th:text="${total}"></td>
+					</tr>
 				</table>
-				<label name="gratis" id="gratis">Envio gratis</label>
-				<input type="radio" name="envio" id="gratis" value="0">
-				<br>
-				<label name="envio" id="gratis">48H</label>
-				<input type="radio" name="envio" value="5" >
+				
 				
 				<br>
 				
 				
 					<p>Dirección de envio: <strong th:text="${usuario.direccion}"></strong><br>
-						Nombre y apellidos: <strong th:text="${usuario.nombre}"> <strong th:text="${usuario.apellidos}"></strong></strong><br>
+						Nombre y apellidos: <strong th:text="${usuario.nombre}"> 
+						<strong th:text="${usuario.apellidos}"></strong></strong><br>
 						Telefono: <strong th:text="${usuario.tlf}"></strong><br>
 						Mail:<strong th:text="${usuario.mail}"></strong><br>
 					

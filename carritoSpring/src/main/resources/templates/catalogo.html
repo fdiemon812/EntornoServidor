@@ -21,7 +21,7 @@
 				<img th:src="${producto.img}" alt="">
 				<br>
 				
-				<form action="#" th:action="@{/login/catalogo}" th:object="${producto2}"  method="post">
+				<form  th:action="@{/login/catalogo}" th:object="${producto2}"  method="post">
 				
 				<label for="morde"><strong th:text="${producto.nombre}"></strong> - <strong th:text="${producto.precio}"></label>
 				<input type="number" name="morde" id="morde" value="0" th:field="*{cantidad}">

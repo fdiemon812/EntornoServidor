@@ -47,6 +47,8 @@ public class UsuarioService {
 	}
 	
 	
+
+	
 	public Usuario obtenerUsuario(String nombreUsuario) {
 		ArrayList<Usuario> arrayUsuarios = new ArrayList<Usuario>(listaUsuarios);
 		

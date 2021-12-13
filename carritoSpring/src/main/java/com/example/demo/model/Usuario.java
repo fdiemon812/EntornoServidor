@@ -84,8 +84,8 @@ public class Usuario {
 		return listaPedidos;
 	}
 
-	public void setListaPedidos(HashSet<Pedido> listaPedidos) {
-		this.listaPedidos = listaPedidos;
+	public void addListaPedidos(Pedido pedido) {
+		listaPedidos.add(pedido);
 	}
 
 	public String getDireccion() {
