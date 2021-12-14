@@ -10,7 +10,7 @@
 	<body>
 		
 		
-		<form th:action="@{/login/factura}" method="post" >
+		<form th:action="@{/login/factura}" th:object="${pedido}" method="post" >
 			
 			<div class="container">
 				<h3>Resumen Pedido</h3>
@@ -44,19 +44,20 @@
 				<input type="radio" name="envio" id="gratis" value="0">
 				<br>
 				<label name="envio" id="gratis">48H</label>
-				<input type="radio" name="envio" value="5" >
+				<input type="radio" name="envio" value="5" checked>
 				
 				<br>
 				
 				
-					<p>Dirección de envio: <strong th:text="${usuario.direccion}"></strong><br>
-						Nombre y apellidos: <strong th:text="${usuario.nombre}"> <strong th:text="${usuario.apellidos}"></strong></strong><br>
-						Telefono: <strong th:text="${usuario.tlf}"></strong><br>
-						Mail:<strong th:text="${usuario.mail}"></strong><br>
+				<input type="text" name="direccion" id="direccion" th:value="${usuario.direccion}" placeholder="direccion">
+				<input type="text" name="mail" id="mail" th:value="${usuario.mail}" placeholder="mail">
+				<input type="text" name="tlf" id="tlf" th:value="${usuario.tlf}" placeholder="tlf">
+				<input type="text" name="nombre" id="nombre" th:value="${usuario.nombre}" placeholder="nombre">
+				<input type="text" name="apellidos" id="apellidos" th:value="${usuario.apellidos}" placeholder="apellidos">
+				
 					
+				
 					
-					
-					</p>
 				
 				
 					

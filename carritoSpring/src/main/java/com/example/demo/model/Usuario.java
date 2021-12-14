@@ -6,13 +6,13 @@ import java.util.Objects;
 
 public class Usuario {
 	
-	private String nombre;
 	private String user;
+	private String nombre;
 	private String apellidos;
 	private String direccion;
-	private String password;
 	private String mail;
 	private int tlf;
+	private String password;
 	private ArrayList<Pedido> listaPedidos;
 	
 	public Usuario() {

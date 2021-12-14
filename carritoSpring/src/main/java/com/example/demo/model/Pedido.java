@@ -22,6 +22,11 @@ public class Pedido {
 	private Date fecha;
 	private int precioEnvio;
 	private Double totalPedido;
+	private String nombre;
+	private String apellidos;
+	private String direccion;
+	private String mail;
+	private int tlf;
 	
 
 	
@@ -125,6 +130,86 @@ public class Pedido {
 	public void setListaProductos( HashMap<Producto,Integer> listaProductos) {
 		this.listaProductos = listaProductos;
 	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+
+
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+
+
+
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+
+
+
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+
+
+
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+
+
+
+
+	public String getMail() {
+		return mail;
+	}
+
+
+
+
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+
+
+
+
+	public int getTlf() {
+		return tlf;
+	}
+
+
+
+
+
+	public void setTlf(int tlf) {
+		this.tlf = tlf;
+	}
+
+
+
 
 
 	@Override

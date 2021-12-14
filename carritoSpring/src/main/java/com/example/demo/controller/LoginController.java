@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,12 +138,12 @@ public class LoginController {
 		
 		}else {
 			
-		
 		Pedido pedido = (Pedido) sesion.getAttribute("pedido");
 		Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
 		userLogado.addListaPedidos(pedido);
 		model.addAttribute("usuario", userLogado);
 		model.addAttribute("listaPedido", pedido.getListaProductos());
+		model.addAttribute("pedido", pedido);
 		
 		
 		}
@@ -152,7 +156,13 @@ public class LoginController {
 	
 
 	@PostMapping("/login/factura")
-	public String facturaPedido(Model model, @RequestParam(name="envio") int envio) {
+	public String facturaPedido(Model model, 
+			@RequestParam(name="envio") int envio, 
+			@RequestParam(name="nombre") String nombre, 
+			@RequestParam(name="apellidos") String apellidos, 
+			@RequestParam(name="direccion") String direccion, 
+			@RequestParam(name="mail") String mail, 
+			@RequestParam(name="tlf") int tlf) {
 		
 		
 		String result="factura";
@@ -173,8 +183,13 @@ public class LoginController {
 		Double totalPedido=pedService.calculaPrecioTotal(pedido)+envio;
 		pedido.setTotalPedido(totalPedido);
 		pedido.setPrecioEnvio(envio);
+		pedido.setNombre(nombre);
+		pedido.setApellidos(apellidos);
+		pedido.setDireccion(direccion);
+		pedido.setMail(mail);
+		pedido.setTlf(tlf);
 		
-		
+		model.addAttribute(pedido);
 		model.addAttribute("total",totalPedido);
 		
 		
@@ -240,12 +255,64 @@ public class LoginController {
 	}
 	
 	
-	@GetMapping("/login/edit/{id}")
-	public String editarEmpleadoForm(@PathVariable int id, Model model) {
+	@GetMapping("/login/editar/{id}")
+	public String editarPedido(@PathVariable int id, Model model) {
+		
+		String result="editar";
+		
+		if(sesion.getAttribute("usuario")==null || sesion.getAttribute("pedido")==null){
+			sesion.invalidate();
+			result="redirect:/login";
+		
+		}else {
 		
 		Pedido pedido = pedService.findPedido(id, (Usuario) sesion.getAttribute("usuario") );
+		model.addAttribute("pedido", pedido);
+		}
 		
-		return "";
+		
+		return result;
+	}
+	
+	
+	@PostMapping("/login/editar/submit")
+	public String editadoPedido(Model model, 
+			 
+			@RequestParam(name="nombre") String nombre, 
+			@RequestParam(name="apellidos") String apellidos, 
+			@RequestParam(name="direccion") String direccion, 
+			@RequestParam(name="mail") String mail, 
+			@RequestParam(name="tlf") int tlf,
+			@RequestParam(name="idEnviado") int idEnviado,
+			@RequestParam(name="cantidades") int[] cantidades){
+		
+		String result="redirect:/login/pedidos";
+	
+
+		if(sesion.getAttribute("usuario")==null || sesion.getAttribute("pedido")==null){
+			sesion.invalidate();
+			result="redirect:/login";
+		
+		}else {
+		
+	Pedido pedido = pedService.findPedido(idEnviado, (Usuario) sesion.getAttribute("usuario") );
+//		model.addAttribute("pedido", pedido);
+		
+			pedido.setNombre(nombre);
+			pedido.setApellidos(apellidos);
+			pedido.setDireccion(direccion);
+			pedido.setMail(mail);
+			pedido.setTlf(tlf);
+			
+			
+			int i=0;
+			for (Entry<Producto, Integer> producto : pedido.getListaProductos().entrySet()) {
+				producto.setValue(cantidades[i]);
+				i++;
+			}
+		
+		}
+		return result;
 	}
 	
 	
