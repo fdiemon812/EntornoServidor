@@ -10,7 +10,7 @@
 	<body>
 		
 		
-		<form th:action="@{/login/catalogo}" method="post" >
+		<form th:action="@{/login/catalogo}" method="get" >
 			
 			<div class="container">
 				<h3>Listado de Pedidos</h3>
@@ -95,12 +95,24 @@
 					
 								
 		<button type="submit" class="registerbtn">Nuevo Pedido</button>
-			</div>
+		
+		
+			
 			
 			
 				
-		</form>
+	</form>
 		
+		
+		 <form action="#" th:action="@{/login/logout}" method="get">
+		
+        <br>
+ 
+
+		<button type="submit" class="registerbtn">Cerrar Sesión</button>
+		
+		</form>
+		</div>
 		</body>
 
 	

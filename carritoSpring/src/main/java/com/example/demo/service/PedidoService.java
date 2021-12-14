@@ -68,7 +68,10 @@ public class PedidoService {
 	}
 	
 	
-	
+	public Pedido findPedido(Usuario usuario) {
+		return usuario.getListaPedidos().get(0);
+		
+	}
 	
 	@PostConstruct
 	public void intiProductos() {

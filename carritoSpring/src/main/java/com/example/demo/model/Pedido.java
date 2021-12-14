@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.PostConstruct;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 
 
@@ -22,10 +25,16 @@ public class Pedido {
 	private Date fecha;
 	private int precioEnvio;
 	private Double totalPedido;
+	
 	private String nombre;
 	private String apellidos;
+	
+	@NotEmpty
 	private String direccion;
+	@Email(message="Pon un email valido")
 	private String mail;
+	
+	
 	private int tlf;
 	
 

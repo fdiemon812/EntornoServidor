@@ -7,7 +7,7 @@
     <title>Login</title>
 </head>
 
-<link rel="stylesheet" type="text/css" href="login.css">
+<link rel="stylesheet" type="text/css" href="/login.css">
 
 <header>
 
@@ -32,11 +32,14 @@
       
           <label for="usuario"><strong>Usuario</strong></label>
          <input type="text" th:field="*{user}" placeholder="Enter user">
+   		<span th:if="${#fields.hasErrors('user')}" th:errors="*{user}" id="user-error">Errores</span>
 
         <br>
  
           <label for="pass"><strong>Contraseña</strong></label>
           <input type="password" th:field="*{password}" placeholder="Enter pass">
+          <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" id="password-error">Errores</span>
+          
       
 
  

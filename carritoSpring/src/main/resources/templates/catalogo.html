@@ -24,6 +24,8 @@
 				<form  th:action="@{/login/catalogo}" th:object="${producto2}"  method="post">
 				
 				<label for="morde"><strong th:text="${producto.nombre}"></strong> - <strong th:text="${producto.precio}"></label>
+				
+				<p th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}">Errores</p>
 				<input type="number" name="morde" id="morde" value="0" th:field="*{cantidad}">
 				<input type="hidden" th:value="${producto.id}"  th:name="id" th:id="id">
 				
@@ -42,7 +44,6 @@
 				<br><br>
 		
 		
-			 
 					
 					
 					<fieldset><br>

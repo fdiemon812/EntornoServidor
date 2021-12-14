@@ -2,12 +2,15 @@ package com.example.demo.model;
 
 import java.util.Objects;
 
+import javax.validation.constraints.Min;
+
 public class Producto {
 	
 	
 	private String nombre;
 	private Double precio;
 	private int id;
+	@Min(1)
 	private int cantidad;
 	private String img;
 	

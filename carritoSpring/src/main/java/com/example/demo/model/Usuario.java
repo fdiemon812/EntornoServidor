@@ -4,14 +4,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 public class Usuario {
-	
+	@NotEmpty(message="Debes rellenar el nombre")
 	private String user;
+	
 	private String nombre;
 	private String apellidos;
 	private String direccion;
+	
+	
 	private String mail;
 	private int tlf;
+	@NotEmpty(message="Debes rellenar el password")
 	private String password;
 	private ArrayList<Pedido> listaPedidos;
 	
