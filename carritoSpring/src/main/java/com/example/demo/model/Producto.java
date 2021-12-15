@@ -16,25 +16,48 @@ public class Producto {
 	
 	
 	
-	
+	/**
+	 *  Devuelve la cantidad de productos
+	 * @return int cantidad 
+	 */
 	public int getCantidad() {
 		return cantidad;
 	}
 
+	/**
+	 * Modifica la cantidad
+	 * @param cantidad
+	 */
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
 
+	
+	
+	/**
+	 * Constructor vacio
+	 */
 	public Producto() {
 		
 		
 	}
 	
+	/**
+	 * Constructor con solo la id
+	 * @param id
+	 */
 	public Producto(int id) {
 		this.id=id;
 		
 	}
 	
+	/**
+	 * Constructor con parametros
+	 * @param nombre
+	 * @param precio
+	 * @param id
+	 * @param img
+	 */
 	public Producto(String nombre, Double precio, int id, String img) {
 		
 		this.nombre=nombre;
@@ -43,51 +66,93 @@ public class Producto {
 		this.img=img;
 	}
 
+	
+	/**
+	 * Devuelve el nombre del producto
+	 * @return
+	 */
 	public String getNombre() {
 		return nombre;
 	}
-
+/**
+ * Recibe el nombre del producto y lo modifica. 
+ * @param nombre
+ */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
 	
-
+/**
+ * Devuelve el precio del producto
+ * @return
+ */
 	public Double getPrecio() {
 		return precio;
 	}
 
-
+/**
+ * 
+ * Modifica el precio de un producto
+ * @param precio
+ */
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
 
+	
+	/**
+	 * Obtener ID del producto
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
 
+	
+	/**
+	 * 
+	 * Modificar ID del producto
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	
+	/**
+	 * 
+	 * Obtener imagen de producto
+	 * @return
+	 */
 	public String getImg() {
 		return img;
 	}
 
+	
+	/**
+	 * Modificar imagen de producto
+	 * @param img
+	 */
 	public void setImg(String img) {
 		this.img = img;
 	}
 
-	@Override
-	public String toString() {
-		return "Producto [nombre=" + nombre + ", precio=" + precio + "]";
-	}
-
+	
+	
+	/*
+	 * 
+	 * Devuelve el codigo hash de un producto
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, nombre, precio);
 	}
-
+	
+	/**
+	 * 
+	 * Recibe un obejto, devuelve true si es igual al producto
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

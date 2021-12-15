@@ -286,8 +286,8 @@ public class LoginController {
 	
 	
 	/**
-	 * 
-	 * @return
+	 * Nos muestra el resumen de la factura. Si no hay usuario logado nos manda al login. Si el pedido no tiene articulos lo elimina 
+	 * @return seleccion de pedidos
 	 */
 	@PostMapping("/login/factura/fin")
 	public String finFactura() {
@@ -311,7 +311,12 @@ public class LoginController {
 	
 	
 	
-	
+	/**
+	 * Lista todos los pedidos del usuario. Si no hay usuario logado va al login.
+	 * 
+	 * @param model
+	 * @return pedidos.html
+	 */
 	@GetMapping("/login/pedidos")
 	public String listarPedidos(Model model) {
 		String result = "pedidos";
@@ -333,6 +338,15 @@ public class LoginController {
 		return result;
 	}
 
+	
+	/**
+	 * 
+	 *  Nos lleva a una pantalla de edicion del pedido concreto, localizado por ID. Si no tiene usuario logado devielve al login
+	 * 
+	 * @param id
+	 * @param model
+	 * @return pagina de editar.
+	 */
 	@GetMapping("/login/editar/{id}")
 	public String editarPedido(@PathVariable int id, Model model) {
 		
@@ -353,6 +367,19 @@ public class LoginController {
 	}
 	
 	
+	/**
+	 * 
+	 * Se recogen los datos del envio y modificas cada producto del envio. Si metes cantidades negativas no las guarda. 
+	 * @param model
+	 * @param nombre
+	 * @param apellidos
+	 * @param direccion
+	 * @param mail
+	 * @param tlf
+	 * @param idEnviado
+	 * @param cantidades
+	 * @return
+	 */
 	@PostMapping("/login/editar/submit")
 	public String editadoPedido(Model model, 
 			 
@@ -385,7 +412,7 @@ public class LoginController {
 			
 			int i=0;
 			for (Entry<Producto, Integer> producto : pedido.getListaProductos().entrySet()) {
-				if(cantidades[i]>0) {producto.setValue(cantidades[i]);}
+				if(cantidades[i]>=0) {producto.setValue(cantidades[i]);}
 				
 				i++;
 			}
@@ -395,6 +422,12 @@ public class LoginController {
 	}
 	
 	
+	/**
+	 * Localiza el pedido por ID y lo elimina. SI no hay usuario logado devuelve al login. 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/login/eliminar/{id}")
 	public String eliminarPedido(@PathVariable int id, Model model) {
 		
@@ -417,7 +450,11 @@ public class LoginController {
 	}
 	
 	
-	
+	/**
+	 * Nos devuelve al login
+	 * @param usuario
+	 * @return login
+	 */
 	@GetMapping({ "/login/resumen", "/login/factura", "/login/factura/fin", "/login/editar/submit"})
 	public String forzarInicio(@ModelAttribute("usuario") Usuario usuario) {
 		
@@ -426,7 +463,10 @@ public class LoginController {
 	}
 	
 	
-	
+	/**
+	 * Invalida sesión y devuelve al login. 
+	 * @return login
+	 */
 	@GetMapping("/login/logout")
 	public String cerrarSesion() {
 		

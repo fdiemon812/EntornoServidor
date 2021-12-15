@@ -38,7 +38,9 @@ public class Pedido {
 	private int tlf;
 	
 
-	
+	/**
+	 * Constructor vacio
+	 */
 	public Pedido() {
 		
 		this.listaProductos = new  HashMap<Producto,Integer>();
@@ -52,7 +54,10 @@ public class Pedido {
 	
 	
 	
-	
+	/**
+	 * Constructor con parametro id
+	 * @param id
+	 */
 	public Pedido(int id) {
 		this.id=id;
 	
@@ -60,7 +65,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Devuelve el coste total del pedido
+	 * @return
+	 */
 	public Double getTotalPedido() {
 		return totalPedido;
 	}
@@ -68,7 +76,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Modifica el coste total del pedido
+	 * @param totalPedido
+	 */
 	public void setTotalPedido(Double totalPedido) {
 		this.totalPedido = totalPedido;
 	}
@@ -80,7 +91,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Devuelve el id del pedido
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
@@ -88,7 +102,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Modifica el id del pedido
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -96,7 +113,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Devuelve la fecha en la que se realizo el pedido
+	 * @return
+	 */
 	public String getFecha() {
 		
 		
@@ -117,7 +137,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Se obtiene el precio del envio
+	 * @return
+	 */
 	public int getPrecioEnvio() {
 		return precioEnvio;
 	}
@@ -125,22 +148,29 @@ public class Pedido {
 	
 	
 	
-	
+	/**
+	 * Modifica el precio del envio
+	 * @param precioEnvio
+	 */
 	public void setPrecioEnvio(int precioEnvio) {
 		this.precioEnvio = precioEnvio;
 	}
 
-
+	
+	/**
+	 * Devuelve la lista de productos de un pedido
+	 * @return HashMap<Producto, Integer>
+	 */
 	public  HashMap<Producto,Integer> getListaProductos() {
 		return listaProductos;
 	}
 
+	
 
-	public void setListaProductos( HashMap<Producto,Integer> listaProductos) {
-		this.listaProductos = listaProductos;
-	}
-
-
+	/**
+	 * Devuelve el nombre del pedido
+	 * @return
+	 */
 	public String getNombre() {
 		return nombre;
 	}
@@ -148,7 +178,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Modifica el nombre del usuario del pedido
+	 * @param nombre
+	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -156,7 +189,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Devuelve los apellidos del usuario del pedido
+	 * @return
+	 */
 	public String getApellidos() {
 		return apellidos;
 	}
@@ -164,15 +200,21 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Modifica el apellido del usuario del pedido
+	 * @param apellidos
+	 */
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
 
 
 
-
-
+	
+	/**
+	 * Obtiene la direccion del pedido
+	 * @return
+	 */
 	public String getDireccion() {
 		return direccion;
 	}
@@ -180,7 +222,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Modifica la dirección del pedido
+	 * @param direccion
+	 */
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
@@ -188,15 +233,21 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Obtiene el mail del usuario del pedido
+	 * @return
+	 */
 	public String getMail() {
 		return mail;
 	}
 
 
 
-
-
+	
+	/**
+	 * Modifica el correo del pedido
+	 * @param mail
+	 */
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
@@ -204,7 +255,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Obtiene el telefono del pedido
+	 * @return
+	 */
 	public int getTlf() {
 		return tlf;
 	}
@@ -212,7 +266,10 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Modifica el telefono del pedido
+	 * @param tlf
+	 */
 	public void setTlf(int tlf) {
 		this.tlf = tlf;
 	}
@@ -221,23 +278,14 @@ public class Pedido {
 
 
 
-	@Override
-	public String toString() {
-		
-		StringBuilder sb = new StringBuilder();
-		
-		for(Map.Entry<Producto, Integer> producto: listaProductos.entrySet()) {
-			
-			sb.append(producto.getKey() + " - "+ producto.getValue());
-		}
-		
-		return sb.toString();
-	}
+	
 
 
 
 
-
+	/**
+	 * Devuelve el codigo hash del pedido
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -246,7 +294,9 @@ public class Pedido {
 
 
 
-
+	/**
+	 * Devuelve true si el pedido recibido es igual 
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

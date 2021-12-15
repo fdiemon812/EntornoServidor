@@ -22,15 +22,33 @@ public class Usuario {
 	private String password;
 	private ArrayList<Pedido> listaPedidos;
 	
+	
+	
+	/**
+	 * Constructor vacio
+	 */
 	public Usuario() {
 		
 	}
 	
+	/**
+	 * Constructor con parametros nickname y contraseña
+	 */
 	public Usuario(String user, String password ) {
 		this.user=user;
 		this.password=password;
 	}
 
+	/**
+	 * 
+	 * @param user
+	 * @param nombre
+	 * @param apellidos
+	 * @param password
+	 * @param direccion
+	 * @param tlf
+	 * @param mail
+	 */
 	public Usuario(String user, String nombre, String apellidos,
 			String password, String direccion, int tlf, String mail) {
 		
