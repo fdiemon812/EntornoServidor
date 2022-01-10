@@ -2,22 +2,39 @@ package com.example.demo.model;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
+@Entity
 public class Empleado {
 	
-	@Min(1)
+	@Id @GeneratedValue
+	//@Min(1)
 	private long id;
+	
+	@Column(nullable=false)
 	@NotEmpty
 	private String nombre;
+	
 	@Email
 	private String email;
+	
 	private String telefono;
 	
 	public Empleado() {}
 	
+	public Empleado(@NotEmpty String nombre, @Email String email, String telefono) {
+		super();
+		this.nombre = nombre;
+		this.email = email;
+		this.telefono = telefono;
+	}
+
 	public Empleado(long id, String nombre, String email, String telefono) {
 		this.id = id;
 		this.nombre = nombre;

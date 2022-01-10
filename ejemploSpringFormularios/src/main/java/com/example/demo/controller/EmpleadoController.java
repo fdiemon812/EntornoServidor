@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.model.Empleado;
-import com.example.demo.service.EmpleadoServiceMemory;
+import com.example.demo.service.EmpleadoService;
 
 @Controller
 public class EmpleadoController {
 	
 	@Autowired
-	private EmpleadoServiceMemory servicio;
+	private EmpleadoService servicio;
 	
 	@GetMapping({"/", "/empleado/list"})
 	public String listado(Model model) {
@@ -56,7 +56,7 @@ public class EmpleadoController {
 	
 	@PostMapping("/empleado/edit/submit")
 	public String editarEmpleadoSubmit(@Valid @ModelAttribute("empleado") Empleado empleado,
-			BindingResult bindingResult) { //Si devuelve true hay errores en la validacion
+			BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "form";
 		} else {
