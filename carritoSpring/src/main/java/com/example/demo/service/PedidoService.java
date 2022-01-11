@@ -16,15 +16,20 @@ import com.example.demo.model.Usuario;
 @Service
 public class PedidoService {
 
-	private ArrayList<Producto> listaProductosDefecto = new ArrayList<Producto>();
+	private ArrayList<Producto> listaProductosDefecto = new ArrayList<>();
 
-
+	/**
+	 * Recibe la posicion de un producto en la BBDD o ID, el pedido donde lo vas a add y la cantidad que quieres add de ese producto.
+	 * @param posicion
+	 * @param pedido
+	 * @param cantidad
+	 */
 	public void addPedido(int posicion, Pedido pedido, int cantidad) {
 		
 			
 			HashMap<Producto, Integer> map= pedido.getListaProductos();
 			
-//			pedido.listaProductos.add(listaProductosDefecto.get(posicion));
+
 			
 			if(map.containsKey(listaProductosDefecto.get(posicion))) {
 				
@@ -40,39 +45,60 @@ public class PedidoService {
 		
 	}
 	
+	/**
+	 * Recibe un pedido y devuelve el precio total. 
+	 * @param pedido
+	 * @return Double precioToptal
+	 */
 	public Double calculaPrecioTotal(Pedido pedido) {
 		Double result=0.0;
 		for (Map.Entry<Producto, Integer> producto : pedido.listaProductos.entrySet()) {
 			
-			result=result+(((Producto) producto.getKey()).getPrecio())*producto.getValue();
+			result=result+(( producto.getKey()).getPrecio())*producto.getValue();
 		}
 		
 		return result;
 		
 	}
 	
-	public Pedido findPedido(int id, Usuario usuario) {
-		Pedido pedido = new Pedido(id);
-		ArrayList<Pedido> listaPedidos = new ArrayList<Pedido>(usuario.getListaPedidos());
-		
-		return  listaPedidos.get(listaPedidos.indexOf(pedido));
-	}
-	
+	/**
+	 *  Recibe un usuario y un id de pedido. Borra el pedido con dicho ID del usuario recibido. 
+	 * @param usuario
+	 * @param id
+	 */
 	public void borrarPedido(Usuario usuario, int id) {
 		Pedido pedido = new Pedido(id);
-		System.out.println(id + "el ID ES");
-		System.out.println(pedido.getId() + " borrado en teoria");
+		
 		
 		usuario.getListaPedidos().remove(pedido);
 		
 	}
 	
+	/**
+	 * Recibe un id de pedido y un usuario. Devuelve el pedido dentro del usuario, con dicho ID.
+	 * @param id
+	 * @param usuario
+	 * @return Pedido
+	 */
+	public Pedido findPedido(int id, Usuario usuario) {
+		Pedido pedido = new Pedido(id);
+		ArrayList<Pedido> listaPedidos = new ArrayList<>(usuario.getListaPedidos());
+		
+		return  listaPedidos.get(listaPedidos.indexOf(pedido));
+	}
 	
+	/**
+	 * Recibe un usuario. Devuelve
+	 * @param usuario
+	 * @return
+	 */
 	public Pedido findPedido(Usuario usuario) {
 		return usuario.getListaPedidos().get(0);
 		
 	}
-	
+	/**
+	 * Inicia una lista de productos por defecto. 
+	 */
 	@PostConstruct
 	public void intiProductos() {
 		listaProductosDefecto.addAll(Arrays.asList(
@@ -81,7 +107,10 @@ public class PedidoService {
 				new Producto("Mordedor-C", 10.0, 2, "/img/pesa3.jpg")));
 	}
 	
-	
+	/**
+	 * Devuelve los productos recogidos en nuestra lista por defecto
+	 * @return
+	 */
 	public ArrayList<Producto> findAll() {
 		
 		return listaProductosDefecto;

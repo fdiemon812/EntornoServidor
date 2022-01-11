@@ -1,16 +1,10 @@
 package com.example.demo.model;
 
-import java.beans.JavaBean;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -22,6 +16,7 @@ public class Pedido {
 	public HashMap<Producto,Integer> listaProductos;
 	private static int contador=0;
 	private int id;
+	@SuppressWarnings("unused")
 	private Date fecha;
 	private int precioEnvio;
 	private Double totalPedido;
@@ -35,7 +30,7 @@ public class Pedido {
 	private String mail;
 	
 	
-	private int tlf;
+	private String tlf;
 	
 
 	/**
@@ -259,7 +254,7 @@ public class Pedido {
 	 * Obtiene el telefono del pedido
 	 * @return
 	 */
-	public int getTlf() {
+	public String getTlf() {
 		return tlf;
 	}
 
@@ -268,10 +263,10 @@ public class Pedido {
 
 	/**
 	 * Modifica el telefono del pedido
-	 * @param tlf
+	 * @param tlf2
 	 */
-	public void setTlf(int tlf) {
-		this.tlf = tlf;
+	public void setTlf(String tlf2) {
+		this.tlf = tlf2;
 	}
 
 

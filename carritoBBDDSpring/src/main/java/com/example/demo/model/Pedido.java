@@ -1,69 +1,35 @@
 package com.example.demo.model;
 
-import java.beans.JavaBean;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 
-@Entity
-@Table(name = "pedidos")
+
 public class Pedido {
 	
-    @ElementCollection
-    @CollectionTable(name="MapaCantidades", joinColumns=@JoinColumn(name="producto"))
-	public Map<Producto,Integer> listaProductos;
+	
+	public ArrayList<Producto> listaProductos;
 	private static int contador=0;
-	
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-    @Column(name = "fecha", nullable = false)
+	@SuppressWarnings("unused")
 	private Date fecha;
-    
-    @Column(name = "precioEnvio", nullable = false)
 	private int precioEnvio;
-    
-    @Column(name = "totalPedido", nullable = false)
 	private Double totalPedido;
 	
-    @Column(name = "nombre", nullable = false)
 	private String nombre;
-    
-    @Column(name = "apellidos", nullable = false)
 	private String apellidos;
 	
-	@NotEmpty
-	private String direccion;
 	
-	@Email(message="Pon un email valido")
-    @Column(name = "mail", nullable = false)
+	private String direccion;
 	private String mail;
 	
-    @Column(name = "tlf", nullable = false)
-	private int tlf;
+	
+	private String tlf;
 	
 
 	/**
@@ -71,7 +37,7 @@ public class Pedido {
 	 */
 	public Pedido() {
 		
-		this.listaProductos = new  HashMap<Producto,Integer>();
+		this.listaProductos = new  ArrayList<Producto>();
 		this.id=contador;
 		contador++;
 		this.fecha=new Date();
@@ -189,8 +155,7 @@ public class Pedido {
 	 * Devuelve la lista de productos de un pedido
 	 * @return HashMap<Producto, Integer>
 	 */
-//	@Column(name = "lista_productos", nullable = false)
-	public  Map<Producto,Integer> getListaProductos() {
+	public  ArrayList<Producto> getListaProductos() {
 		return listaProductos;
 	}
 
@@ -288,7 +253,7 @@ public class Pedido {
 	 * Obtiene el telefono del pedido
 	 * @return
 	 */
-	public int getTlf() {
+	public String getTlf() {
 		return tlf;
 	}
 
@@ -297,10 +262,10 @@ public class Pedido {
 
 	/**
 	 * Modifica el telefono del pedido
-	 * @param tlf
+	 * @param tlf2
 	 */
-	public void setTlf(int tlf) {
-		this.tlf = tlf;
+	public void setTlf(String tlf2) {
+		this.tlf = tlf2;
 	}
 
 

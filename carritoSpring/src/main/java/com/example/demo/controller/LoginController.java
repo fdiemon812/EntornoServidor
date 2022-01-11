@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.Pedido;
@@ -173,16 +171,13 @@ public class LoginController {
 			model.addAttribute("listaProductos", pedService.findAll());
 			model.addAttribute("producto2", new Producto());
 			
-			//CAMBIO ESTO
-			//Pedido pedido = (Pedido) sesion.getAttribute("pedido");
 			
 			
 			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
 			Pedido pedido = pedService.findPedido(userLogado);
 			
 			
-			//NUEVO ESTO
-			//Pedido pedido = new Pedido();
+			
 			if(!bindingResult.hasErrors()) {
 						
 				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
@@ -245,7 +240,7 @@ public class LoginController {
 			@RequestParam(name="apellidos") String apellidos, 
 			@RequestParam(name="direccion") String direccion, 
 			@RequestParam(name="mail") String mail, 
-			@RequestParam(name="tlf") int tlf) {
+			@RequestParam(name="tlf") String tlf) {
 		
 		
 		String result="factura";
@@ -387,7 +382,7 @@ public class LoginController {
 			@RequestParam(name="apellidos") String apellidos, 
 			@RequestParam(name="direccion") String direccion, 
 			@RequestParam(name="mail") String mail, 
-			@RequestParam(name="tlf") int tlf,
+			@RequestParam(name="tlf") String tlf,
 			@RequestParam(name="idEnviado") int idEnviado,
 			@RequestParam(name="cantidades") int[] cantidades){
 		
@@ -401,7 +396,7 @@ public class LoginController {
 		}else {
 		
 	Pedido pedido = pedService.findPedido(idEnviado, (Usuario) sesion.getAttribute("usuario") );
-//		model.addAttribute("pedido", pedido);
+
 		
 			pedido.setNombre(nombre);
 			pedido.setApellidos(apellidos);
@@ -439,7 +434,6 @@ public class LoginController {
 			}else {
 				
 				Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-				System.out.println(userLogado.getNombre());
 				pedService.borrarPedido(userLogado, id);
 			}
 		

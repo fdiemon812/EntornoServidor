@@ -15,11 +15,16 @@ import com.example.demo.model.Usuario;
 public class UsuarioService {
 	
 	
-	private HashSet<Usuario> listaUsuarios = new HashSet<Usuario>();
+	private HashSet<Usuario> listaUsuarios = new HashSet<>();
 	
 	
 	
-	
+	/**
+	 * Recibe un nombreUsuario y Contraseña. Devuelve true si existe ese usuario con esa contraseña
+	 * @param usuario
+	 * @param password
+	 * @return boolean respuesta
+	 */
 	public boolean compruebaUsuario(String usuario, String password) {
 		
 		boolean result=false;
@@ -28,7 +33,7 @@ public class UsuarioService {
 		
 		if(listaUsuarios.contains(user)) {
 			
-			ArrayList<Usuario> listaUsuariosArray = new ArrayList<Usuario>(listaUsuarios);
+			ArrayList<Usuario> listaUsuariosArray = new ArrayList<>(listaUsuarios);
 			
 			Usuario usuarioBD = listaUsuariosArray.get(listaUsuariosArray.indexOf(user));
 			
@@ -49,8 +54,13 @@ public class UsuarioService {
 	
 
 	
+	/**
+	 * Recibe un nombreUsuario. Devuelve el usuario que tenga dicho nombre. Si no existe devuelve null. 
+	 * @param nombreUsuario
+	 * @return
+	 */
 	public Usuario obtenerUsuario(String nombreUsuario) {
-		ArrayList<Usuario> arrayUsuarios = new ArrayList<Usuario>(listaUsuarios);
+		ArrayList<Usuario> arrayUsuarios = new ArrayList<>(listaUsuarios);
 		
 
 		Usuario result = null;

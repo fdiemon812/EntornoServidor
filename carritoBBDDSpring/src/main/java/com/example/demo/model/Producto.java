@@ -2,32 +2,15 @@ package com.example.demo.model;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
-@Entity
-@Table(name="productos")
 public class Producto {
 	
-    @Column(name = "nombre", nullable = false)
+	
 	private String nombre;
-    
-    @Column(name = "precio", nullable = false)
 	private Double precio;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Min(1)
-    @Column(name = "cantidad", nullable = false)
 	private int cantidad;
-	
-    @Column(name = "img", nullable = false)
 	private String img;
 	
 	
