@@ -3,17 +3,34 @@ package com.example.demo.model;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
 	
+	@Id
 	private String user;
+	@Column(name = "nombre", nullable = false)
 	private String nombre;
+	@Column(name = "apellidos", nullable = false)
 	private String apellidos;
+	@Column(name = "direccion", nullable = false)
 	private String direccion;
+	@Column(name = "mail", nullable = false)
 	private String mail;
+	@Column(name = "tlf", nullable = false)
 	private int tlf;
+	@Column(name = "password", nullable = false)
 	private String password;
+	
+	
+	
 	private ArrayList<Pedido> listaPedidos;
 	
 	

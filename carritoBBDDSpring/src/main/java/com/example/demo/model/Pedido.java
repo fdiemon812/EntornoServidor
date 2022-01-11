@@ -5,30 +5,45 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 
-
+@Entity
+@Table(name = "pedidos")
 public class Pedido {
 	
-	
 	public ArrayList<Producto> listaProductos;
+    
 	private static int contador=0;
-	private int id;
-	@SuppressWarnings("unused")
-	private Date fecha;
-	private int precioEnvio;
-	private Double totalPedido;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(name = "fecha", nullable = false)
+	private Date fecha;
+    @Column(name = "precioEnvio", nullable = false)
+	private int precioEnvio;
+    @Column(name = "totalPedido", nullable = false)
+	private Double totalPedido;
+    @Column(name = "nombre", nullable = false)
 	private String nombre;
+    @Column(name = "apellidos", nullable = false)
 	private String apellidos;
 	
-	
+    @Column(name = "direccion", nullable = false)
 	private String direccion;
+    @Column(name = "mail", nullable = false)
 	private String mail;
 	
-	
+    @Column(name = "telefono", nullable = false)
 	private String tlf;
 	
 
