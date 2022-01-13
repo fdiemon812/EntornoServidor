@@ -22,8 +22,9 @@ public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "cantidad", nullable = false)
+	
 	private int cantidad;
+	
 	@Column(name = "img", nullable = false)
 	private String img;
 	

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.model.LineaPedido;
 import com.example.demo.model.Pedido;
 import com.example.demo.model.Producto;
 import com.example.demo.model.Usuario;
@@ -181,7 +182,7 @@ public class LoginController {
 			
 			
 			if(!bindingResult.hasErrors()) {
-						
+						System.out.println("la cantidad add es "+producto.getCantidad());
 				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
 			}
 			
@@ -409,14 +410,25 @@ public class LoginController {
 			
 			int i=0;
 			
-			for (Producto producto: pedido.getListaProductos()) {
+			
+			for (LineaPedido linea : pedido.getListaProductos()) {
 				
 				if(cantidades[i]>=0) {
 					
-					producto.setCantidad(cantidades[i]); 
+					linea.setCantidad(cantidades[i]); 
 					i++;
 				}
-			};
+				
+			}
+			
+//			for (Producto producto: pedido.getListaProductos()) {
+//				
+//				if(cantidades[i]>=0) {
+//					
+//					producto.setCantidad(cantidades[i]); 
+//					i++;
+//				}
+//			};
 			
 			
 //			for (Entry<Producto, Integer> producto : pedido.getListaProductos().entrySet()) {

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -32,7 +33,7 @@ public class Usuario {
 	
 	
 	@OneToMany
-	private ArrayList<Pedido> listaPedidos;
+	private List<Pedido> listaPedidos;
 	
 	
 	
@@ -164,7 +165,7 @@ public class Usuario {
 	 * Devuelve la lista de pedidos de un usuario.
 	 * @return
 	 */
-	public ArrayList<Pedido> getListaPedidos() {
+	public List<Pedido> getListaPedidos() {
 		return listaPedidos;
 	}
 

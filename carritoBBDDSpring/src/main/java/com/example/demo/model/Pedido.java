@@ -3,6 +3,7 @@ package com.example.demo.model;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -21,9 +22,15 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "pedidos")
 public class Pedido {
 	
-	
-	public ArrayList<Producto> listaProductos;
+//	@OneToMany
+//	public List<Producto> listaProductos;
     
+	
+	@OneToMany
+	public List<LineaPedido> listaLineaPedido;
+    
+	
+	
 	private static int contador=0;
 	
 	@Id
@@ -54,7 +61,7 @@ public class Pedido {
 	 */
 	public Pedido() {
 		
-		this.listaProductos = new  ArrayList<Producto>();
+		this.listaLineaPedido = new  ArrayList<LineaPedido>();
 		this.id=contador;
 		contador++;
 		this.fecha=new Date();
@@ -172,8 +179,8 @@ public class Pedido {
 	 * Devuelve la lista de productos de un pedido
 	 * @return HashMap<Producto, Integer>
 	 */
-	public  ArrayList<Producto> getListaProductos() {
-		return listaProductos;
+	public  List<LineaPedido> getListaProductos() {
+		return listaLineaPedido;
 	}
 
 	

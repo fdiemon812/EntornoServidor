@@ -3,12 +3,14 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.LineaPedido;
 import com.example.demo.model.Pedido;
 import com.example.demo.model.Producto;
 import com.example.demo.model.Usuario;
@@ -46,25 +48,47 @@ public class PedidoService {
 		
 		
 		
-		ArrayList<Producto> productos=pedido.getListaProductos();
+//		List<Producto> productos=pedido.getListaProductos();
+//		
+//		if(productos.contains(listaProductosDefecto.get(posicion))) {
+//			
+//			int cantidadOld=productos.get(posicion).getCantidad();
+//			int cantidadNew=cantidadOld+cantidad;
+//			productos.get(posicion).setCantidad(cantidadNew);
+//			
+//		}else {
+//			Producto prod = new Producto(listaProductosDefecto.get(posicion).getNombre(), 
+//					listaProductosDefecto.get(posicion).getPrecio(),
+//					listaProductosDefecto.get(posicion).getId(),
+//					listaProductosDefecto.get(posicion).getImg());
+//				
+//			prod.setCantidad(cantidad);
+//			productos.add(prod);
+//	}
 		
-		if(productos.contains(listaProductosDefecto.get(posicion))) {
+		
+		
+		
+		LineaPedido nuevaLinea= new LineaPedido(listaProductosDefecto.get(posicion), pedido);
+		
+		ArrayList<LineaPedido> lineasPedido=(ArrayList<LineaPedido>) pedido.getListaProductos();
 			
-			int cantidadOld=productos.get(posicion).getCantidad();
-			int cantidadNew=cantidadOld+cantidad;
-			productos.get(posicion).setCantidad(cantidadNew);
+		if(lineasPedido.contains(nuevaLinea)) {
 			
+			int indice=lineasPedido.indexOf(nuevaLinea);
+			int cantidadOld=lineasPedido.get(indice).getCantidad();
+			int cantidadNueva=cantidadOld+cantidad;
+			lineasPedido.get(indice).setCantidad(cantidadNueva);
+			System.out.println("Editando la cantidad es "+ (lineasPedido.get(indice)).getCantidad());
 		}else {
-			Producto prod = new Producto(listaProductosDefecto.get(posicion).getNombre(), 
-					listaProductosDefecto.get(posicion).getPrecio(),
-					listaProductosDefecto.get(posicion).getId(),
-					listaProductosDefecto.get(posicion).getImg());
-				
-			prod.setCantidad(cantidad);
-			productos.add(prod);
+			nuevaLinea.setCantidad(cantidad);
+			lineasPedido.add(nuevaLinea);
+			
+			System.out.println("Creando la cantidad es "+ nuevaLinea.getCantidad());
+
+			
 			
 		}
-		
 	}
 	
 	/**
@@ -76,10 +100,22 @@ public class PedidoService {
 		Double result=0.0;
 		
 		
-		for (Producto producto : pedido.getListaProductos()) {
+		
+		for (LineaPedido linea : pedido.getListaProductos()) {
 			
-			result=result+producto.getPrecio()*producto.getCantidad();
+			result+=(linea.getProducto().getPrecio())*linea.getCantidad();
+			
 		}
+		
+		
+		
+		
+		
+		
+//		for (Producto producto : pedido.getListaProductos()) {
+//			
+//			result=result+producto.getPrecio()*producto.getCantidad();
+//		}
 		
 		
 //		for (Map.Entry<Producto, Integer> producto : pedido.listaProductos.entrySet()) {

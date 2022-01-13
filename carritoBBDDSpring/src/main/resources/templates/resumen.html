@@ -28,11 +28,11 @@
 			
 					</tr>
 				
-					<tr th:each="producto: ${listaPedido}">
+					<tr th:each="linea: ${listaPedido}">
 					
-						<td th:text="${producto.nombre}">Producto</td>
-						<td th:text="${producto.cantidad}">Cantidad</td>
-						<td th:text="${producto.precio}"></td>
+						<td th:text="${linea.producto.nombre}">Producto</td>
+						<td th:text="${linea.cantidad}">Cantidad</td>
+						<td th:text="${linea.producto.precio}"></td>
 						
 						
 			
