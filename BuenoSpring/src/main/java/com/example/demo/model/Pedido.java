@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 
 @Entity
 @Table(name = "pedidos")
@@ -27,32 +30,32 @@ public class Pedido {
     
 	
 	@OneToMany
+	@NotFound(action=NotFoundAction.IGNORE)
 	public List<LineaPedido> listaLineaPedido;
     
 	
 	
-	private static int contador=0;
+	private static int contador=1;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "fecha", nullable = false)
+	@Column(name = "fecha", nullable = true)
 	private Date fecha;
-    @Column(name = "precioEnvio", nullable = false)
+    @Column(name = "precioEnvio", nullable = true)
 	private int precioEnvio;
-    @Column(name = "totalPedido", nullable = false)
+    @Column(name = "totalPedido", nullable = true)
 	private Double totalPedido;
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = true)
 	private String nombre;
-    @Column(name = "apellidos", nullable = false)
+    @Column(name = "apellidos", nullable = true)
 	private String apellidos;
 	
-    @Column(name = "direccion", nullable = false)
+    @Column(name = "direccion", nullable = true)
 	private String direccion;
-    @Column(name = "mail", nullable = false)
+    @Column(name = "mail", nullable = true)
 	private String mail;
 	
-    @Column(name = "telefono", nullable = false)
+    @Column(name = "telefono", nullable = true)
 	private String tlf;
 	
 

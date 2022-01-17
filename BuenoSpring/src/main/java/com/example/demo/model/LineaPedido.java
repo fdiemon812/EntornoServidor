@@ -10,31 +10,60 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name="lineapedido")
-@IdClass(LineaPedidoId.class)
-public class LineaPedido {
+public class LineaPedido{
+//@IdClass(LineaPedidoId.class)
+//public class LineaPedido {
+//	
+//	@Id
+//	@ManyToOne
+//	@NotFound(action=NotFoundAction.IGNORE)
+//	@JoinColumn(name="pedido_id")
+//	private Pedido pedido;
+//	
+//	@Id
+//	@ManyToOne
+//	@NotFound(action=NotFoundAction.IGNORE)
+//	@JoinColumn(name="producto_id")
+//	private Producto producto;
 	
-	@Id
+	
+	
 	@ManyToOne
 	@JoinColumn(name="pedido_id")
 	private Pedido pedido;
 	
-	@Id
+	
 	@ManyToOne
 	@JoinColumn(name="producto_id")
 	private Producto producto;
 	
+	private static int contador=1;
+	
+	@Id
+	private int id;
 	
 	@Column(name = "cantidad", nullable = false)
 	int cantidad=0;
 
 
+	
+	public LineaPedido() {
+		
+		this.id=contador;
+		contador++;
+	};
+	
 	public LineaPedido(Producto producto, Pedido pedido) {
 		
 		this.producto=producto;
 		this.pedido=pedido;
-
+		this.id=contador;
+		contador++;
 	}
 
 

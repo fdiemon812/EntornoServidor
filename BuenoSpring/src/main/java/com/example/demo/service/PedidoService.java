@@ -15,16 +15,25 @@ import com.example.demo.model.LineaPedido;
 import com.example.demo.model.Pedido;
 import com.example.demo.model.Producto;
 import com.example.demo.model.Usuario;
+import com.example.demo.repository.LineaPedidoRepository;
+import com.example.demo.repository.PedidoRepository;
 import com.example.demo.repository.ProductoRepository;
 
 @Service
 public class PedidoService {
 
-	private ArrayList<Producto> listaProductosDefecto = new ArrayList<>();
 
 	
 	@Autowired
 	private ProductoRepository produRepo;
+	
+	@Autowired
+	private PedidoRepository pedidoRepo;
+	
+	@Autowired
+	private LineaPedidoRepository lineaRepo;
+	
+	private ArrayList<Producto> listaProductosDefecto = new ArrayList<>();
 	
 	/**
 	 * Recibe la posicion de un producto en la BBDD o ID, el pedido donde lo vas a 
@@ -36,6 +45,31 @@ public class PedidoService {
 	public void addPedido(int posicion, Pedido pedido, int cantidad) {
 		
 			
+		
+		LineaPedido nuevaLinea= new LineaPedido(produRepo.findAll().get(posicion-1), pedido);
+		
+		ArrayList<LineaPedido> lineasPedido=(ArrayList<LineaPedido>) pedido.getListaProductos();
+			
+		if(lineasPedido.contains(nuevaLinea)) {
+			
+			int indice=lineasPedido.indexOf(nuevaLinea);
+			int cantidadOld=lineasPedido.get(indice).getCantidad();
+			int cantidadNueva=cantidadOld+cantidad;
+			lineasPedido.get(indice).setCantidad(cantidadNueva);
+			System.out.println("Editando la cantidad es "+ (lineasPedido.get(indice)).getCantidad());
+		}else {
+			nuevaLinea.setCantidad(cantidad);
+			lineasPedido.add(nuevaLinea);
+			lineaRepo.save(nuevaLinea);
+			System.out.println("Creando la cantidad es "+ nuevaLinea.getCantidad());
+
+			
+			
+		}
+		
+		
+	}
+		
 //			HashMap<Producto, Integer> map= pedido.getListaProductos();
 //			
 //
@@ -75,27 +109,27 @@ public class PedidoService {
 		
 		
 		
-		LineaPedido nuevaLinea= new LineaPedido(listaProductosDefecto.get(posicion), pedido);
-		
-		ArrayList<LineaPedido> lineasPedido=(ArrayList<LineaPedido>) pedido.getListaProductos();
-			
-		if(lineasPedido.contains(nuevaLinea)) {
-			
-			int indice=lineasPedido.indexOf(nuevaLinea);
-			int cantidadOld=lineasPedido.get(indice).getCantidad();
-			int cantidadNueva=cantidadOld+cantidad;
-			lineasPedido.get(indice).setCantidad(cantidadNueva);
-			System.out.println("Editando la cantidad es "+ (lineasPedido.get(indice)).getCantidad());
-		}else {
-			nuevaLinea.setCantidad(cantidad);
-			lineasPedido.add(nuevaLinea);
-			
-			System.out.println("Creando la cantidad es "+ nuevaLinea.getCantidad());
-
-			
-			
-		}
-	}
+//		LineaPedido nuevaLinea= new LineaPedido(listaProductosDefecto.get(posicion), pedido);
+//		
+//		ArrayList<LineaPedido> lineasPedido=(ArrayList<LineaPedido>) pedido.getListaProductos();
+//			
+//		if(lineasPedido.contains(nuevaLinea)) {
+//			
+//			int indice=lineasPedido.indexOf(nuevaLinea);
+//			int cantidadOld=lineasPedido.get(indice).getCantidad();
+//			int cantidadNueva=cantidadOld+cantidad;
+//			lineasPedido.get(indice).setCantidad(cantidadNueva);
+//			System.out.println("Editando la cantidad es "+ (lineasPedido.get(indice)).getCantidad());
+//		}else {
+//			nuevaLinea.setCantidad(cantidad);
+//			lineasPedido.add(nuevaLinea);
+//			
+//			System.out.println("Creando la cantidad es "+ nuevaLinea.getCantidad());
+//
+//			
+//			
+//		}
+	
 	
 	/**
 	 * Recibe un pedido y devuelve el precio total. 
@@ -190,6 +224,11 @@ public class PedidoService {
 		return listaProductos;
 		
 		
+	}
+	
+	
+	public void savePedido(Pedido pedido) {
+		pedidoRepo.save(pedido);
 	}
 	
 }

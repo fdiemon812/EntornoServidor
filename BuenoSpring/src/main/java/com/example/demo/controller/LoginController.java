@@ -151,7 +151,10 @@ public class LoginController {
 		
 			
 			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-			userLogado.addListaPedidos(new Pedido());
+			Pedido pedido= new Pedido();
+			userLogado.addListaPedidos(pedido);
+			pedService.savePedido(pedido);
+
 		}
 		
 		return result;
@@ -273,6 +276,9 @@ public class LoginController {
 		pedido.setMail(mail);
 		pedido.setTlf(tlf);
 		
+		pedService.savePedido(pedido);
+		userServ.saveUser(userLogado);
+
 		model.addAttribute(pedido);
 		model.addAttribute("total",totalPedido);
 		

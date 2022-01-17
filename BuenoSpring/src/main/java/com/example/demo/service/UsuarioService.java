@@ -167,6 +167,11 @@ public class UsuarioService implements UsuarioServiceInterfaz {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	public Usuario saveUser(Usuario userLogado) {
+		return usuRepo.save(userLogado);
+	}
 	
 	 
 	
