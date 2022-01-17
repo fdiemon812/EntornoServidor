@@ -96,21 +96,20 @@ public class LoginController {
 	@PostMapping("/login/seleccion")
 	public String seleccion(@Valid @ModelAttribute("usuario") Usuario usuario,BindingResult bindingResult, Model model) {
 		
-				
+				System.out.println("entra en post");
 		String result="login";
 		boolean isUser= userServ.compruebaUsuario(usuario.getUser(), usuario.getPassword());
 		
 		if(isUser && !bindingResult.hasErrors()) {
 			
-			Usuario userLogado = userServ.obtenerUsuario(usuario.getUser());
-			
+//			Usuario userLogado = userServ.obtenerUsuario(usuario.getUser());
+			Usuario userLogado = userServ.findById(usuario.getUser());
 			sesion.setAttribute("usuario", userLogado);
 			
 			
 			
-			//NUEVO
 			
-			
+			System.out.println("Entra en que existe el user");
 			
 			
 			result="seleccion";
@@ -134,11 +133,16 @@ public class LoginController {
 	@GetMapping("/login/catalogo")
 	public String catalogoPedidoGet( Model model) {
 		
+		System.out.println("entra en catalogo");
+
 		String result="catalogo";
 																			
 		if(sesion.getAttribute("usuario")==null){
 			sesion.invalidate();
 			result="redirect:/login";
+			
+			System.out.println("redirige al login");
+
 		}else {
 			
 			model.addAttribute("listaProductos", pedService.findAll());
@@ -148,7 +152,6 @@ public class LoginController {
 			
 			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
 			userLogado.addListaPedidos(new Pedido());
-			System.out.println(userLogado.getListaPedidos());
 		}
 		
 		return result;
@@ -165,7 +168,7 @@ public class LoginController {
 	public String catalogoPedido(@Valid @ModelAttribute("producto2") Producto producto, BindingResult bindingResult, Model model) {
 		
 		String result="catalogo";
-																			//CAMBIO ESTO
+																			
 		if(sesion.getAttribute("usuario")==null){
 			sesion.invalidate();
 			result="redirect:/login";

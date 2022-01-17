@@ -8,18 +8,24 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.LineaPedido;
 import com.example.demo.model.Pedido;
 import com.example.demo.model.Producto;
 import com.example.demo.model.Usuario;
+import com.example.demo.repository.ProductoRepository;
 
 @Service
 public class PedidoService {
 
 	private ArrayList<Producto> listaProductosDefecto = new ArrayList<>();
 
+	
+	@Autowired
+	private ProductoRepository produRepo;
+	
 	/**
 	 * Recibe la posicion de un producto en la BBDD o ID, el pedido donde lo vas a 
 	 * add y la cantidad que quieres add de ese producto.
@@ -165,13 +171,13 @@ public class PedidoService {
 	/**
 	 * Inicia una lista de productos por defecto. 
 	 */
-	@PostConstruct
-	public void intiProductos() {
-		listaProductosDefecto.addAll(Arrays.asList(
-				new Producto("Mordedor-A", 20.0, 0, "/img/pesa.jpg"),
-				new Producto("Mordedor-B", 15.0, 1, "/img/pesa2.png"),
-				new Producto("Mordedor-C", 10.0, 2, "/img/pesa3.jpg")));
-	}
+//	@PostConstruct
+//	public void intiProductos() {
+//		listaProductosDefecto.addAll(Arrays.asList(
+//				new Producto("Mordedor-A", 20.0, 0, "/img/pesa.jpg"),
+//				new Producto("Mordedor-B", 15.0, 1, "/img/pesa2.png"),
+//				new Producto("Mordedor-C", 10.0, 2, "/img/pesa3.jpg")));
+//	}
 	
 	/**
 	 * Devuelve los productos recogidos en nuestra lista por defecto
@@ -179,7 +185,9 @@ public class PedidoService {
 	 */
 	public ArrayList<Producto> findAll() {
 		
-		return listaProductosDefecto;
+		ArrayList<Producto> listaProductos = new ArrayList(produRepo.findAll());
+		System.out.println(listaProductos.get(1));
+		return listaProductos;
 		
 		
 	}

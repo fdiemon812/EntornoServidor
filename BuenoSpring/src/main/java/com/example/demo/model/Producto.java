@@ -159,7 +159,7 @@ public class Producto {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, nombre, precio);
+		return Objects.hash(id);
 	}
 	
 	/**
