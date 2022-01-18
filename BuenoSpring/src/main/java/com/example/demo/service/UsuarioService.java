@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
@@ -164,14 +165,22 @@ public class UsuarioService implements UsuarioServiceInterfaz {
 
 	@Override
 	public Usuario edit(Usuario usuario) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
 
 	public Usuario saveUser(Usuario userLogado) {
+		
+		Usuario aux = usuRepo.getById(userLogado.getUser());
+		
+		aux.setListaPedidos(userLogado.getListaPedidos());
+		
 		return usuRepo.save(userLogado);
 	}
+	
+	
 	
 	 
 	

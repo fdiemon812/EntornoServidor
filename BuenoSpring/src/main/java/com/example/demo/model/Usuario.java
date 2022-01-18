@@ -155,6 +155,10 @@ public class Usuario {
 	}
 
 	
+	public void setListaPedidos(List<Pedido> listaPedidos) {
+		this.listaPedidos = listaPedidos;
+	}
+
 	/**
 	 * Reecibe un string y modifica la contraseña 
 	 * @param password

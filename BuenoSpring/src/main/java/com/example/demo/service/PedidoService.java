@@ -177,6 +177,7 @@ public class PedidoService {
 		
 		
 		usuario.getListaPedidos().remove(pedido);
+		deletePedido(id);
 		
 	}
 	
@@ -229,6 +230,10 @@ public class PedidoService {
 	
 	public void savePedido(Pedido pedido) {
 		pedidoRepo.save(pedido);
+	}
+	
+	public void deletePedido(int id) {
+		pedidoRepo.deleteById(id);
 	}
 	
 }

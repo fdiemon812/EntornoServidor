@@ -6,8 +6,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +31,7 @@ public class Pedido {
 //	public List<Producto> listaProductos;
     
 	
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@NotFound(action=NotFoundAction.IGNORE)
 	public List<LineaPedido> listaLineaPedido;
     
