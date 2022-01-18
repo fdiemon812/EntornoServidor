@@ -3,10 +3,15 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +37,9 @@ public class PedidoService {
 	
 	@Autowired
 	private LineaPedidoRepository lineaRepo;
+	
+	@Autowired
+	private UsuarioService usuServ;
 	
 	private ArrayList<Producto> listaProductosDefecto = new ArrayList<>();
 	
@@ -173,11 +181,30 @@ public class PedidoService {
 	 * @param id
 	 */
 	public void borrarPedido(Usuario usuario, int id) {
-		Pedido pedido = new Pedido(id);
+		
+		Pedido pedido = pedidoRepo.getById(id);
 		
 		
 		usuario.getListaPedidos().remove(pedido);
-		deletePedido(id);
+		usuServ.edit(usuario);
+		
+//		Iterator<LineaPedido> it = pedido.getListaProductos().iterator();
+//		
+//		while(it.hasNext()) {
+//			LineaPedido linea = it.next();
+//			lineaRepo.delete(linea);
+//			
+//		pedidoRepo.delete(pedido);
+//		}
+		
+
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "prueba" );
+	     EntityManager entitymanager = emfactory.createEntityManager();
+	     
+	     
+		Query query = entitymanager.createQuery("Delete from pedidos_lista_linea_pedido where pedido_id="+id);
+		Query query2 = entitymanager.createQuery("Delete from lineapedido where pedido_id="+id);
+		Query query3 = entitymanager.createQuery("Delete from pedidos where pedido_id="+id);
 		
 	}
 	
@@ -237,3 +264,28 @@ public class PedidoService {
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

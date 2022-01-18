@@ -19,8 +19,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -30,8 +33,7 @@ public class Pedido {
 //	@OneToMany
 //	public List<Producto> listaProductos;
     
-	
-	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER)
 	@NotFound(action=NotFoundAction.IGNORE)
 	public List<LineaPedido> listaLineaPedido;
     
