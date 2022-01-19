@@ -35,7 +35,7 @@ public class Usuario {
 	private String password;
 	
 	
-	@OneToMany(fetch=FetchType.EAGER)
+	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Pedido> listaPedidos;
 	
 	

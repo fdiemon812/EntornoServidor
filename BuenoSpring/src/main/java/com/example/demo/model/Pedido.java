@@ -33,7 +33,7 @@ public class Pedido {
 //	@OneToMany
 //	public List<Producto> listaProductos;
     
-	@OneToMany(fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL,fetch= FetchType.EAGER, orphanRemoval = true)
 	@NotFound(action=NotFoundAction.IGNORE)
 	public List<LineaPedido> listaLineaPedido;
     

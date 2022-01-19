@@ -184,27 +184,14 @@ public class PedidoService {
 		
 		Pedido pedido = pedidoRepo.getById(id);
 		
-		
+		List<Pedido> pedidos =  usuario.getListaPedidos();
+		int indice= pedidos.indexOf(pedido);
+		pedido.getListaProductos().clear();
 		usuario.getListaPedidos().remove(pedido);
-		usuServ.edit(usuario);
+		usuServ.saveUser(usuario);
 		
-//		Iterator<LineaPedido> it = pedido.getListaProductos().iterator();
-//		
-//		while(it.hasNext()) {
-//			LineaPedido linea = it.next();
-//			lineaRepo.delete(linea);
-//			
-//		pedidoRepo.delete(pedido);
-//		}
 		
 
-		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "prueba" );
-	     EntityManager entitymanager = emfactory.createEntityManager();
-	     
-	     
-		Query query = entitymanager.createQuery("Delete from pedidos_lista_linea_pedido where pedido_id="+id);
-		Query query2 = entitymanager.createQuery("Delete from lineapedido where pedido_id="+id);
-		Query query3 = entitymanager.createQuery("Delete from pedidos where pedido_id="+id);
 		
 	}
 	
@@ -257,6 +244,10 @@ public class PedidoService {
 	
 	public void savePedido(Pedido pedido) {
 		pedidoRepo.save(pedido);
+	}
+	
+	public void editPedido(Pedido pedido) {
+		
 	}
 	
 	public void deletePedido(int id) {

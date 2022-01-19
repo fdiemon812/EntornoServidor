@@ -5,6 +5,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -34,12 +35,12 @@ public class LineaPedido{
 	
 	
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL,fetch= FetchType.EAGER)
 	@JoinColumn(name="pedido_id")
 	private Pedido pedido;
 	
 	
-	@ManyToOne
+	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="producto_id")
 	private Producto producto;
 	
