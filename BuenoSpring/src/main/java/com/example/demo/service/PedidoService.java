@@ -183,14 +183,12 @@ public class PedidoService {
 	public void borrarPedido(Usuario usuario, int id) {
 		
 		Pedido pedido = pedidoRepo.getById(id);
-		
 		List<Pedido> pedidos =  usuario.getListaPedidos();
 		int indice= pedidos.indexOf(pedido);
 		pedido.getListaProductos().clear();
 		usuario.getListaPedidos().remove(pedido);
 		usuServ.saveUser(usuario);
-		
-		
+		pedidoRepo.delete(pedido);
 
 		
 	}

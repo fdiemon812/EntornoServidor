@@ -16,7 +16,7 @@ import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
 
 @Service
-public class UsuarioService implements UsuarioServiceInterfaz {
+public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository usuRepo;
@@ -137,7 +137,7 @@ public class UsuarioService implements UsuarioServiceInterfaz {
 
 
 
-	@Override
+	
 	public Usuario add(Usuario usuario) {
 		return usuRepo.save(usuario);
 		
@@ -146,7 +146,7 @@ public class UsuarioService implements UsuarioServiceInterfaz {
 
 
 
-	@Override
+	
 	public List<Usuario> findAll() {
 		// TODO Auto-generated method stub
 		return null;
@@ -155,7 +155,7 @@ public class UsuarioService implements UsuarioServiceInterfaz {
 
 
 
-	@Override
+	
 	public Usuario findById(String id) {
 		return usuRepo.findById(id).orElse(null);
 	}
@@ -163,12 +163,7 @@ public class UsuarioService implements UsuarioServiceInterfaz {
 
 
 
-	@Override
-	public Usuario edit(Usuario usuario) {
-		
-		
-		return null;
-	}
+	
 
 
 	public Usuario saveUser(Usuario userLogado) {

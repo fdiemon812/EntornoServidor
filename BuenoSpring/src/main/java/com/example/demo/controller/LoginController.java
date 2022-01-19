@@ -133,7 +133,6 @@ public class LoginController {
 	@GetMapping("/login/catalogo")
 	public String catalogoPedidoGet( Model model) {
 		
-		System.out.println("entra en catalogo");
 
 		String result="catalogo";
 																			
@@ -141,7 +140,6 @@ public class LoginController {
 			sesion.invalidate();
 			result="redirect:/login";
 			
-			System.out.println("redirige al login");
 
 		}else {
 			
@@ -334,12 +332,12 @@ public class LoginController {
 			result="redirect:/login";
 		
 		}else {
-			Usuario usuario2 = (Usuario) sesion.getAttribute("usuario");
+			Usuario usuario = (Usuario) sesion.getAttribute("usuario");
 			
 			//NUEVO
 //			List<Pedido> pedidos =
 					
-			Usuario usuario = userServ.findById(usuario2.getUser());
+//			Usuario usuario = userServ.findById(usuario2.getUser());
 					
 //			model.addAttribute("listaPedidos", usuario);
 
@@ -437,6 +435,10 @@ public class LoginController {
 				}
 				
 			}
+			
+			
+			pedService.savePedido(pedido);
+			userServ.saveUser((Usuario) sesion.getAttribute("usuario"));
 			
 //			for (Producto producto: pedido.getListaProductos()) {
 //				
