@@ -334,9 +334,17 @@ public class LoginController {
 			result="redirect:/login";
 		
 		}else {
-			Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+			Usuario usuario2 = (Usuario) sesion.getAttribute("usuario");
 			
+			//NUEVO
+//			List<Pedido> pedidos =
+					
+			Usuario usuario = userServ.findById(usuario2.getUser());
+					
+//			model.addAttribute("listaPedidos", usuario);
+
 			model.addAttribute("listaPedidos", usuario.getListaPedidos());
+					
 			model.addAttribute("usuario", usuario);
 			
 			
