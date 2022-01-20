@@ -102,7 +102,6 @@ public class LoginController {
 		
 		if(isUser && !bindingResult.hasErrors()) {
 			
-//			Usuario userLogado = userServ.obtenerUsuario(usuario.getUser());
 			Usuario userLogado = userServ.findById(usuario.getUser());
 			sesion.setAttribute("usuario", userLogado);
 			
@@ -186,7 +185,6 @@ public class LoginController {
 			
 			
 			if(!bindingResult.hasErrors()) {
-						System.out.println("la cantidad add es "+producto.getCantidad());
 				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
 			}
 			
@@ -217,7 +215,7 @@ public class LoginController {
 		Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
 		Pedido pedido = pedService.findPedido(userLogado);		
 		model.addAttribute("usuario", userLogado);
-		model.addAttribute("listaPedido", pedido.getListaProductos());
+		model.addAttribute("listaPedido", pedido.getListaLineaPedido());
 		model.addAttribute("pedido", pedido);
 		
 		
@@ -262,7 +260,7 @@ public class LoginController {
 		Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
 		Pedido pedido = pedService.findPedido(userLogado);		
 		model.addAttribute("usuario", userLogado);
-		model.addAttribute("listaPedido", pedido.getListaProductos());
+		model.addAttribute("listaPedido", pedido.getListaLineaPedido());
 		model.addAttribute("gastoEnvio",envio);
 		
 		Double totalPedido=pedService.calculaPrecioTotal(pedido)+envio;
@@ -305,7 +303,7 @@ public class LoginController {
 		
 		}
 		
-		if(pedido.getListaProductos().size()==0) {
+		if(pedido.getListaLineaPedido().size()==0) {
 			userLogado.getListaPedidos().remove(0);
 			
 		}
@@ -333,13 +331,7 @@ public class LoginController {
 		
 		}else {
 			Usuario usuario = (Usuario) sesion.getAttribute("usuario");
-			
-			//NUEVO
-//			List<Pedido> pedidos =
-					
-//			Usuario usuario = userServ.findById(usuario2.getUser());
-					
-//			model.addAttribute("listaPedidos", usuario);
+		
 
 			model.addAttribute("listaPedidos", usuario.getListaPedidos());
 					
@@ -426,7 +418,7 @@ public class LoginController {
 			int i=0;
 			
 			
-			for (LineaPedido linea : pedido.getListaProductos()) {
+			for (LineaPedido linea : pedido.getListaLineaPedido()) {
 				
 				if(cantidades[i]>=0) {
 					
@@ -440,21 +432,6 @@ public class LoginController {
 			pedService.savePedido(pedido);
 			userServ.saveUser((Usuario) sesion.getAttribute("usuario"));
 			
-//			for (Producto producto: pedido.getListaProductos()) {
-//				
-//				if(cantidades[i]>=0) {
-//					
-//					producto.setCantidad(cantidades[i]); 
-//					i++;
-//				}
-//			};
-			
-			
-//			for (Entry<Producto, Integer> producto : pedido.getListaProductos().entrySet()) {
-//				if(cantidades[i]>=0) {producto.setValue(cantidades[i]);}
-//				
-//				i++;
-//			}
 		
 		}
 		return result;

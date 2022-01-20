@@ -164,7 +164,7 @@ public class Producto {
 	
 	/**
 	 * 
-	 * Recibe un obejto, devuelve true si es igual al producto
+	 * Recibe un objeto, devuelve true si es igual al producto
 	 */
 	@Override
 	public boolean equals(Object obj) {

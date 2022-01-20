@@ -48,7 +48,7 @@
 				
 					
 					
-					<tr th:each="producto: ${pedido.listaProductos}">
+					<tr th:each="producto: ${pedido.listaLineaPedido}">
 					
 						<td th:text="${producto.producto.nombre}">Producto</td>
 						<td><input type="number" name="cantidades" th:value="${producto.cantidad}"></td>

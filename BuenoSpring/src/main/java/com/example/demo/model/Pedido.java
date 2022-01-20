@@ -186,7 +186,7 @@ public class Pedido {
 	 * Devuelve la lista de productos de un pedido
 	 * @return HashMap<Producto, Integer>
 	 */
-	public  List<LineaPedido> getListaProductos() {
+	public  List<LineaPedido> getListaLineaPedido() {
 		return listaLineaPedido;
 	}
 

@@ -18,21 +18,6 @@ import org.hibernate.annotations.NotFoundAction;
 @Entity
 @Table(name="lineapedido")
 public class LineaPedido{
-//@IdClass(LineaPedidoId.class)
-//public class LineaPedido {
-//	
-//	@Id
-//	@ManyToOne
-//	@NotFound(action=NotFoundAction.IGNORE)
-//	@JoinColumn(name="pedido_id")
-//	private Pedido pedido;
-//	
-//	@Id
-//	@ManyToOne
-//	@NotFound(action=NotFoundAction.IGNORE)
-//	@JoinColumn(name="producto_id")
-//	private Producto producto;
-	
 	
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch= FetchType.EAGER)
@@ -53,13 +38,20 @@ public class LineaPedido{
 	int cantidad=0;
 
 
-	
+	/**
+	 * Constructor vacio
+	 */
 	public LineaPedido() {
 		
 		this.id=contador;
 		contador++;
 	};
 	
+	/**
+	 * Constructor que recibe un poroducto y un pedido
+	 * @param producto
+	 * @param pedido
+	 */
 	public LineaPedido(Producto producto, Pedido pedido) {
 		
 		this.producto=producto;
@@ -68,43 +60,65 @@ public class LineaPedido{
 		contador++;
 	}
 
-
+	/**
+	 * Devuelve el pedido
+	 * @return
+	 */
 	public Pedido getPedido() {
 		return pedido;
 	}
 
-
+	/**
+	 * Modifica el pedido
+	 * @param pedido
+	 */
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
 
-
+	/**
+	 * Devuelve el producto
+	 * @return
+	 */
 	public Producto getProducto() {
 		return producto;
 	}
 
-
+	/**
+	 * Modifica el producto
+	 * @param producto
+	 */
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
 
-
+	/**
+	 * Devuelve la cantidad
+	 * @return
+	 */
 	public int getCantidad() {
 		return cantidad;
 	}
 
-
+	/**
+	 * Modifica la cantidad
+	 * @param cantidad
+	 */
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
 
-
+	/**
+	 * Asigna el codigo hash
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(pedido, producto);
 	}
 
-
+	/**
+	 * Compara dos lineas pedido segun su id. 
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
