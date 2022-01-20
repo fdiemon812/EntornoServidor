@@ -96,7 +96,6 @@ public class LoginController {
 	@PostMapping("/login/seleccion")
 	public String seleccion(@Valid @ModelAttribute("usuario") Usuario usuario,BindingResult bindingResult, Model model) {
 		
-				System.out.println("entra en post");
 		String result="login";
 		boolean isUser= userServ.compruebaUsuario(usuario.getUser(), usuario.getPassword());
 		
@@ -104,12 +103,7 @@ public class LoginController {
 			
 			Usuario userLogado = userServ.findById(usuario.getUser());
 			sesion.setAttribute("usuario", userLogado);
-			
-			
-			
-			
-			System.out.println("Entra en que existe el user");
-			
+						
 			
 			result="seleccion";
 		}
