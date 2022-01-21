@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
 
-import java.util.Iterator;
-import java.util.Map.Entry;
+
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -297,7 +296,7 @@ public class LoginController {
 		
 		}
 		
-		if(pedido.getListaLineaPedido().size()==0) {
+		if(pedido.getListaLineaPedido().isEmpty()) {
 			userLogado.getListaPedidos().remove(0);
 			
 		}

@@ -1,18 +1,7 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -99,7 +88,6 @@ public class PedidoService {
 
 		Pedido pedido = pedidoRepo.getById(id);
 		List<Pedido> pedidos = usuario.getListaPedidos();
-		int indice = pedidos.indexOf(pedido);
 		pedido.getListaLineaPedido().clear();
 		usuario.getListaPedidos().remove(pedido);
 		usuServ.saveUser(usuario);
@@ -141,8 +129,8 @@ public class PedidoService {
 	 */
 	public ArrayList<Producto> findAll() {
 
-		ArrayList<Producto> listaProductos = new ArrayList(produRepo.findAll());
-		return listaProductos;
+		
+		return  (ArrayList<Producto>) produRepo.findAll();
 
 	}
 	/**

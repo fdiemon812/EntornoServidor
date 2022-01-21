@@ -10,28 +10,19 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
 
 
 @Entity
 @Table(name = "pedidos")
 public class Pedido {
 	
-//	@OneToMany
-//	public List<Producto> listaProductos;
+
     
 	@OneToMany(cascade = CascadeType.ALL,fetch= FetchType.EAGER, orphanRemoval = true)
 	@NotFound(action=NotFoundAction.IGNORE)
@@ -68,7 +59,7 @@ public class Pedido {
 	 */
 	public Pedido() {
 		
-		this.listaLineaPedido = new  ArrayList<LineaPedido>();
+		this.listaLineaPedido = new  ArrayList<>();
 		this.id=contador;
 		contador++;
 		this.fecha=new Date();

@@ -7,13 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name="lineapedido")
@@ -45,7 +42,7 @@ public class LineaPedido{
 		
 		this.id=contador;
 		contador++;
-	};
+	}
 	
 	/**
 	 * Constructor que recibe un poroducto y un pedido
