@@ -67,6 +67,21 @@ public class Pedido {
 		
 	}
 	
+	public Pedido(Usuario usuario) {
+		
+		this.listaLineaPedido = new  ArrayList<>();
+		this.id=contador;
+		contador++;
+		this.fecha=new Date();
+		this.nombre=usuario.getNombre();
+		this.apellidos=usuario.getApellidos();
+		this.direccion=usuario.getDireccion();
+		this.mail=usuario.getMail();
+		this.tlf=usuario.getTlf()+"";
+		
+		
+	}
+	
 	
 	
 	

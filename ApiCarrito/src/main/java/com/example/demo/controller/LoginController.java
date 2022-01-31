@@ -468,105 +468,65 @@ public class LoginController {
 	
 	
 	
-	/**
-	 * Recibe en el body un Usuario con user y password. Realiza Login.
-	 * @param usuario
-	 * @return Devuelve true si el login es correctro
-	 */
-	@PostMapping("/login")
-	public Boolean logandose(@Valid @RequestBody Usuario usuario) {
-		
-		boolean isUser= userServ.compruebaUsuario(usuario.getUser(), usuario.getPassword());
-		boolean result=false;
-		if(isUser) {
-			
-			Usuario userLogado = userServ.findById(usuario.getUser());
-			sesion.setAttribute("usuario", userLogado);
-						
-			
-			result=true;
-		}
+	
 
-		return result;
-		
-	}
-	
-	
-	@GetMapping("/sesion")
-	public Usuario usuarioLogado() {
-
-		
-		Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-		return userLogado;
-		
-		
-	}
-	
-	
 	
 	/**
-	 * Crea un pedido vación en el usuario logado. Devuelve el id del pedido si se ha creado correctamente. 
+	 * Crea un pedido vacio en el usuario logado. Devuelve el id del pedido si se ha creado correctamente. 
 	 * @return String
 	 */
-	@GetMapping("/login/nuevopedido")
-	public String crearPedido( ) {
+	@GetMapping("/nuevopedido/{idUsuario}")
+	public String crearPedido(@PathVariable String idUsuario) {
 		
 
 		String result="";
-																			
-		if(sesion.getAttribute("usuario")==null){
-			sesion.invalidate();
-			result="Sesión caducada";
-			
-
-		}else {
 			
 					
-			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-			Pedido pedido= new Pedido();
+			Usuario userLogado = userServ.findById(idUsuario);
+			Pedido pedido= new Pedido(userLogado);
 			result=pedido.getId()+"";
 			userLogado.addListaPedidos(pedido);
-			pedService.savePedido(pedido);
+			userServ.saveUser(userLogado);
 
-		}
+		
 		
 		return result;
 		
 	}
 	
 	
-	/**
-	 * 
-	 * @param producto
-	 * @param bindingResult
-	 * @return
-	 */
-	@PostMapping("/login/addproducto/{idPedido}")
-	public String addProducto(@Valid @RequestBody Producto producto,@PathVariable int idPedido, BindingResult bindingResult) {
-		
-		String result="";
-																			
-		if(sesion.getAttribute("usuario")==null){
-			sesion.invalidate();
-			result="Sesion caducada";
-		}else {
-			
-		
-			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-			Pedido pedido = pedService.findPedido(idPedido, userLogado);
-			
-			
-			
-			if(!bindingResult.hasErrors() && productoService.contains(producto.getId())) {
-				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
-				result="ok";
-			}
-			
-		}
-		
-		return result;
-		
-	}
+//	/**
+//	 * 
+//	 * @param producto
+//	 * @param bindingResult
+//	 * @return
+//	 */
+//	@PostMapping("/login/addproducto/{idPedido}")
+//	public String addProducto(@Valid @RequestBody Producto producto,@PathVariable int idPedido, BindingResult bindingResult) {
+//		
+//		String result="";
+//																			
+//		if(sesion.getAttribute("usuario")==null){
+//			sesion.invalidate();
+//			result="Sesion caducada";
+//		}else {
+//			
+//		
+//			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
+//			Pedido pedido = pedService.findPedido(idPedido, userLogado);
+//			
+//			
+//			
+//			if(!bindingResult.hasErrors() && productoService.contains(producto.getId())) {
+//				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
+//				result="ok";
+//			}
+//			
+//		}
+//		
+//		return result;
+//		
+//	}
 	
 	
 
