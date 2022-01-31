@@ -108,40 +108,7 @@ public class LoginController {
 	
 	
 	
-	/*
-	 * 
-	 * Nos devuelve al catalogo de productos para añadir productos  al carrito.
-	 * Si no hay usuario devuielve al login. 
-	 */
-	@PostMapping("/login/catalogo")
-	public String catalogoPedido(@Valid @ModelAttribute("producto2") Producto producto, BindingResult bindingResult, Model model) {
-		
-		String result="catalogo";
-																			
-		if(sesion.getAttribute("usuario")==null){
-			sesion.invalidate();
-			result="redirect:/login";
-		}else {
-			
-			model.addAttribute("listaProductos", pedService.findAll());
-			model.addAttribute("producto2", new Producto());
-			
-			
-			
-			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-			Pedido pedido = pedService.findPedido(userLogado);
-			
-			
-			
-			if(!bindingResult.hasErrors()) {
-				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
-			}
-			
-		}
-		
-		return result;
-		
-	}
+	
 	
 	
 	/**
@@ -507,7 +474,7 @@ public class LoginController {
 	 * @return Devuelve true si el login es correctro
 	 */
 	@PostMapping("/login")
-	public Boolean seleccion(@Valid @RequestBody Usuario usuario) {
+	public Boolean logandose(@Valid @RequestBody Usuario usuario) {
 		
 		boolean isUser= userServ.compruebaUsuario(usuario.getUser(), usuario.getPassword());
 		boolean result=false;
@@ -538,19 +505,18 @@ public class LoginController {
 	
 	
 	/**
-	 * Nos lleva al catalogo de productos, crea un pedido en el usuario. 
-	 * @param model
-	 * @return catalogo.html. Si no hay usuario devuelve al login. 
+	 * Crea un pedido vación en el usuario logado. Devuelve el id del pedido si se ha creado correctamente. 
+	 * @return String
 	 */
 	@GetMapping("/login/nuevopedido")
-	public String catalogoPedidoGet( ) {
+	public String crearPedido( ) {
 		
 
-		String result="hola";
+		String result="";
 																			
 		if(sesion.getAttribute("usuario")==null){
 			sesion.invalidate();
-			result="adios";
+			result="Sesión caducada";
 			
 
 		}else {
@@ -558,6 +524,7 @@ public class LoginController {
 					
 			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
 			Pedido pedido= new Pedido();
+			result=pedido.getId()+"";
 			userLogado.addListaPedidos(pedido);
 			pedService.savePedido(pedido);
 
@@ -568,6 +535,41 @@ public class LoginController {
 	}
 	
 	
+	/**
+	 * 
+	 * @param producto
+	 * @param bindingResult
+	 * @return
+	 */
+	@PostMapping("/login/addproducto/{idPedido}")
+	public String addProducto(@Valid @RequestBody Producto producto,@PathVariable int idPedido, BindingResult bindingResult) {
+		
+		String result="";
+																			
+		if(sesion.getAttribute("usuario")==null){
+			sesion.invalidate();
+			result="Sesion caducada";
+		}else {
+			
+		
+			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
+			Pedido pedido = pedService.findPedido(idPedido, userLogado);
+			
+			
+			
+			if(!bindingResult.hasErrors() && productoService.contains(producto.getId())) {
+				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
+				result="ok";
+			}
+			
+		}
+		
+		return result;
+		
+	}
+	
+	
+
 	
 	
 }
