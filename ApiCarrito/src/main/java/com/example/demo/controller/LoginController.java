@@ -3,17 +3,15 @@ package com.example.demo.controller;
 
 
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -354,60 +352,25 @@ public class LoginController {
 	}
 	
 	
-	/**
-	 * Localiza el pedido por ID y lo elimina. SI no hay usuario logado devuelve al login. 
-	 * @param id
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/login/eliminar/{id}")
-	public String eliminarPedido(@PathVariable int id, Model model) {
-		
-		String result="redirect:/login/pedidos";
-		
-		if(sesion.getAttribute("usuario")==null){
-			sesion.invalidate();
-			result="redirect:/login";
-			}else {
-				
-				Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-				pedService.borrarPedido(userLogado, id);
-			}
-		
-		
-		
-		
-		return result;
-	}
-	
-	
-	/**
-	 * Nos devuelve al login
-	 * @param usuario
-	 * @return login
-	 */
-	@GetMapping({ "/login/resumen", "/login/factura", "/login/factura/fin", "/login/editar/submit"})
-	public String forzarInicio(@ModelAttribute("usuario") Usuario usuario) {
-		
-		return "redirect:/login";
-		
-	}
-	
-	
-	/**
-	 * Invalida sesión y devuelve al login. 
-	 * @return login
-	 */
-	@GetMapping("/login/logout")
-	public String cerrarSesion() {
-		
-		sesion.invalidate();
-		return "redirect:/login";
-	}
 	
 	
 	
 	
+	
+	
+	
+	
+	
+	
+
+	//A PARTIR DE AQUÍ LOS DE LA API
+	//A PARTIR DE AQUÍ LOS DE LA API
+	//A PARTIR DE AQUÍ LOS DE LA API
+	//A PARTIR DE AQUÍ LOS DE LA API
+	//A PARTIR DE AQUÍ LOS DE LA API
+	//A PARTIR DE AQUÍ LOS DE LA API
+	//A PARTIR DE AQUÍ LOS DE LA API
+	//A PARTIR DE AQUÍ LOS DE LA API
 	//A PARTIR DE AQUÍ LOS DE LA API
 	
 	@GetMapping("/usuarios")
@@ -472,14 +435,15 @@ public class LoginController {
 
 	
 	/**
-	 * Crea un pedido vacio en el usuario logado. Devuelve el id del pedido si se ha creado correctamente. 
+	 * Crea un pedido vacio en el usuario usuario con el id pasado. Devuelve el id del pedido si se ha creado correctamente. 
 	 * @return String
 	 */
 	@GetMapping("/nuevopedido/{idUsuario}")
 	public String crearPedido(@PathVariable String idUsuario) {
 		
-
-		String result="";
+		
+		String result="Usuario no existe";
+		if(userServ.contains(idUsuario)) {
 			
 					
 			Usuario userLogado = userServ.findById(idUsuario);
@@ -487,49 +451,86 @@ public class LoginController {
 			result=pedido.getId()+"";
 			userLogado.addListaPedidos(pedido);
 			userServ.saveUser(userLogado);
-
-		
+		}
 		
 		return result;
 		
 	}
 	
 	
-//	/**
-//	 * 
-//	 * @param producto
-//	 * @param bindingResult
-//	 * @return
-//	 */
-//	@PostMapping("/login/addproducto/{idPedido}")
-//	public String addProducto(@Valid @RequestBody Producto producto,@PathVariable int idPedido, BindingResult bindingResult) {
-//		
-//		String result="";
-//																			
-//		if(sesion.getAttribute("usuario")==null){
-//			sesion.invalidate();
-//			result="Sesion caducada";
-//		}else {
+	@PostMapping("/login/addproducto/{idPedido}")
+	public String addProducto(@RequestBody Producto producto,@PathVariable int idPedido) {
+		
+		String result="Error";
+																			
+	
+			
+		
+			Pedido pedido = pedService.getPedidoById(idPedido);
+			
+			
+			
+			if(productoService.contains(producto.getId()) && producto.getCantidad()>0) {
+				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
+				result="Añadido al pedido "+idPedido+" , el producto: "+producto.getId();
+			
+			
+		}
+		
+		return result;
+		
+	}
+	
+	
+	
+	@GetMapping("/pedido/{idPedido}")
+	public Pedido listarPedido(@PathVariable int idPedido){
+		StringBuilder stringBuilder = new StringBuilder("[");
+		List<LineaPedido> articulos=pedService.getPedidoById(idPedido).getListaLineaPedido();
+		
+//		int i=0;
+//		for (LineaPedido lineaPedido : articulos) {
+//			i++;
+//			stringBuilder.append(""
+//					+ "{"+(char)34+"id_producto"+(char)34+":"+(char)34+lineaPedido.getProducto().getId()+(char)34+", "+
+//					+(char)34+"cantidad"+(char)34+":"+(char)34+lineaPedido.getCantidad()+(char)34+", "+
+//					+(char)34+"id"+(char)34+":"+(char)34+lineaPedido.getId()+(char)34+"} ");
 //			
-//		
-//			Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-//			Pedido pedido = pedService.findPedido(idPedido, userLogado);
-//			
-//			
-//			
-//			if(!bindingResult.hasErrors() && productoService.contains(producto.getId())) {
-//				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
-//				result="ok";
+//			if(i<articulos.size()) {
+//				stringBuilder.append(",");
 //			}
-//			
 //		}
 //		
-//		return result;
+//		stringBuilder.append("]");
+//	
 //		
-//	}
 	
+		Pedido pedido = pedService.getPedidoById(idPedido);
+		
+		
+		return pedido;
+	}
 	
-
+	/**
+	 * Localiza el pedido por ID y lo elimina. SI no hay usuario logado devuelve al login. 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/eliminar/{idUsuario}/{idPedido}")
+	public String eliminarPedido(@PathVariable String idUsuario,@PathVariable int idPedido) {
+		
+		String result="Pedido borrado";
+		
+					
+				pedService.borrarPedido(idUsuario, idPedido);
+				
+		
+		
+		
+		
+		return result;
+	}
 	
 	
 }

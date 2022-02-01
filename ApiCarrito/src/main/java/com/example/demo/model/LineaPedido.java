@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name="lineapedido")
@@ -19,6 +21,7 @@ public class LineaPedido{
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch= FetchType.EAGER)
 	@JoinColumn(name="pedido_id")
+	@JsonBackReference
 	private Pedido pedido;
 	
 	
@@ -103,6 +106,10 @@ public class LineaPedido{
 	 */
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	/**

@@ -41,7 +41,7 @@ public class PedidoService {
 
 		LineaPedido nuevaLinea = new LineaPedido(produRepo.findAll().get(posicion - 1), pedido);
 
-		ArrayList<LineaPedido> lineasPedido = (ArrayList<LineaPedido>) pedido.getListaLineaPedido();
+		List<LineaPedido> lineasPedido =  pedido.getListaLineaPedido();
 
 		if (lineasPedido.contains(nuevaLinea)) {
 
@@ -52,9 +52,8 @@ public class PedidoService {
 		} else {
 			nuevaLinea.setCantidad(cantidad);
 			lineasPedido.add(nuevaLinea);
-			lineaRepo.save(nuevaLinea);
-
 		}
+		pedidoRepo.save(pedido);
 
 	}
 
@@ -84,14 +83,14 @@ public class PedidoService {
 	 * @param usuario
 	 * @param id
 	 */
-	public void borrarPedido(Usuario usuario, int id) {
-
-		Pedido pedido = pedidoRepo.getById(id);
-		List<Pedido> pedidos = usuario.getListaPedidos();
-		pedido.getListaLineaPedido().clear();
+	public void borrarPedido(String idUsuario, int id) {
+		
+		Usuario usuario = usuServ.findById(idUsuario);
+		int posicion = usuario.getListaPedidos().indexOf(new Pedido(id));
+		Pedido pedido =usuario.getListaPedidos().get(posicion);
 		usuario.getListaPedidos().remove(pedido);
 		usuServ.saveUser(usuario);
-		pedidoRepo.delete(pedido);
+//		pedidoRepo.delete(pedido);
 
 	}
 
@@ -142,5 +141,11 @@ public class PedidoService {
 		pedidoRepo.save(pedido);
 	}
 
+	
+	public Pedido getPedidoById(int id) {
+		
+		return pedidoRepo.getById(id);
+		
+	}
 
 }

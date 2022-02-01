@@ -16,8 +16,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "pedidos")
 public class Pedido {
@@ -26,7 +29,8 @@ public class Pedido {
     
 	@OneToMany(cascade = CascadeType.ALL,fetch= FetchType.EAGER, orphanRemoval = true)
 	@NotFound(action=NotFoundAction.IGNORE)
-	public List<LineaPedido> listaLineaPedido;
+	@JsonManagedReference
+	public List<LineaPedido> listaLineaPedido = new ArrayList<LineaPedido>();
     
 	
 	
@@ -59,7 +63,7 @@ public class Pedido {
 	 */
 	public Pedido() {
 		
-		this.listaLineaPedido = new  ArrayList<>();
+//		this.listaLineaPedido = new  ArrayList<>();
 		this.id=contador;
 		contador++;
 		this.fecha=new Date();
@@ -69,7 +73,7 @@ public class Pedido {
 	
 	public Pedido(Usuario usuario) {
 		
-		this.listaLineaPedido = new  ArrayList<>();
+//		this.listaLineaPedido = new  ArrayList<>();
 		this.id=contador;
 		contador++;
 		this.fecha=new Date();
@@ -193,6 +197,8 @@ public class Pedido {
 	 * @return HashMap<Producto, Integer>
 	 */
 	public  List<LineaPedido> getListaLineaPedido() {
+		
+		
 		return listaLineaPedido;
 	}
 
