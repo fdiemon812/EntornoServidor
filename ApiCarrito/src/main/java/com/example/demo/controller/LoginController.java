@@ -71,320 +71,6 @@ public class LoginController {
 	
 	
 	
-	
-	
-	/**
-	 * Nos dirige a la página de inicio o LOGIN e invalida cualquier sesión existente.
-	 * @param model
-	 * @return login.html
-	 */
-//	@GetMapping({"/", "/login"})
-//	public String login(Model model) {
-//		sesion.invalidate();
-//		model.addAttribute("usuario", new Usuario());
-//
-//	return "login";	
-//	}
-//	
-	
-	/**
-	 * Nos manda al menú principal de la aplicación. Si no hay usuario logado nos devuelve al login. 
-	 * @return seleccion.html. Login si no hay usuario logado
-	 */
-//	@GetMapping("/login/seleccion")
-//	public String seleccionGET() {
-//		String result="seleccion";
-//		if(sesion.getAttribute("usuario")==null){
-//			sesion.invalidate();
-//			result="redirect:/login";
-//		
-//		}
-//		
-//		
-//		
-//		
-//		return result;
-//		
-//	}
-	
-
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * Nos muestra un resumen del pedido. Si no hay usuario logado nos devuelve al login
-	 * @param model
-	 * @return
-	 */
-	@PostMapping("/login/resumen")
-	public String resumenPedido(Model model) {
-		
-		
-		String result="resumen";
-		
-		if(sesion.getAttribute("usuario")==null){
-			sesion.invalidate();
-			result="redirect:/login";
-		
-		}else {
-			
-		Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-		Pedido pedido = pedService.findPedido(userLogado);		
-		model.addAttribute("usuario", userLogado);
-		model.addAttribute("listaPedido", pedido.getListaLineaPedido());
-		model.addAttribute("pedido", pedido);
-		
-		
-		}
-		
-		
-		
-		return result;
-	}
-	
-	
-/**
- * Saca la factura del pedido realizado, junto al envio, con todos los datos correspondientes. 
- * @param model
- * @param envio
- * @param nombre
- * @param apellidos
- * @param direccion
- * @param mail
- * @param tlf
- * @return
- */
-	@PostMapping("/login/factura")
-	public String facturaPedido(Model model, 
-			@RequestParam(name="envio") int envio, 
-			@RequestParam(name="nombre") String nombre, 
-			@RequestParam(name="apellidos") String apellidos, 
-			@RequestParam(name="direccion") String direccion, 
-			@RequestParam(name="mail") String mail, 
-			@RequestParam(name="tlf") String tlf) {
-		
-		
-		String result="factura";
-		
-		if(sesion.getAttribute("usuario")==null){
-			sesion.invalidate();
-			result="redirect:/login";
-		
-		}else {
-			
-	
-		Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-		Pedido pedido = pedService.findPedido(userLogado);		
-		model.addAttribute("usuario", userLogado);
-		model.addAttribute("listaPedido", pedido.getListaLineaPedido());
-		model.addAttribute("gastoEnvio",envio);
-		
-		Double totalPedido=pedService.calculaPrecioTotal(pedido)+envio;
-		pedido.setTotalPedido(totalPedido);
-		pedido.setPrecioEnvio(envio);
-		pedido.setNombre(nombre);
-		pedido.setApellidos(apellidos);
-		pedido.setDireccion(direccion);
-		pedido.setMail(mail);
-		pedido.setTlf(tlf);
-		
-		pedService.savePedido(pedido);
-		userServ.saveUser(userLogado);
-
-		model.addAttribute(pedido);
-		model.addAttribute("total",totalPedido);
-		
-		
-		}
-		
-		
-		
-		return result;
-	}
-	
-	
-	
-	/**
-	 * Nos muestra el resumen de la factura. Si no hay usuario logado nos manda al login. Si el pedido no tiene articulos lo elimina 
-	 * @return seleccion de pedidos
-	 */
-	@PostMapping("/login/factura/fin")
-	public String finFactura() {
-		String result="redirect:/login/seleccion";
-		Usuario userLogado = (Usuario) sesion.getAttribute("usuario");
-		Pedido pedido = pedService.findPedido(userLogado);		
-		if(sesion.getAttribute("usuario")==null){
-			sesion.invalidate();
-			result="redirect:/login";
-		
-		}
-		
-		if(pedido.getListaLineaPedido().isEmpty()) {
-			userLogado.getListaPedidos().remove(0);
-			
-		}
-		
-		return result;
-		
-	}
-	
-	
-	
-	/**
-	 * Lista todos los pedidos del usuario. Si no hay usuario logado va al login.
-	 * 
-	 * @param model
-	 * @return pedidos.html
-	 */
-	@GetMapping("/login/pedidos")
-	public String listarPedidos(Model model) {
-		String result = "pedidos";
-		
-		
-		if(sesion.getAttribute("usuario")==null){
-			sesion.invalidate();
-			result="redirect:/login";
-		
-		}else {
-			Usuario usuario = (Usuario) sesion.getAttribute("usuario");
-		
-
-			model.addAttribute("listaPedidos", usuario.getListaPedidos());
-					
-			model.addAttribute("usuario", usuario);
-			
-			
-		}
-		
-		return result;
-	}
-
-	
-	/**
-	 * 
-	 *  Nos lleva a una pantalla de edicion del pedido concreto, localizado por ID. Si no tiene usuario logado devielve al login
-	 * 
-	 * @param id
-	 * @param model
-	 * @return pagina de editar.
-	 */
-	@GetMapping("/login/editar/{id}")
-	public String editarPedido(@PathVariable int id, Model model) {
-		
-		String result="editar";
-		
-		if(sesion.getAttribute("usuario")==null ){
-			sesion.invalidate();
-			result="redirect:/login";
-		
-		}else {
-		
-		Pedido pedido = pedService.findPedido(id, (Usuario) sesion.getAttribute("usuario") );
-		model.addAttribute("pedido", pedido);
-		}
-		
-		
-		return result;
-	}
-	
-	
-	/**
-	 * 
-	 * Se recogen los datos del envio y modificas cada producto del envio. Si metes cantidades negativas no las guarda. 
-	 * @param model
-	 * @param nombre
-	 * @param apellidos
-	 * @param direccion
-	 * @param mail
-	 * @param tlf
-	 * @param idEnviado
-	 * @param cantidades
-	 * @return
-	 */
-	@PostMapping("/login/editar/submit")
-	public String editadoPedido(Model model, 
-			 
-			@RequestParam(name="nombre") String nombre, 
-			@RequestParam(name="apellidos") String apellidos, 
-			@RequestParam(name="direccion") String direccion, 
-			@RequestParam(name="mail") String mail, 
-			@RequestParam(name="tlf") String tlf,
-			@RequestParam(name="idEnviado") int idEnviado,
-			@RequestParam(name="cantidades") int[] cantidades){
-		
-		String result="redirect:/login/pedidos";
-	
-
-		if(sesion.getAttribute("usuario")==null ){
-			sesion.invalidate();
-			result="redirect:/login";
-		
-		}else {
-		
-	Pedido pedido = pedService.findPedido(idEnviado, (Usuario) sesion.getAttribute("usuario") );
-
-		
-			pedido.setNombre(nombre);
-			pedido.setApellidos(apellidos);
-			pedido.setDireccion(direccion);
-			pedido.setMail(mail);
-			pedido.setTlf(tlf);
-			
-			
-			int i=0;
-			
-			
-			for (LineaPedido linea : pedido.getListaLineaPedido()) {
-				
-				if(cantidades[i]>=0) {
-					
-					linea.setCantidad(cantidades[i]); 
-					i++;
-				}
-				
-			}
-			
-			
-			pedService.savePedido(pedido);
-			userServ.saveUser((Usuario) sesion.getAttribute("usuario"));
-			
-		
-		}
-		return result;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	//A PARTIR DE AQUÍ LOS DE LA API
-	//A PARTIR DE AQUÍ LOS DE LA API
-	//A PARTIR DE AQUÍ LOS DE LA API
-	//A PARTIR DE AQUÍ LOS DE LA API
-	//A PARTIR DE AQUÍ LOS DE LA API
-	//A PARTIR DE AQUÍ LOS DE LA API
-	//A PARTIR DE AQUÍ LOS DE LA API
-	//A PARTIR DE AQUÍ LOS DE LA API
-	//A PARTIR DE AQUÍ LOS DE LA API
-	
 	@GetMapping("/usuarios")
 	public ResponseEntity<List<Usuario>> findAllUsuarios(){
 		
@@ -543,13 +229,25 @@ public class LoginController {
 	 * @return
 	 */
 	@DeleteMapping("/eliminar/{idUsuario}/{idPedido}")
-	public String eliminarPedido(@PathVariable String idUsuario,@PathVariable int idPedido) {
+	public String eliminarPedido(@PathVariable String idUsuario,@PathVariable int idPedido) throws Exception{
 		
-		String result="Pedido borrado";
+		String result="Pedido borrado " + idPedido;
 		
-					
-				pedService.borrarPedido(idUsuario, idPedido);
+		
+		
+		if(!userServ.contains(idUsuario)){
+			
+			throw new UsuarioNotFoundException(idUsuario);
+			
+		}else if(!pedService.contains(idPedido)) {
+			
+			throw new PedidoNotFoundException(idPedido);
+			
+		}else {
+			
+			pedService.borrarPedido(idUsuario, idPedido);
 				
+		}
 		
 		
 		
@@ -558,7 +256,7 @@ public class LoginController {
 	}
 	
 	@PutMapping("/editar/{idPedido}")
-	public Pedido editarDatosPedido(@RequestBody DatosUsuarioPedido datos,@PathVariable int idPedido) {
+	public Pedido editarDatosPedido(@RequestBody DatosUsuarioPedido datos,@PathVariable int idPedido) throws Exception {
 		Pedido pedido;
 		
 		if(!pedService.contains(idPedido)) {
@@ -614,12 +312,19 @@ public class LoginController {
 	
 	
 	@DeleteMapping("/eliminar/{idUsuario}/linea/{idLinea}")
-	public String eliminarLineaPedido(@PathVariable String idUsuario, @PathVariable int idLinea) {
+	public String eliminarLineaPedido(@PathVariable String idUsuario, @PathVariable int idLinea) throws Exception {
 		
 
-		
-		
+		if(!userServ.contains(idUsuario)) {
+			throw new UsuarioNotFoundException(idUsuario);
+		}else if(!pedService.containsLinea(idLinea)) {
+			throw new LineaPedidoException(idLinea);
+
+		}	else {
+			
 			pedService.borrarLinea(idUsuario, idLinea);
+		}
+		
 		
 		
 		
@@ -628,11 +333,18 @@ public class LoginController {
 	}
 	
 	@PutMapping("editar/{idUsuario}/linea/{idLinea}")
-	public LineaPedido editarLineaPedido(@RequestBody Producto producto,@PathVariable String idUsuario , @PathVariable int idLinea) {
+	public LineaPedido editarLineaPedido(@RequestBody Producto producto,@PathVariable String idUsuario , @PathVariable int idLinea) throws Exception{
 		
+		
+		if(!userServ.contains(idUsuario)) {
+			throw new UsuarioNotFoundException(idUsuario);
+		}else if(!pedService.containsLinea(idLinea)) {
+			throw new LineaPedidoException(idLinea);
+
+		}	else {
 		Usuario usuario = userServ.findById(idUsuario);
 		
-		
+		}
 		
 		return pedService.editarLinea(idLinea, producto.getId(), producto.getCantidad());
 	}
