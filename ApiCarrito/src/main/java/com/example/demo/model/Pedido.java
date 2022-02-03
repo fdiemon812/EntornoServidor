@@ -346,6 +346,10 @@ public class Pedido {
 		return id == other.id;
 	}
 
+	public void setListaLineasPedidos(List<LineaPedido> listaLineaPedido2) {
+		this.listaLineaPedido=listaLineaPedido2;
+	}
+
 
 	
 

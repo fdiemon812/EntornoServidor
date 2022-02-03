@@ -53,6 +53,7 @@ public class PedidoService {
 			nuevaLinea.setCantidad(cantidad);
 			lineasPedido.add(nuevaLinea);
 		}
+		pedido.setTotalPedido(this.calculaPrecioTotal(pedido));
 		pedidoRepo.save(pedido);
 
 	}
@@ -137,14 +138,67 @@ public class PedidoService {
 	 * Recibe un pedido. Guarda o actualiza un pedido en la BBDD
 	 * @param pedido
 	 */
-	public void savePedido(Pedido pedido) {
+	public Pedido savePedido(Pedido pedido) {
 		pedidoRepo.save(pedido);
+		
+			
+		Pedido aux = pedidoRepo.getById(pedido.getId());
+		aux.setListaLineasPedidos(pedido.getListaLineaPedido());
+		
+		return pedidoRepo.save(pedido);
 	}
 
 	
 	public Pedido getPedidoById(int id) {
 		
 		return pedidoRepo.getById(id);
+		
+	}
+	
+	
+	public boolean contains(int id) {
+
+		return pedidoRepo.existsById(id);
+	}
+
+	public List<Pedido> findAllPedidos() {
+		return pedidoRepo.findAll();
+	}
+	
+	public List<LineaPedido> findAllLineas() {
+		return lineaRepo.findAll();
+	}
+
+	public boolean containsLinea(int idLinea) {
+		return lineaRepo.existsById(idLinea);
+	}
+
+	public LineaPedido getLineaById(int idLinea) {
+		return lineaRepo.getById(idLinea);
+	}
+
+	public void borrarLinea(String idUsuario, int idLinea) {
+		
+		Usuario usuario = usuServ.findById(idUsuario);
+		int idPedido = this.getLineaById(idLinea).getPedido().getId();
+//		
+//		
+//		int posicionPedido = usuario.getListaPedidos().indexOf(new Pedido(idPedido));
+//		Pedido pedido =usuario.getListaPedidos().get(posicionPedido);
+
+		Pedido pedido=getPedidoById(idPedido);
+		
+
+		int posicionLinea = pedido.getListaLineaPedido().indexOf(new LineaPedido(idLinea));
+		
+		
+		LineaPedido linea =pedido.getListaLineaPedido().get(posicionLinea);
+		
+		
+		pedido.getListaLineaPedido().remove(linea);
+		lineaRepo.delete(linea);
+		this.savePedido(pedido);
+//		usuServ.saveUser(usuario);
 		
 	}
 

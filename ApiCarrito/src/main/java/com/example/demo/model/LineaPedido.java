@@ -12,8 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="lineapedido")
 public class LineaPedido{
@@ -25,7 +26,7 @@ public class LineaPedido{
 	private Pedido pedido;
 	
 	
-	@ManyToOne(fetch= FetchType.EAGER)
+	@ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="producto_id")
 	private Producto producto;
 	
@@ -58,6 +59,10 @@ public class LineaPedido{
 		this.pedido=pedido;
 		this.id=contador;
 		contador++;
+	}
+
+	public LineaPedido(int idLinea) {
+		this.id=idLinea;
 	}
 
 	/**
@@ -112,17 +117,11 @@ public class LineaPedido{
 		return id;
 	}
 
-	/**
-	 * Asigna el codigo hash
-	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(pedido, producto);
+		return Objects.hash(id);
 	}
 
-	/**
-	 * Compara dos lineas pedido segun su id. 
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -132,8 +131,10 @@ public class LineaPedido{
 		if (getClass() != obj.getClass())
 			return false;
 		LineaPedido other = (LineaPedido) obj;
-		return Objects.equals(pedido, other.pedido) && Objects.equals(producto, other.producto);
+		return id == other.id;
 	}
+
+	
 
 
 	

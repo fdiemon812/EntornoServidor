@@ -3,21 +3,32 @@ package com.example.demo.controller;
 
 
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exception.ApiError;
+import com.example.demo.exception.PedidoNotFoundException;
+import com.example.demo.exception.LineaPedidoException;
+import com.example.demo.exception.ProductoNotFoundException;
+import com.example.demo.exception.UsuarioNotFoundException;
+import com.example.demo.model.DatosUsuarioPedido;
 import com.example.demo.model.LineaPedido;
 import com.example.demo.model.Pedido;
 import com.example.demo.model.Producto;
@@ -25,6 +36,7 @@ import com.example.demo.model.Usuario;
 import com.example.demo.service.PedidoService;
 import com.example.demo.service.ProductoService;
 import com.example.demo.service.UsuarioService;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 @RestController
 public class LoginController {
@@ -388,13 +400,15 @@ public class LoginController {
 	}
 	
 	@GetMapping("/usuario/{id}")
-	public ResponseEntity<Usuario> getUsuarioById(@PathVariable String id) {
+	public ResponseEntity<Usuario> getUsuarioById(@PathVariable String id) throws Exception{
 
 		ResponseEntity<Usuario> respuesta = ResponseEntity.notFound().build();
 
-		if(userServ.contains(id)) {
+		if(!userServ.contains(id)) {
+			throw new UsuarioNotFoundException(id);
+		}else {
 			Usuario usuario=userServ.findById(id);
-			 respuesta = ResponseEntity.ok(usuario);
+			respuesta = ResponseEntity.ok(usuario);
 		}
 		return respuesta;
 		
@@ -416,11 +430,14 @@ public class LoginController {
 	
 	
 	@GetMapping("/producto/{id}")
-	public ResponseEntity<Producto> getProductoById(@PathVariable Integer id) {
+	public ResponseEntity<Producto> getProductoById(@PathVariable Integer id) throws Exception{
 		
 		ResponseEntity<Producto> respuesta = ResponseEntity.notFound().build();
 
-		if(productoService.contains(id)) {
+		if(!productoService.contains(id)) {
+			
+			throw new ProductoNotFoundException(id);
+		}else {
 			Producto producto=productoService.findById(id);
 			 respuesta = ResponseEntity.ok(producto);
 		}
@@ -438,17 +455,19 @@ public class LoginController {
 	 * Crea un pedido vacio en el usuario usuario con el id pasado. Devuelve el id del pedido si se ha creado correctamente. 
 	 * @return String
 	 */
-	@GetMapping("/nuevopedido/{idUsuario}")
-	public String crearPedido(@PathVariable String idUsuario) {
+	@PostMapping("/nuevopedido/{idUsuario}")
+	public String crearPedido(@PathVariable String idUsuario) throws Exception{
 		
 		
-		String result="Usuario no existe";
-		if(userServ.contains(idUsuario)) {
+		String result="";
+		if(!userServ.contains(idUsuario)) {
 			
-					
+				throw new UsuarioNotFoundException(idUsuario);	
+			
+		}else {
 			Usuario userLogado = userServ.findById(idUsuario);
 			Pedido pedido= new Pedido(userLogado);
-			result=pedido.getId()+"";
+			result=pedido.getId()+" = ID pedido";
 			userLogado.addListaPedidos(pedido);
 			userServ.saveUser(userLogado);
 		}
@@ -459,18 +478,21 @@ public class LoginController {
 	
 	
 	@PostMapping("/login/addproducto/{idPedido}")
-	public String addProducto(@RequestBody Producto producto,@PathVariable int idPedido) {
+	public String addProducto(@RequestBody Producto producto,@PathVariable int idPedido) throws Exception{
 		
-		String result="Error";
+		String result;
 																			
 	
-			
-		
-			Pedido pedido = pedService.getPedidoById(idPedido);
-			
-			
-			
-			if(productoService.contains(producto.getId()) && producto.getCantidad()>0) {
+			if(!pedService.contains(idPedido)) {
+				
+				throw new PedidoNotFoundException(idPedido);
+
+			}else if(!productoService.contains(producto.getId()) || producto.getCantidad()<=0) {
+				
+				throw new ProductoNotFoundException(producto.getId());
+				
+			}else {
+				Pedido pedido = pedService.getPedidoById(idPedido);
 				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
 				result="Añadido al pedido "+idPedido+" , el producto: "+producto.getId();
 			
@@ -484,31 +506,34 @@ public class LoginController {
 	
 	
 	@GetMapping("/pedido/{idPedido}")
-	public Pedido listarPedido(@PathVariable int idPedido){
-		StringBuilder stringBuilder = new StringBuilder("[");
-		List<LineaPedido> articulos=pedService.getPedidoById(idPedido).getListaLineaPedido();
+	public Pedido listarPedido(@PathVariable int idPedido) throws Exception{
 		
-//		int i=0;
-//		for (LineaPedido lineaPedido : articulos) {
-//			i++;
-//			stringBuilder.append(""
-//					+ "{"+(char)34+"id_producto"+(char)34+":"+(char)34+lineaPedido.getProducto().getId()+(char)34+", "+
-//					+(char)34+"cantidad"+(char)34+":"+(char)34+lineaPedido.getCantidad()+(char)34+", "+
-//					+(char)34+"id"+(char)34+":"+(char)34+lineaPedido.getId()+(char)34+"} ");
-//			
-//			if(i<articulos.size()) {
-//				stringBuilder.append(",");
-//			}
-//		}
-//		
-//		stringBuilder.append("]");
-//	
-//		
-	
-		Pedido pedido = pedService.getPedidoById(idPedido);
+		Pedido pedido;
+		if(!pedService.contains(idPedido)) {
+			throw new PedidoNotFoundException(idPedido);
+		}else {
+			
+			pedido = pedService.getPedidoById(idPedido);
+		}
+		
 		
 		
 		return pedido;
+	}
+	
+	
+	@GetMapping("/pedidos")
+	public ResponseEntity<List<Pedido>> findAllPedidos(){
+		
+		List<Pedido> pedidos=pedService.findAllPedidos();
+		
+		ResponseEntity<List<Pedido>> respuesta = ResponseEntity.ok(pedidos);
+		
+		if (pedidos.isEmpty()) {
+			respuesta = ResponseEntity.notFound().build();
+		} 
+		
+		return respuesta;
 	}
 	
 	/**
@@ -517,7 +542,7 @@ public class LoginController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/eliminar/{idUsuario}/{idPedido}")
+	@DeleteMapping("/eliminar/{idUsuario}/{idPedido}")
 	public String eliminarPedido(@PathVariable String idUsuario,@PathVariable int idPedido) {
 		
 		String result="Pedido borrado";
@@ -531,6 +556,136 @@ public class LoginController {
 		
 		return result;
 	}
+	
+	@PutMapping("/editar/{idPedido}")
+	public Pedido editarDatosPedido(@RequestBody DatosUsuarioPedido datos,@PathVariable int idPedido) {
+		Pedido pedido;
+		
+		if(!pedService.contains(idPedido)) {
+			throw new PedidoNotFoundException(idPedido);
+		}else {
+			pedido = pedService.getPedidoById(idPedido);
+			pedido.setApellidos(datos.getApellidos());
+			pedido.setDireccion(datos.getDireccion());
+			pedido.setMail(datos.getMail());
+			pedido.setNombre(datos.getNombre());
+			pedido.setTlf(datos.getTlf());
+			pedService.savePedido(pedido);
+		}
+			
+		
+		return pedido;
+	}
+	
+	
+	
+	
+	@GetMapping("/lineas")
+	public ResponseEntity<List<LineaPedido>> findAllLineas(){
+		
+		List<LineaPedido> lineas=pedService.findAllLineas();
+		
+		ResponseEntity<List<LineaPedido>> respuesta = ResponseEntity.ok(lineas);
+		
+		if (lineas.isEmpty()) {
+			respuesta = ResponseEntity.notFound().build();
+		} 
+		
+		return respuesta;
+	}
+	
+	
+	@GetMapping("/linea/{idLinea}")
+	public LineaPedido listarLinea(@PathVariable int idLinea) throws Exception{
+		
+		LineaPedido linea;
+		if(!pedService.containsLinea(idLinea)) {
+			throw new LineaPedidoException(idLinea);
+		}else {
+			
+			linea = pedService.getLineaById(idLinea);
+		}
+		
+		
+		
+		return linea;
+	}
+	
+	
+	
+	@DeleteMapping("/eliminar/{idUsuario}/linea/{idLinea}")
+	public String eliminarLineaPedido(@PathVariable String idUsuario, @PathVariable int idLinea) {
+		
+//		
+
+//					
+		
+//		LineaPedido linea = 
+//		int idPedido=(pedService.getLineaById(idLinea)).getPedido().getId();
+//		System.out.println(idPedido);
+//		Pedido pedido =pedService.getPedidoById(idPedido);
+//		
+//		System.out.println(pedido.getListaLineaPedido().size() + "el tamaño es");
+//		
+//		int posicion = pedido.getListaLineaPedido().indexOf(new LineaPedido(idLinea));
+//		System.out.println(posicion);
+//		LineaPedido linea= pedido.getListaLineaPedido().get(posicion);
+//		pedido.getListaLineaPedido().remove(linea);
+//		pedService.savePedido(pedido);
+		
+		
+			pedService.borrarLinea(idUsuario, idLinea);
+		
+		
+		
+		
+		return "bieeeen";
+	}
+	
+	
+	
+	
+	/**
+	 * Para cuando existe un error de un JSON mal formado
+	 * @param ex
+	 * @return un json con el estado, fecha, hora y mensaje de la excepción --> ignora la traza de la excepción
+	 */
+	@ExceptionHandler(UsuarioNotFoundException.class)
+	public ResponseEntity<ApiError> UsuarioException(UsuarioNotFoundException userException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+	}
+	
+	@ExceptionHandler(PedidoNotFoundException.class)
+	public ResponseEntity<ApiError> PedidoException(PedidoNotFoundException pedidoException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), pedidoException.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+	}
+	
+	@ExceptionHandler(ProductoNotFoundException.class)
+	public ResponseEntity<ApiError> ProductoException(ProductoNotFoundException productoException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), productoException.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+	}
+	
+	@ExceptionHandler(LineaPedidoException.class)
+	public ResponseEntity<ApiError> LineaPedidoException(LineaPedidoException lineaException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), lineaException.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+	}
+	
+	
+	/**
+	 * Para cuando existe un error de un JSON mal formado
+	 * @param ex
+	 * @return un json con el estado, fecha, hora y mensaje de la excepción --> ignora la traza de la excepción
+	 */
+	@ExceptionHandler(JsonMappingException.class)
+	public ResponseEntity<ApiError> handleJsonMappingException(JsonMappingException jsonException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), jsonException.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+	}
+		
 	
 	
 }
