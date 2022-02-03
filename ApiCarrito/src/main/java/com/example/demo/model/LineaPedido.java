@@ -20,13 +20,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class LineaPedido{
 	
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch= FetchType.EAGER)
+	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="pedido_id")
 	@JsonBackReference
 	private Pedido pedido;
 	
 	
-	@ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch= FetchType.EAGER)
 	@JoinColumn(name="producto_id")
 	private Producto producto;
 	

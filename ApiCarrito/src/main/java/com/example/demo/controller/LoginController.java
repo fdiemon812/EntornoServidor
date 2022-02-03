@@ -70,7 +70,10 @@ public class LoginController {
 	private PedidoService pedService;
 	
 	
-	
+	/**
+	 * Devuelve todos los usuarios
+	 * @return List Usuario
+	 */
 	@GetMapping("/usuarios")
 	public ResponseEntity<List<Usuario>> findAllUsuarios(){
 		
@@ -85,6 +88,12 @@ public class LoginController {
 		return respuesta;
 	}
 	
+	/**
+	 * Devuelve un usuario por la id
+	 * @param id
+	 * @return Usuario
+	 * @throws Exception
+	 */
 	@GetMapping("/usuario/{id}")
 	public ResponseEntity<Usuario> getUsuarioById(@PathVariable String id) throws Exception{
 
@@ -100,6 +109,11 @@ public class LoginController {
 		
 	}
 	
+	
+	/**
+	 * Devlve todos los prodcutos
+	 * @return
+	 */
 	@GetMapping("/productos")
 	public ResponseEntity<List<Producto>> findAllProducto(){
 		
@@ -115,6 +129,13 @@ public class LoginController {
 	}
 	
 	
+	
+	/**
+	 * Devuelve un producto recibiendo su id
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping("/producto/{id}")
 	public ResponseEntity<Producto> getProductoById(@PathVariable Integer id) throws Exception{
 		
@@ -138,7 +159,7 @@ public class LoginController {
 
 	
 	/**
-	 * Crea un pedido vacio en el usuario usuario con el id pasado. Devuelve el id del pedido si se ha creado correctamente. 
+	 * Crea un pedido vacio en el usuario  con el id pasado. Devuelve el id del pedido si se ha creado correctamente. 
 	 * @return String
 	 */
 	@PostMapping("/nuevopedido/{idUsuario}")
@@ -162,7 +183,22 @@ public class LoginController {
 		
 	}
 	
-	
+	/**
+	 * Agrega lineas al pedido. Recibe el producto a añadir y la cantidad en el siguiente formato.
+	 * 
+	 * {
+	**
+	*    	"id":2,
+	*    "cantidad":"3"
+	*}
+	 * 
+	 * 
+	 * 
+	 * @param producto
+	 * @param idPedido
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping("/login/addproducto/{idPedido}")
 	public String addProducto(@RequestBody Producto producto,@PathVariable int idPedido) throws Exception{
 		
@@ -190,7 +226,12 @@ public class LoginController {
 	}
 	
 	
-	
+	/**
+	 * Muestra un pedido por ID
+	 * @param idPedido
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping("/pedido/{idPedido}")
 	public Pedido listarPedido(@PathVariable int idPedido) throws Exception{
 		
@@ -207,7 +248,10 @@ public class LoginController {
 		return pedido;
 	}
 	
-	
+	/**
+	 * Muestra todos los pedidos
+	 * @return
+	 */
 	@GetMapping("/pedidos")
 	public ResponseEntity<List<Pedido>> findAllPedidos(){
 		
@@ -223,7 +267,7 @@ public class LoginController {
 	}
 	
 	/**
-	 * Localiza el pedido por ID y lo elimina. SI no hay usuario logado devuelve al login. 
+	 * Localiza el pedido por ID y lo elimina. 
 	 * @param id
 	 * @param model
 	 * @return
@@ -255,6 +299,13 @@ public class LoginController {
 		return result;
 	}
 	
+	/**
+	 * Edita los datos de un pedido. Los recibe en el cuerpo , formato JSON
+	 * @param datos
+	 * @param idPedido
+	 * @return
+	 * @throws Exception
+	 */
 	@PutMapping("/editar/{idPedido}")
 	public Pedido editarDatosPedido(@RequestBody DatosUsuarioPedido datos,@PathVariable int idPedido) throws Exception {
 		Pedido pedido;
@@ -277,7 +328,10 @@ public class LoginController {
 	
 	
 	
-	
+	/**
+	 * DEvuelve todas las lineas de pedidos
+	 * @return
+	 */
 	@GetMapping("/lineas")
 	public ResponseEntity<List<LineaPedido>> findAllLineas(){
 		
@@ -292,7 +346,12 @@ public class LoginController {
 		return respuesta;
 	}
 	
-	
+	/**
+	 * Devuielve una linea segun el id pasado
+	 * @param idLinea
+	 * @return
+	 * @throws Exception
+	 */
 	@GetMapping("/linea/{idLinea}")
 	public LineaPedido listarLinea(@PathVariable int idLinea) throws Exception{
 		
@@ -310,7 +369,13 @@ public class LoginController {
 	}
 	
 	
-	
+	/**
+	 * Elimina la linea del id pasado y el usuario pasado. 
+	 * @param idUsuario
+	 * @param idLinea
+	 * @return
+	 * @throws Exception
+	 */
 	@DeleteMapping("/eliminar/{idUsuario}/linea/{idLinea}")
 	public String eliminarLineaPedido(@PathVariable String idUsuario, @PathVariable int idLinea) throws Exception {
 		
@@ -331,7 +396,14 @@ public class LoginController {
 		
 		return "Linea borrada "+idLinea;
 	}
-	
+	/**
+	 * Edita la linea del id pasado y el usuario pasado
+	 * @param producto
+	 * @param idUsuario
+	 * @param idLinea
+	 * @return
+	 * @throws Exception
+	 */
 	@PutMapping("editar/{idUsuario}/linea/{idLinea}")
 	public LineaPedido editarLineaPedido(@RequestBody Producto producto,@PathVariable String idUsuario , @PathVariable int idLinea) throws Exception{
 		
@@ -351,28 +423,42 @@ public class LoginController {
 	
 	
 	/**
-	 * Para cuando existe un error de un JSON mal formado
+	 * Gestiona si no existe un usuario buscado
 	 * @param ex
-	 * @return un json con el estado, fecha, hora y mensaje de la excepción --> ignora la traza de la excepción
+	 * @return JSON bien formado
 	 */
 	@ExceptionHandler(UsuarioNotFoundException.class)
 	public ResponseEntity<ApiError> UsuarioException(UsuarioNotFoundException userException) {
 		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 	}
-	
+	/**
+	 * GEstiona si no existe pedido
+	 * @param pedidoException
+	 * @return
+	 */
 	@ExceptionHandler(PedidoNotFoundException.class)
 	public ResponseEntity<ApiError> PedidoException(PedidoNotFoundException pedidoException) {
 		ApiError apiError = new ApiError(LocalDateTime.now(), pedidoException.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 	}
 	
+	/**
+	 * GEstiona si no existe producto
+	 * @param productoException
+	 * @return
+	 */
 	@ExceptionHandler(ProductoNotFoundException.class)
 	public ResponseEntity<ApiError> ProductoException(ProductoNotFoundException productoException) {
 		ApiError apiError = new ApiError(LocalDateTime.now(), productoException.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 	}
 	
+	/**
+	 * Gestiona si no existe linea
+	 * @param lineaException
+	 * @return
+	 */
 	@ExceptionHandler(LineaPedidoException.class)
 	public ResponseEntity<ApiError> LineaPedidoException(LineaPedidoException lineaException) {
 		ApiError apiError = new ApiError(LocalDateTime.now(), lineaException.getMessage());
@@ -383,7 +469,7 @@ public class LoginController {
 	/**
 	 * Para cuando existe un error de un JSON mal formado
 	 * @param ex
-	 * @return un json con el estado, fecha, hora y mensaje de la excepción --> ignora la traza de la excepción
+	 * @return JSON bien formado
 	 */
 	@ExceptionHandler(JsonMappingException.class)
 	public ResponseEntity<ApiError> handleJsonMappingException(JsonMappingException jsonException) {

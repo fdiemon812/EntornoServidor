@@ -91,7 +91,6 @@ public class PedidoService {
 		Pedido pedido =usuario.getListaPedidos().get(posicion);
 		usuario.getListaPedidos().remove(pedido);
 		usuServ.saveUser(usuario);
-//		pedidoRepo.delete(pedido);
 
 	}
 
@@ -148,35 +147,71 @@ public class PedidoService {
 		return pedidoRepo.save(pedido);
 	}
 
-	
+	/**
+	 * Devuelve un pedido pasando ID
+	 * @param id
+	 * @return
+	 */
 	public Pedido getPedidoById(int id) {
 		
 		return pedidoRepo.getById(id);
 		
 	}
 	
-	
+	/**
+	 * Devuelve true si existe en la bbdd ese pedidoi ID
+	 * @param id
+	 * @return
+	 */
 	public boolean contains(int id) {
 
 		return pedidoRepo.existsById(id);
 	}
 
+	/**
+	 * Devuelve todos los pedidos
+	 * @return
+	 */
 	public List<Pedido> findAllPedidos() {
 		return pedidoRepo.findAll();
 	}
 	
+	
+	/**
+	 * Devuelve todas las lineas de pedidos
+	 * 
+	 * @return
+	 */
 	public List<LineaPedido> findAllLineas() {
 		return lineaRepo.findAll();
 	}
 
+	
+	/**
+	 * Devuelve true si contiene la liena en la BBDD
+	 * @param idLinea
+	 * @return
+	 */
 	public boolean containsLinea(int idLinea) {
 		return lineaRepo.existsById(idLinea);
 	}
 
+	
+	/**
+	 * Devuelve una linea segun suy ID
+	 * @param idLinea
+	 * @return
+	 */
 	public LineaPedido getLineaById(int idLinea) {
 		return lineaRepo.getById(idLinea);
 	}
 
+	
+	/**
+	 * Elimina una linea de la bbdd
+	 * @param idUsuario
+	 * @param idLinea
+	 */
 	public void borrarLinea(String idUsuario, int idLinea) {
 		
 		Usuario usuario = usuServ.findById(idUsuario);
@@ -190,7 +225,14 @@ public class PedidoService {
 		this.savePedido(pedido);
 				
 	}
-
+	
+	/**
+	 * Edita una linea de la BBDD
+	 * @param idLinea
+	 * @param idProducto
+	 * @param idCantidad
+	 * @return
+	 */
 	public LineaPedido editarLinea(int idLinea, int idProducto, int idCantidad) {
 		
 		int idPedido = this.getLineaById(idLinea).getPedido().getId();
