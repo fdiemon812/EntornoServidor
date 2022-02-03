@@ -181,25 +181,30 @@ public class PedidoService {
 		
 		Usuario usuario = usuServ.findById(idUsuario);
 		int idPedido = this.getLineaById(idLinea).getPedido().getId();
-//		
-//		
-//		int posicionPedido = usuario.getListaPedidos().indexOf(new Pedido(idPedido));
-//		Pedido pedido =usuario.getListaPedidos().get(posicionPedido);
-
 		Pedido pedido=getPedidoById(idPedido);
-		
-
-		int posicionLinea = pedido.getListaLineaPedido().indexOf(new LineaPedido(idLinea));
-		
-		
+		int posicionLinea = pedido.getListaLineaPedido().indexOf(new LineaPedido(idLinea));	
 		LineaPedido linea =pedido.getListaLineaPedido().get(posicionLinea);
-		
-		
 		pedido.getListaLineaPedido().remove(linea);
 		lineaRepo.delete(linea);
+		pedido.setTotalPedido(this.calculaPrecioTotal(pedido));
 		this.savePedido(pedido);
-//		usuServ.saveUser(usuario);
+				
+	}
+
+	public LineaPedido editarLinea(int idLinea, int idProducto, int idCantidad) {
 		
+		int idPedido = this.getLineaById(idLinea).getPedido().getId();
+		Pedido pedido=getPedidoById(idPedido);
+		int posicionLinea = pedido.getListaLineaPedido().indexOf(new LineaPedido(idLinea));	
+		LineaPedido linea =pedido.getListaLineaPedido().get(posicionLinea);
+		
+		linea.setCantidad(idCantidad);
+		linea.setProducto(produRepo.getById(idProducto));
+		lineaRepo.save(linea);
+		pedido.setTotalPedido(this.calculaPrecioTotal(pedido));
+		this.savePedido(pedido);	
+		
+		return linea;
 	}
 
 }

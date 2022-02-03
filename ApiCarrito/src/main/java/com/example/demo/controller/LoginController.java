@@ -616,22 +616,7 @@ public class LoginController {
 	@DeleteMapping("/eliminar/{idUsuario}/linea/{idLinea}")
 	public String eliminarLineaPedido(@PathVariable String idUsuario, @PathVariable int idLinea) {
 		
-//		
 
-//					
-		
-//		LineaPedido linea = 
-//		int idPedido=(pedService.getLineaById(idLinea)).getPedido().getId();
-//		System.out.println(idPedido);
-//		Pedido pedido =pedService.getPedidoById(idPedido);
-//		
-//		System.out.println(pedido.getListaLineaPedido().size() + "el tamaño es");
-//		
-//		int posicion = pedido.getListaLineaPedido().indexOf(new LineaPedido(idLinea));
-//		System.out.println(posicion);
-//		LineaPedido linea= pedido.getListaLineaPedido().get(posicion);
-//		pedido.getListaLineaPedido().remove(linea);
-//		pedService.savePedido(pedido);
 		
 		
 			pedService.borrarLinea(idUsuario, idLinea);
@@ -639,10 +624,18 @@ public class LoginController {
 		
 		
 		
-		return "bieeeen";
+		return "Linea borrada "+idLinea;
 	}
 	
-	
+	@PutMapping("editar/{idUsuario}/linea/{idLinea}")
+	public LineaPedido editarLineaPedido(@RequestBody Producto producto,@PathVariable String idUsuario , @PathVariable int idLinea) {
+		
+		Usuario usuario = userServ.findById(idUsuario);
+		
+		
+		
+		return pedService.editarLinea(idLinea, producto.getId(), producto.getCantidad());
+	}
 	
 	
 	/**
