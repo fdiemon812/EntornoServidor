@@ -1,26 +1,32 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 import javax.persistence.OneToMany;
 
 @Entity
-public class Tutor {
-
+public class Tutor extends Usuario {
 	
-	public String nombre;
-	public String apellidos;
-	public String dni;
-	public String email;
-	public String tlf;
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Id
-	public int id;
+	
 	
 	@OneToMany
-	public List<Alumno> alumnos;
+	private List<Alumno> alumnos = new ArrayList<>();
+	
+	private String rol;
+
+	
+	public Tutor() {
+		super();
+	}
+	
+	
+	public Tutor(String nombre, String apellidos, String dni, String email, String tlf, String password) {
+		super(nombre, apellidos, dni, email, tlf, password);
+		this.rol="Tutor";
+		
+	}
+	
 }

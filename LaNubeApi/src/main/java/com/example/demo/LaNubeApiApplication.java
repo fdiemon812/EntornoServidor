@@ -1,7 +1,16 @@
 package com.example.demo;
 
+import java.util.Arrays;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.example.demo.model.Profesor;
+import com.example.demo.model.Tutor;
+import com.example.demo.repository.UserRepo;
 
 @SpringBootApplication
 public class LaNubeApiApplication {
@@ -9,5 +18,14 @@ public class LaNubeApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LaNubeApiApplication.class, args);
 	}
+
+
+	@Bean
+	CommandLineRunner iniData (UserRepo usuRepo, PasswordEncoder pass) {
+		return (args) -> {
+			usuRepo.saveAll(Arrays.asList(new Profesor("Admin","Admin","00000000X", "admin@admin.com","666666666",pass.encode("admin"), "admin")));
+		};
+	}
+
 
 }

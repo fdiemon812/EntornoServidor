@@ -12,17 +12,17 @@ import javax.persistence.OneToMany;
 @Entity
 public class Aula {
 	
-	public String nombre;
+	private String nombre;
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	public int id;
+	private int id;
 	
 	@OneToMany
-	public List<Profesor> profesores;
+	private List<Profesor> profesores;
 	
 	@OneToMany
-	public List<Alumno> alumnos;
+	private List<Alumno> alumnos;
 	
 	
 	public String getNombre() {

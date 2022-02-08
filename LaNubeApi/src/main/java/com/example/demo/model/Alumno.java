@@ -11,16 +11,16 @@ import javax.persistence.OneToMany;
 @Entity
 public class Alumno {
 
-	public String nombre;
+	private String nombre;
 	
-	public String apellidos;
+	private String apellidos;
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	public int id;
-	public String dni;
+	private int id;
+	private String dni;
 	
 	@OneToMany
-	public List<Tutor> tutor;
+	private List<Tutor> tutor;
 	
 	
 	

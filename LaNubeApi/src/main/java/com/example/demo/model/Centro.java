@@ -15,15 +15,15 @@ public class Centro {
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	public int id;
+	private int id;
 	
-	public String nombre;
-	public String direccion;
-	public String tlf;
-	public String email;
+	private String nombre;
+	private String direccion;
+	private String tlf;
+	private String email;
 	
 	@OneToMany
-	public List<Aula> aulas;
+	private List<Aula> aulas;
 
 	public Centro(String nombre, String direccion, String tlf, String email, List<Aula> aulas) {
 		super();
