@@ -20,7 +20,10 @@ public class Alumno {
 	private String dni;
 	
 	@OneToMany
-	private List<Tutor> tutor;
+	private List<Tutor> tutores;
+	
+	@OneToMany
+	private List<EstadoAlumno> estados;
 	
 	
 	

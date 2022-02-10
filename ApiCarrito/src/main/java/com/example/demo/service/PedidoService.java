@@ -37,7 +37,7 @@ public class PedidoService {
 	 * @param pedido
 	 * @param cantidad
 	 */
-	public void addPedido(int posicion, Pedido pedido, int cantidad) {
+	public LineaPedido addPedido(int posicion, Pedido pedido, int cantidad) {
 
 		LineaPedido nuevaLinea = new LineaPedido(produRepo.findAll().get(posicion - 1), pedido);
 
@@ -55,7 +55,7 @@ public class PedidoService {
 		}
 		pedido.setTotalPedido(this.calculaPrecioTotal(pedido));
 		pedidoRepo.save(pedido);
-
+		return nuevaLinea;
 	}
 
 	/**

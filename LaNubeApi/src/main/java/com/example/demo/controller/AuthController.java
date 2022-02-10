@@ -21,7 +21,7 @@ import com.example.demo.model.Usuario;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.security.JWTUtil;
 
-@CrossOrigin(origins ="http://localhost:4200") 
+//@CrossOrigin(origins ="http://localhost:4200") 
 @RestController
 public class AuthController {
 
@@ -57,7 +57,7 @@ public class AuthController {
     
     
     
-    @GetMapping("/home/token")
+    @PostMapping("/home/token")
     public boolean compruebaToken(){
     	
     	

@@ -16,8 +16,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.demo.repository.UserRepo;
 
+//@EnableWebSecurity
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired private UserRepo userRepo;
@@ -32,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers("/login/**").permitAll()
-                .antMatchers("/home/**").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/home/token").permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .and()
                 .userDetailsService(uds)

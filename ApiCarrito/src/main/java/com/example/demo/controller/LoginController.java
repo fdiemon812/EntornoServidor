@@ -163,8 +163,9 @@ public class LoginController {
 	 * @return String
 	 */
 	@PostMapping("/nuevopedido/{idUsuario}")
-	public String crearPedido(@PathVariable String idUsuario) throws Exception{
+	public Pedido crearPedido(@PathVariable String idUsuario) throws Exception{
 		
+		Pedido pedido;
 		
 		String result="";
 		if(!userServ.contains(idUsuario)) {
@@ -173,13 +174,13 @@ public class LoginController {
 			
 		}else {
 			Usuario userLogado = userServ.findById(idUsuario);
-			Pedido pedido= new Pedido(userLogado);
+			pedido= new Pedido(userLogado);
 			result=pedido.getId()+" = ID pedido";
 			userLogado.addListaPedidos(pedido);
 			userServ.saveUser(userLogado);
 		}
 		
-		return result;
+		return pedido;
 		
 	}
 	
@@ -200,10 +201,10 @@ public class LoginController {
 	 * @throws Exception
 	 */
 	@PostMapping("/login/addproducto/{idPedido}")
-	public String addProducto(@RequestBody Producto producto,@PathVariable int idPedido) throws Exception{
+	public LineaPedido addProducto(@RequestBody Producto producto,@PathVariable int idPedido) throws Exception{
 		
 		String result;
-																			
+					LineaPedido linea;														
 	
 			if(!pedService.contains(idPedido)) {
 				
@@ -215,13 +216,13 @@ public class LoginController {
 				
 			}else {
 				Pedido pedido = pedService.getPedidoById(idPedido);
-				pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
+			linea=	pedService.addPedido(producto.getId(), pedido, producto.getCantidad());
 				result="Añadido al pedido "+idPedido+" , el producto: "+producto.getId();
 			
 			
 		}
 		
-		return result;
+		return linea;
 		
 	}
 	

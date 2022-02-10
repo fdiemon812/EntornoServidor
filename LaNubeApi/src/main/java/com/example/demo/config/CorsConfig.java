@@ -13,9 +13,34 @@ public class CorsConfig implements WebMvcConfigurer {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("**")
+				
+				registry.addMapping("/login")
 				.allowedOrigins("http://localhost:4200")
-				.allowedHeaders("GET", "POST", "PUT", "DELETE");
+				.allowedHeaders("GET", "POST", "PUT", "DELETE","Content-Type","X-Requested-With",
+						"accept","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
+				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
+				
+				registry.addMapping("/auth/register")
+				.allowedOrigins("http://localhost:4200")
+				.allowedHeaders("GET", "POST", "PUT", "DELETE","Content-Type","X-Requested-With",
+						"accept"
+						,"Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
+				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
+				
+				
+				//ESTE ES PA EL GET
+				registry.addMapping("/coches")
+				.allowedOrigins("http://localhost:4200")
+				.allowedHeaders("GET", "POST", "PUT", "DELETE","Content-Type","X-Requested-With",
+						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
+				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
+				
+				registry.addMapping("/user")
+				.allowedOrigins("http://localhost:4200")
+				.allowedHeaders("GET", "POST", "PUT", "DELETE","Content-Type","X-Requested-With",
+						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
+				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
+				
 			}
 		};
 	}
