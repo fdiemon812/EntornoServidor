@@ -23,7 +23,7 @@ public class JWTUtil {
         Calendar calendar = Calendar.getInstance();
 
               calendar.setTime(new Date());  
-              calendar.add(Calendar.MILLISECOND, 5000);  
+              calendar.add(Calendar.MILLISECOND, 50000000);  
               Date date= calendar.getTime();
     	
         return JWT.create()

@@ -31,10 +31,13 @@ public class LaNubeApiApplication {
 
 	
 	@Bean
-	CommandLineRunner iniData (AlumnoRepo alumnoRepo) {
+	CommandLineRunner iniData2 (AlumnoRepo alumnoRepo) {
 		return (args) -> {
-			alumnoRepo.saveAll(Arrays.asList(new Alumno("nombre1", "apellidos1", "dni1"),
-					new Alumno("aaa", "aa", "aa"),new Alumno("bbb", "bbbb", "bb"),
+			System.out.println("guardando alumnos");
+			alumnoRepo.saveAll(Arrays.asList(
+					new Alumno("nombre1", "apellidos1", "dni1"),
+					new Alumno("aaa", "aa", "aa"),
+					new Alumno("bbb", "bbbb", "bb"),
 					new Alumno("cccc", "ccccc", "ccccc")));
 		};
 	}

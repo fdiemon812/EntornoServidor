@@ -34,6 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/home/token").permitAll()
                 .antMatchers("/alumnos").permitAll()
+                .antMatchers("/alumno").permitAll()
+
+                
 //                .antMatchers("/user/**").hasRole("USER")
                 .and()
                 .userDetailsService(uds)
