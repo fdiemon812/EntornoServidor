@@ -9,6 +9,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @Component
@@ -18,8 +19,16 @@ public class JWTUtil {
     private String secret;
 
     public String generateToken(String email) throws IllegalArgumentException, JWTCreationException {
+    	
+        Calendar calendar = Calendar.getInstance();
+
+              calendar.setTime(new Date());  
+              calendar.add(Calendar.MILLISECOND, 5000);  
+              Date date= calendar.getTime();
+    	
         return JWT.create()
                 .withSubject("User Details")
+                .withExpiresAt(date)
                 .withClaim("email", email)
                 .withIssuedAt(new Date())
                 .withIssuer("YOUR APPLICATION/PROJECT/COMPANY NAME")

@@ -21,7 +21,11 @@ import com.example.demo.model.Usuario;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.security.JWTUtil;
 
-//@CrossOrigin(origins ="http://localhost:4200") 
+/**
+ * Clase que controla el Login y registro de los usuarios
+ * @author estudiante
+ *
+ */
 @RestController
 public class AuthController {
 
@@ -30,6 +34,13 @@ public class AuthController {
     @Autowired private AuthenticationManager authManager;
     @Autowired private PasswordEncoder passwordEncoder;
 
+    
+    
+    /**
+     * Registra un usuario. Recibe un JSON con el usuario.
+     * @param user
+     * @return
+     */
     @PostMapping("/register")
     public Map<String, Object> registerHandler(@RequestBody Usuario user){
         String encodedPass = passwordEncoder.encode(user.getPassword());
@@ -39,6 +50,12 @@ public class AuthController {
         return Collections.singletonMap("jwt_token", token);
     }
 
+    
+    /**
+     * Loga un usuario. Recibe email y contraseña en un JSON. 
+     * @param body
+     * @return
+     */
     @PostMapping("/login")
     public Map<String, Object> loginHandler(@RequestBody LoginCredentials body){
         try {
@@ -57,15 +74,7 @@ public class AuthController {
     
     
     
-    @PostMapping("/home/token")
-    public boolean compruebaToken(){
-    	
-    	
-
-    	
-    return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
-    	
-    }
+    
 
 
 }

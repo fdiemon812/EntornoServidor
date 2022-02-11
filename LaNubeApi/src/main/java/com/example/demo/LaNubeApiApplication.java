@@ -8,8 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.demo.model.Alumno;
 import com.example.demo.model.Profesor;
 import com.example.demo.model.Tutor;
+import com.example.demo.repository.AlumnoRepo;
 import com.example.demo.repository.UserRepo;
 
 @SpringBootApplication
@@ -27,5 +29,14 @@ public class LaNubeApiApplication {
 		};
 	}
 
+	
+	@Bean
+	CommandLineRunner iniData (AlumnoRepo alumnoRepo) {
+		return (args) -> {
+			alumnoRepo.saveAll(Arrays.asList(new Alumno("nombre1", "apellidos1", "dni1"),
+					new Alumno("aaa", "aa", "aa"),new Alumno("bbb", "bbbb", "bb"),
+					new Alumno("cccc", "ccccc", "ccccc")));
+		};
+	}
 
 }
