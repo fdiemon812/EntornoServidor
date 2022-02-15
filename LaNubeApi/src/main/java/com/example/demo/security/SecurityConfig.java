@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home/token").permitAll()
                 .antMatchers("/alumnos").permitAll()
                 .antMatchers("/alumno").permitAll()
+//                .antMatchers("/alumno").hasRole("ADMINISTRADOR")
 
                 
 //                .antMatchers("/user/**").hasRole("USER")

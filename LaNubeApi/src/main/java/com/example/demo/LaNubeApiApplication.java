@@ -25,7 +25,7 @@ public class LaNubeApiApplication {
 	@Bean
 	CommandLineRunner iniData (UserRepo usuRepo, PasswordEncoder pass) {
 		return (args) -> {
-			usuRepo.saveAll(Arrays.asList(new Profesor("Admin","Admin","00000000X", "admin@admin.com","666666666",pass.encode("admin"), "admin")));
+			usuRepo.saveAll(Arrays.asList(new Profesor("Admin","Admin","00000000X", "admin@admin.com","666666666",pass.encode("admin"), "ADMINISTRADOR")));
 		};
 	}
 

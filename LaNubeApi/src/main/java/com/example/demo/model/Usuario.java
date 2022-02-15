@@ -18,7 +18,7 @@ public class Usuario {
 	private String dni;
 	private String email;
 	private String tlf;
-	
+	private String role;
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	
@@ -27,7 +27,7 @@ public class Usuario {
 	private int id;
 	
 	
-	public Usuario(){}; 
+	public Usuario(){		this.role="ADMINISTRADOR";}; 
 	
 	
 	public Usuario(String nombre, String apellidos, String dni, String email, String tlf, String password) {
@@ -38,6 +38,7 @@ public class Usuario {
 		this.email = email;
 		this.tlf = tlf;
 		this.password = password;
+		this.role="ADMINISTRADOR";
 	}
 
 
@@ -103,6 +104,16 @@ public class Usuario {
 
 	public int getId() {
 		return id;
+	}
+
+
+	public String getRole() {
+		return role;
+	}
+
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 

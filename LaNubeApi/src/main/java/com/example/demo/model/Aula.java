@@ -25,6 +25,15 @@ public class Aula {
 	private List<Alumno> alumnos;
 	
 	
+	
+	public Aula(String nombre, List<Profesor> profesores, List<Alumno> alumnos) {
+		super();
+		this.nombre = nombre;
+		this.profesores = profesores;
+		this.alumnos = alumnos;
+	}
+	
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -49,12 +58,7 @@ public class Aula {
 	public void setAlumnos(List<Alumno> alumnos) {
 		this.alumnos = alumnos;
 	}
-	public Aula(String nombre, List<Profesor> profesores, List<Alumno> alumnos) {
-		super();
-		this.nombre = nombre;
-		this.profesores = profesores;
-		this.alumnos = alumnos;
-	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

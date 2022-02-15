@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @Entity
 public class Profesor  extends Usuario{
 
-	private String rol;
 
 	public Profesor() {
 		super();
@@ -19,14 +18,12 @@ public class Profesor  extends Usuario{
 	
 	public Profesor(String nombre, String apellidos, String dni, String email, String tlf, String password) {
 		super(nombre, apellidos, dni, email, tlf, password);
-		this.rol="Profesor";
 		
 	}
 	
 	
 	public Profesor(String nombre, String apellidos, String dni, String email, String tlf, String password, String rol) {
 		super(nombre, apellidos, dni, email, tlf, password);
-		this.rol=rol;
 		
 	}
 	

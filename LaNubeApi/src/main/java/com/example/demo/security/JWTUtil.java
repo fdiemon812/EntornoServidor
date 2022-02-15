@@ -23,12 +23,12 @@ public class JWTUtil {
         Calendar calendar = Calendar.getInstance();
 
               calendar.setTime(new Date());  
-              calendar.add(Calendar.MILLISECOND, 50000000);  
+              calendar.add(Calendar.MILLISECOND, 100000);  
               Date date= calendar.getTime();
     	
         return JWT.create()
                 .withSubject("User Details")
-                .withExpiresAt(date)
+                .withExpiresAt(date)   //Para darle caducidad
                 .withClaim("email", email)
                 .withIssuedAt(new Date())
                 .withIssuer("YOUR APPLICATION/PROJECT/COMPANY NAME")
