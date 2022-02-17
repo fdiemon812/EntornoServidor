@@ -1,13 +1,17 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Aula {
@@ -18,19 +22,28 @@ public class Aula {
 	@Id
 	private int id;
 	
+	@JsonIgnore
 	@OneToMany
 	private List<Profesor> profesores;
 	
+	
+	@JsonIgnore
 	@OneToMany
 	private List<Alumno> alumnos;
 	
+	public Aula() {
+		
+	}
 	
+	public Aula(int id) {
+		this.id=id;
+	}
 	
-	public Aula(String nombre, List<Profesor> profesores, List<Alumno> alumnos) {
+	public Aula(String nombre) {
 		super();
 		this.nombre = nombre;
-		this.profesores = profesores;
-		this.alumnos = alumnos;
+		this.profesores = new ArrayList<Profesor>();
+		this.alumnos = new ArrayList<Alumno>();
 	}
 	
 	

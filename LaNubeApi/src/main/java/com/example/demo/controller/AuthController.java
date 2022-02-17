@@ -73,6 +73,13 @@ public class AuthController {
     }
     
     
+    /**
+	 * Si el token es valido no devuelve nada. Si el token no es válido devuelve error. 
+	 */
+	@GetMapping("/home/token")
+    public void compruebaToken() {}
+	
+	
     
     
 

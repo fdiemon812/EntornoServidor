@@ -22,6 +22,9 @@ public class Tutor extends Usuario {
 		super();
 	}
 	
+	public Tutor(int id) {
+		super();
+	}
 	
 	public Tutor(String nombre, String apellidos, String dni, String email, String tlf, String password) {
 		super(nombre, apellidos, dni, email, tlf, password);
