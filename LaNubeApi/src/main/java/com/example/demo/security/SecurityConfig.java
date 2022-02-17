@@ -33,8 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeHttpRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/home/token").permitAll()
-                .antMatchers("/alumnos").permitAll()
-                .antMatchers("/alumno").permitAll()
+                .antMatchers("/alumno").hasAnyRole("ADMINISTRADOR", "PROFESOR")
 //                .antMatchers("/alumno").hasRole("ADMINISTRADOR")
 
                 

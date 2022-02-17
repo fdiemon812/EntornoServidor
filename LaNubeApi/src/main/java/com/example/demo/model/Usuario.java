@@ -27,10 +27,10 @@ public class Usuario {
 	private int id;
 	
 	
-	public Usuario(){		this.role="ADMINISTRADOR";}; 
+	public Usuario(){		}; 
 	
 	
-	public Usuario(String nombre, String apellidos, String dni, String email, String tlf, String password) {
+	public Usuario(String nombre, String apellidos, String dni, String email, String tlf, String password, String role) {
 	
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -38,7 +38,7 @@ public class Usuario {
 		this.email = email;
 		this.tlf = tlf;
 		this.password = password;
-		this.role="ADMINISTRADOR";
+		this.role=role;
 	}
 
 

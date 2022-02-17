@@ -15,16 +15,18 @@ public class Profesor  extends Usuario{
 		super();
 	}
 	
+	public Profesor(Usuario usuario) {
+		super.setEmail(usuario.getEmail());
+		super.setPassword(usuario.getPassword());
+		super.setRole(usuario.getRole());
+	}
 	
-	public Profesor(String nombre, String apellidos, String dni, String email, String tlf, String password) {
-		super(nombre, apellidos, dni, email, tlf, password);
+	
+	public Profesor(String nombre, String apellidos, String dni, String email, String tlf, String password, String role) {
+		super(nombre, apellidos, dni, email, tlf, password, role);
 		
 	}
 	
 	
-	public Profesor(String nombre, String apellidos, String dni, String email, String tlf, String password, String rol) {
-		super(nombre, apellidos, dni, email, tlf, password);
-		
-	}
 	
 }

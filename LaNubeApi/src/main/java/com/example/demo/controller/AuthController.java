@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.LoginCredentials;
+import com.example.demo.model.Profesor;
+import com.example.demo.model.Tutor;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.security.JWTUtil;
@@ -37,17 +39,32 @@ public class AuthController {
     
     
     /**
-     * Registra un usuario. Recibe un JSON con el usuario.
+     * Registra un usuario. Recibe un JSON con el usuario, password y rol.
      * @param user
      * @return
      */
     @PostMapping("/register")
     public Map<String, Object> registerHandler(@RequestBody Usuario user){
         String encodedPass = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPass);
-        user = userRepo.save(user);
-        String token = jwtUtil.generateToken(user.getEmail());
-        return Collections.singletonMap("jwt_token", token);
+        
+        Map<String, Object> map=null;
+        if(user.getRole().equals("PROFESOR")) {
+        	Profesor profe = (Profesor) user;
+        	profe.setPassword(encodedPass);
+        	profe = userRepo.save(profe);
+             String token = jwtUtil.generateToken(profe.getEmail());
+             map= Collections.singletonMap("jwt_token", token);
+        }else if(user.getRole().equals("TUTOR")){
+        	Tutor tutor = new Tutor( user);
+        	tutor.setPassword(encodedPass);
+        	tutor = userRepo.save(tutor);
+            String token = jwtUtil.generateToken(tutor.getEmail());
+            map= Collections.singletonMap("jwt_token", token);
+        }
+//        user.setPassword(encodedPass);
+//        user = userRepo.save(user);
+//        String token = jwtUtil.generateToken(user.getEmail());
+        return map;
     }
 
     
