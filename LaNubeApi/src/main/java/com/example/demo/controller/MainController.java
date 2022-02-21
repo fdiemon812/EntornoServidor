@@ -103,9 +103,9 @@ public class MainController {
 	 * @param alumno
 	 * @return
 	 */
-	@PutMapping("/aula/{idAula}")
+	@PostMapping("/aula/{idAula}")
 	public ResponseEntity<List<Alumno>>  registrarAulaAlumno(@RequestBody Alumno alumno, @PathVariable int idAula ) throws Exception{
-		
+		System.out.println("hola aula");
 		Aula aula = aulaRepo.getById(idAula);
 				
 		ResponseEntity respuesta = ResponseEntity.ok(aula.getAlumnos());
@@ -118,7 +118,14 @@ public class MainController {
 	}
 	
 	
-	
+//	@GetMapping("/aula/{idAula}")
+//	public ResponseEntity<List<Alumno>>  registrarAulaAlumno2( @PathVariable int idAula ) throws Exception{
+//		
+//		System.out.println("hola aula 2");
+//		
+//		
+//		return null;
+//	}
 	
 	
 	/**

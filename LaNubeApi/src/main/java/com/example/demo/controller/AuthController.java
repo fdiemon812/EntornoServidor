@@ -35,8 +35,11 @@ public class AuthController {
     @Autowired private JWTUtil jwtUtil;
     @Autowired private AuthenticationManager authManager;
     @Autowired private PasswordEncoder passwordEncoder;
-
     
+    
+    private final String PROFESOR ="PROFESOR";
+    private final String ADMINISTRADOR ="ADMINISTRADOR";
+    private final String TUTOR ="TUTOR";
     
     /**
      * Registra un usuario. Recibe un JSON con el usuario, password y rol.
@@ -48,22 +51,20 @@ public class AuthController {
         String encodedPass = passwordEncoder.encode(user.getPassword());
         
         Map<String, Object> map=null;
-        if(user.getRole().equals("PROFESOR")) {
+        if(user.getRole().equals(PROFESOR)) {
         	Profesor profe = new Profesor( user);
         	profe.setPassword(encodedPass);
         	profe = userRepo.save(profe);
              String token = jwtUtil.generateToken(profe.getEmail());
              map= Collections.singletonMap("jwt_token", token);
-        }else if(user.getRole().equals("TUTOR")){
+        }else if(user.getRole().equals(TUTOR)){
         	Tutor tutor = new Tutor( user);
         	tutor.setPassword(encodedPass);
         	tutor = userRepo.save(tutor);
             String token = jwtUtil.generateToken(tutor.getEmail());
             map= Collections.singletonMap("jwt_token", token);
         }
-//        user.setPassword(encodedPass);
-//        user = userRepo.save(user);
-//        String token = jwtUtil.generateToken(user.getEmail());
+
         return map;
     }
 
