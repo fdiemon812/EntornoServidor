@@ -10,12 +10,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exception.ApiError;
 import com.example.demo.model.Alumno;
+import com.example.demo.model.Aula;
+import com.example.demo.model.Tutor;
 import com.example.demo.repository.AlumnoRepo;
+import com.example.demo.repository.AulaRepo;
+import com.example.demo.repository.TutorRepo;
+import com.example.demo.services.AlumnoService;
+import com.example.demo.services.AulaService;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 
@@ -32,6 +39,20 @@ public class MainController {
 	@Autowired
 	private AlumnoRepo alumnoRepo;
 	
+	@Autowired
+	private TutorRepo tutorRepo;
+	
+	@Autowired
+	private AlumnoService alumnoService;
+	
+	@Autowired
+	private AulaService aulaService;
+	
+	@Autowired
+	private AulaRepo aulaRepo;
+	
+	
+	
 		
 	/**
 	 * Devuelve una lista completa de alumnos en el centro. 
@@ -44,28 +65,57 @@ public class MainController {
 	}
 	
 	/**
-	 * 
+	 * Registra alumnos 
 	 * @param alumno
 	 * @return
 	 */
 	@PostMapping("/alumno")
 	public Alumno  registrarAlumno(@RequestBody Alumno alumno ) {
-		System.out.println("Entrando en registro alumno");
-//		System.out.println(alumno.getAula().getNombre());
-//		System.out.println(alumno.getAula().getId());
 
-		System.out.println(alumno.getApellidos());
 		alumnoRepo.save(alumno);
 		
 		return alumno;
 	}
 	
+	/**
+	 * Agrega un tutor a un alumno
+	 * @param alumno
+	 * @return
+	 */
+	@PutMapping("/alumno/{idAlumno}")
+	public ResponseEntity<List<Alumno>>  registrarTutorAlumno(@RequestBody Tutor tutor, @PathVariable int idAlumno ) throws Exception{
+		
+		Alumno alumno = alumnoRepo.getById(idAlumno);
+				
+		ResponseEntity respuesta = ResponseEntity.ok(alumno.getTutores());
+		
+		alumnoService.addTutor(idAlumno, tutor.getId());
+		
+		
+		
+		return respuesta;
+	}
 	
 	
 	
-	
-	
-	
+	/**
+	 * Agrega un tutor a un alumno
+	 * @param alumno
+	 * @return
+	 */
+	@PutMapping("/aula/{idAula}")
+	public ResponseEntity<List<Alumno>>  registrarAulaAlumno(@RequestBody Alumno alumno, @PathVariable int idAula ) throws Exception{
+		
+		Aula aula = aulaRepo.getById(idAula);
+				
+		ResponseEntity respuesta = ResponseEntity.ok(aula.getAlumnos());
+		
+		aulaService.addAlumno(idAula, alumno.getId());
+		
+		
+		
+		return respuesta;
+	}
 	
 	
 	

@@ -49,7 +49,7 @@ public class AuthController {
         
         Map<String, Object> map=null;
         if(user.getRole().equals("PROFESOR")) {
-        	Profesor profe = (Profesor) user;
+        	Profesor profe = new Profesor( user);
         	profe.setPassword(encodedPass);
         	profe = userRepo.save(profe);
              String token = jwtUtil.generateToken(profe.getEmail());

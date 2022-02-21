@@ -19,6 +19,11 @@ public class Profesor  extends Usuario{
 		super.setEmail(usuario.getEmail());
 		super.setPassword(usuario.getPassword());
 		super.setRole(usuario.getRole());
+		super.setApellidos(usuario.getApellidos());
+		super.setDni(usuario.getDni());
+		super.setTlf(usuario.getTlf());
+		super.setNombre(usuario.getNombre());
+		
 	}
 	
 	
