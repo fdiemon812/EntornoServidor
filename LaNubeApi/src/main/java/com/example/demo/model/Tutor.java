@@ -42,5 +42,11 @@ public class Tutor extends Usuario {
 	}
 	
 	
+	public Tutor(String email) {
+		super();
+		super.setEmail(email);
+	}
+	
+	
 	
 }

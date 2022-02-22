@@ -85,11 +85,20 @@ public class MainController {
 	@PutMapping("/alumno/{idAlumno}")
 	public ResponseEntity<List<Alumno>>  registrarTutorAlumno(@RequestBody Tutor tutor, @PathVariable int idAlumno ) throws Exception{
 		
+		
+		System.out.println(tutor.getEmail());
+		System.out.println(tutor.getDni());
+		System.out.println(tutor.getNombre());
+		
+		Tutor tutor2=tutorRepo.findByEmail(tutor.getEmail());
+		System.out.println(tutor2.getEmail());
+		System.out.println(tutor2.getId());
+
 		Alumno alumno = alumnoRepo.getById(idAlumno);
 				
-		ResponseEntity respuesta = ResponseEntity.ok(alumno.getTutores());
 		
-		alumnoService.addTutor(idAlumno, tutor.getId());
+		alumnoService.addTutor(idAlumno, tutor2.getId());
+		ResponseEntity respuesta = ResponseEntity.ok(alumno.getTutores());
 		
 		
 		
@@ -99,7 +108,7 @@ public class MainController {
 	
 	
 	/**
-	 * Agrega un tutor a un alumno
+	 * Agrega un aula a un alumno
 	 * @param alumno
 	 * @return
 	 */

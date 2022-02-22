@@ -50,6 +50,7 @@ public class AuthController {
     public Map<String, Object> registerHandler(@RequestBody Usuario user){
         String encodedPass = passwordEncoder.encode(user.getPassword());
         
+        
         Map<String, Object> map=null;
         if(user.getRole().equals(PROFESOR)) {
         	Profesor profe = new Profesor( user);
@@ -57,13 +58,16 @@ public class AuthController {
         	profe = userRepo.save(profe);
              String token = jwtUtil.generateToken(profe.getEmail());
              map= Collections.singletonMap("jwt_token", token);
+
         }else if(user.getRole().equals(TUTOR)){
         	Tutor tutor = new Tutor( user);
         	tutor.setPassword(encodedPass);
         	tutor = userRepo.save(tutor);
             String token = jwtUtil.generateToken(tutor.getEmail());
             map= Collections.singletonMap("jwt_token", token);
+            
         }
+        
 
         return map;
     }

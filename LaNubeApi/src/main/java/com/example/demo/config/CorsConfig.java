@@ -16,13 +16,13 @@ public class CorsConfig implements WebMvcConfigurer {
 				
 				registry.addMapping("/login")
 				.allowedOrigins("http://localhost:4200")
-				.allowedHeaders("POST", "Content-Type","X-Requested-With",
+				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH", "Content-Type","X-Requested-With",
 						"accept","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/register")
 				.allowedOrigins("http://localhost:4200")
-				.allowedHeaders("GET","POST","OPTIONS","PUT","Content-Type","X-Requested-With",
+				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
@@ -31,23 +31,32 @@ public class CorsConfig implements WebMvcConfigurer {
 				//Estos comprueban token AUTHORIZATION
 				registry.addMapping("/home/token")
 				.allowedOrigins("http://localhost:4200")
-				.allowedHeaders("GET","Content-Type","X-Requested-With",
+				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				
 				registry.addMapping("/alumno")
 				.allowedOrigins("http://localhost:4200")
-				.allowedHeaders("GET","POST","PUT","Content-Type","X-Requested-With",
+				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
+				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
+				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
+				
+				registry.addMapping("/alumno/{idAlumno}")
+				.allowedOrigins("http://localhost:4200")
+				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
+				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
+						"accept","Authorization","Origin","Access-Control-Request-Method:PUT, OPTIONS","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				
 				
 				registry.addMapping("/aula")
 				.allowedOrigins("http://localhost:4200")
-				.allowedHeaders("GET","POST","OPTIONS","PUT","Content-Type","X-Requested-With",
-						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
+//				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
+				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
+						"accept","Authorization","Origin","Access-Control-Request-Method:PUT, OPTIONS","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				
@@ -55,8 +64,9 @@ public class CorsConfig implements WebMvcConfigurer {
 				
 				registry.addMapping("/aula/{id}")
 				.allowedOrigins("http://localhost:4200")
-				.allowedHeaders("GET","POST","OPTIONS","PUT","Content-Type","X-Requested-With",
-						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
+				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
+				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
+						"accept","Authorization","Origin","Access-Control-Request-Method:PUT, OPTIONS","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				
