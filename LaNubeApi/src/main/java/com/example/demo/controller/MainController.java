@@ -18,9 +18,11 @@ import com.example.demo.exception.ApiError;
 import com.example.demo.model.Alumno;
 import com.example.demo.model.Aula;
 import com.example.demo.model.Tutor;
+import com.example.demo.model.Usuario;
 import com.example.demo.repository.AlumnoRepo;
 import com.example.demo.repository.AulaRepo;
 import com.example.demo.repository.TutorRepo;
+import com.example.demo.repository.UserRepo;
 import com.example.demo.services.AlumnoService;
 import com.example.demo.services.AulaService;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -50,6 +52,9 @@ public class MainController {
 	
 	@Autowired
 	private AulaRepo aulaRepo;
+	
+	@Autowired
+	private UserRepo usuarioRepo;
 	
 	
 	
@@ -112,7 +117,7 @@ public class MainController {
 	 * @param alumno
 	 * @return
 	 */
-	@PostMapping("/aula/{idAula}")
+	@PutMapping("/aula/{idAula}")
 	public ResponseEntity<List<Alumno>>  registrarAulaAlumno(@RequestBody Alumno alumno, @PathVariable int idAula ) throws Exception{
 		System.out.println("hola aula");
 		Aula aula = aulaRepo.getById(idAula);
@@ -127,14 +132,32 @@ public class MainController {
 	}
 	
 	
-//	@GetMapping("/aula/{idAula}")
-//	public ResponseEntity<List<Alumno>>  registrarAulaAlumno2( @PathVariable int idAula ) throws Exception{
-//		
-//		System.out.println("hola aula 2");
-//		
-//		
-//		return null;
-//	}
+	/**
+	 * Devuelve una lista de todas las aulas disponibles. 
+	 * @return
+	 */
+	@GetMapping("/aulas")
+	public List<Aula> obtenerAulas(){
+		return aulaRepo.findAll();
+	}
+	
+	
+	
+	@GetMapping("/usuario")
+	public ResponseEntity<Usuario> obtenerUsuario(String email){
+		
+		ResponseEntity<Usuario> respuesta = ResponseEntity.notFound().build();
+		Usuario usuario=usuarioRepo.findByEmail(email).orElse(null);
+		if(usuario!=null) {
+			
+		respuesta = ResponseEntity.ok(usuario);
+		}
+
+		
+		
+		return respuesta;
+		
+	}
 	
 	
 	/**
@@ -155,17 +178,5 @@ public class MainController {
 	
 }
 	
-//	@GetMapping("/alumno")
-//	public Alumno getAlumno(){
-//		System.out.println(alumnoRepo.getById(1));
-//		return alumnoRepo.getById(1);
-//	}
-//	
-//	
-	
-//	@GetMapping("/alumno/{id}")
-//	public Alumno getAlumno(@PathVariable Integer idAlumno){
-//		System.out.println(alumnoRepo.getById(idAlumno));
-//		return alumnoRepo.getById(idAlumno);
-//	}
+
 
