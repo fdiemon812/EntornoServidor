@@ -28,7 +28,7 @@ public class JWTUtil {
     	
         return JWT.create()
                 .withSubject("User Details")
-                .withExpiresAt(date)   //Para darle caducidad
+//                .withExpiresAt(date)   //Para darle caducidad
                 .withClaim("email", email)
                 .withIssuedAt(new Date())
                 .withIssuer("YOUR APPLICATION/PROJECT/COMPANY NAME")

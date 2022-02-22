@@ -24,9 +24,11 @@ public class AulaService {
 		Aula aula = aulaRepo.getById(idAula);
 		Alumno alumno = alumnoRepo.getById(idAlumno);
 		
+		alumno.setAula(aula);
+		alumnoRepo.save(alumno);
+		
 		aula.getAlumnos().add(alumno);
 		aulaRepo.save(aula);
-		
 		return false;
 		
 		

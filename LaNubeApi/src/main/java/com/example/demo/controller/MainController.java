@@ -144,15 +144,18 @@ public class MainController {
 	
 	
 	@GetMapping("/usuario")
-	public ResponseEntity<Usuario> obtenerUsuario(String email){
-		
-		ResponseEntity<Usuario> respuesta = ResponseEntity.notFound().build();
+	public boolean isUsuario(String email){
+		boolean respuesta = false;
 		Usuario usuario=usuarioRepo.findByEmail(email).orElse(null);
-		if(usuario!=null) {
-			
-		respuesta = ResponseEntity.ok(usuario);
+//		ResponseEntity<Usuario> respuesta = ResponseEntity.ok(usuario);
+//		if(usuario==null) {
+//			 respuesta = ResponseEntity.notFound().build();
+//			
+//		}
+		
+		if(usuario==null) {
+			respuesta=true;
 		}
-
 		
 		
 		return respuesta;
