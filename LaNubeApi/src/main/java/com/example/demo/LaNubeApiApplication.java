@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.boot.CommandLineRunner;
@@ -35,27 +37,71 @@ public class LaNubeApiApplication {
 
 	
 	@Bean
-	CommandLineRunner iniData2 (AlumnoRepo alumnoRepo) {
+	CommandLineRunner iniData2 (AlumnoRepo alumnoRepo, AulaRepo aulaRepo) {
+		
+		aulaRepo.save( new Aula("Margarita"));
+		aulaRepo.save( new Aula("Romero"));
+		aulaRepo.save( new Aula("Tulipan"));
+		
 		return (args) -> {
 			alumnoRepo.saveAll(Arrays.asList(
-					new Alumno("nombre1", "apellidos1", "dni1"),
-					new Alumno("aaa", "aa", "aa"),
-					new Alumno("bbb", "bbbb", "bb"),
-					new Alumno("cccc", "ccccc", "ccccc")));
+					new Alumno("nombre2", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nombre3", "apellidos", "dni2", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nombre4", "apellidos", "dni3", "direccion5", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nombre5", "apellidos", "dni8", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nombre6", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nombre7", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nomffbre", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nomdbre", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nombre", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nombre", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nombre", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nomdbre", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(1)),
+					new Alumno("nomdbre", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(2)),
+					new Alumno("nombdfre", "apellidos", "dni", "direccion", LocalDate.now(),
+							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"observaciones", aulaRepo.getById(2))
+					));
 		};
 	}
 	
 	
-	@Bean
-	CommandLineRunner iniData3 (AulaRepo aulaRepo) {
-		return (args) -> {
-			
-			aulaRepo.save( new Aula("margarita"));
-			aulaRepo.save( new Aula("romero"));
-			aulaRepo.save( new Aula("tulipan"));
-			
-			
-		};
-	}
+//	@Bean
+//	CommandLineRunner iniData3 (AulaRepo aulaRepo) {
+//		return (args) -> {
+//			
+//			aulaRepo.save( new Aula("Margarita"));
+//			aulaRepo.save( new Aula("Romero"));
+//			aulaRepo.save( new Aula("Tulipan"));
+//			
+//			
+//		};
+//	}
 
 }

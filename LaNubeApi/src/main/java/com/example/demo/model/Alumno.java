@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,20 +24,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 public class Alumno {
 
-	private String nombre;
+	private String nombre="";
 	
-	private String apellidos;
+	private String apellidos="";
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private int id;
-	private String dni;
-	private String direccion;
-	private Date fechaNacimiento;
-	private LocalDateTime horaEntrada;
-	private LocalDateTime horaSalida;
-	private String comida;
-	private boolean comeEnCentro;
-	private String observaciones;
+	private String dni="";
+	private String direccion="";
+	private LocalDate fechaNacimiento=LocalDate.now();
+	private LocalDateTime horaEntrada=LocalDateTime.now();
+	private LocalDateTime horaSalida=LocalDateTime.now();
+	private String comida="";
+	private boolean comeEnCentro=false;
+	private String observaciones="";
 	
 	@ManyToOne
 	private Aula aula;
@@ -49,7 +50,7 @@ public class Alumno {
 	@OneToMany
 	private List<EstadoAlumno> estados;
 	
-	public Alumno(String nombre, String apellidos, String dni, String direccion, Date fechaNacimiento,
+	public Alumno(String nombre, String apellidos, String dni, String direccion, LocalDate fechaNacimiento,
 			LocalDateTime horaEntrada, LocalDateTime horaSalida, String comida, boolean comeEnCentro,
 			String observaciones, Aula aula) {
 		super();
@@ -179,7 +180,7 @@ public class Alumno {
 
 
 
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
@@ -187,7 +188,7 @@ public class Alumno {
 
 
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
