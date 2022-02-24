@@ -43,11 +43,12 @@ public class LaNubeApiApplication {
 	@Bean
 	CommandLineRunner iniData2 (AlumnoRepo alumnoRepo, AulaRepo aulaRepo, CentroRepo centroRepo) {
 		ArrayList<Aula> aulas = new ArrayList<>();
+		aulaRepo.save( new Aula("Sin aula"));
 		aulaRepo.save( new Aula("Margarita"));
 		aulaRepo.save( new Aula("Romero"));
 		aulaRepo.save( new Aula("Tulipan"));
 		
-		aulas.add(aulaRepo.getById(1));
+		aulas.add(aulaRepo.getById(2));
 		centroRepo.save( new Centro("nube","Urquiza 9" , "954414986", "centro@centro.com",  aulas));
 		
 		return (args) -> {

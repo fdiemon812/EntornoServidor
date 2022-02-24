@@ -3,9 +3,12 @@ package com.example.demo.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Centro;
+import com.example.demo.repository.AulaRepo;
+import com.example.demo.repository.CentroRepo;
 import com.example.demo.model.Aula;
 
 
@@ -18,6 +21,14 @@ import com.example.demo.model.Aula;
 @Service
 public class CentroService {
 
+	@Autowired
+	CentroRepo centroRepo;
+	
+	@Autowired
+	AulaRepo aulaRepo;
+	
+	
+	
 	/**
 	 * Modifica los datos de un centro. Añade un aula si no la tenia respetando los anteriores. 
 	 * @param centro1
@@ -46,6 +57,15 @@ public class CentroService {
 		
 		return centro1;
 		
+	}
+
+	public void borrarAula(int id, int idAula) {
+
+
+		Centro centro = centroRepo.getById(id);
+		int posicion = centro.getAulas().indexOf(new Aula(idAula));
+		centro.getAulas().remove(posicion);
+		centroRepo.save(centro);
 	}
 	
 }

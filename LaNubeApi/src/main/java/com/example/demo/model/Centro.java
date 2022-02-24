@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -25,6 +26,7 @@ public class Centro {
 	private String tlf;
 	private String email;
 	
+	@JsonIgnore
 	@OneToMany
 	private List<Aula> aulas;
 

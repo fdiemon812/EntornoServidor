@@ -83,7 +83,7 @@ public class MainController {
 	}
 	
 	/**
-	 * Crea un centro 
+	 * Devuelve un centro 
 	 */
 	@GetMapping("/centro/{id}")
 	public Centro creaCentro(@PathVariable int id) {
@@ -92,6 +92,19 @@ public class MainController {
 		
 		
 		return centroRepo.getById(id);
+	}
+	
+	
+	/**
+	 * Devuelve los centros 
+	 */
+	@GetMapping("/centros")
+	public List<Centro> creaCentro() {
+		
+		
+		
+		
+		return  centroRepo.findAll();
 	}
 	
 	/**
@@ -205,6 +218,27 @@ public class MainController {
 		return aula2;
 		
 		
+	}
+	
+	@DeleteMapping("/centro/{id}/aula/{idAula}")
+	public void borrarAula(@PathVariable int id, @PathVariable int idAula) throws Exception {
+		
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		}else if(!aulaRepo.existsById(idAula)) {
+			throw new AulaNotFoundException(idAula+"");
+		}
+		Centro centro = centroRepo.getById(id);
+		Aula aulaContenida = new Aula(idAula);
+		int posicion=centro.getAulas().indexOf(aulaContenida);
+		if(posicion==-1){
+			throw new AulaCentroNotFoundException(idAula+"");
+
+		}
+		
+		alumnoService.cambiarAula(id, idAula, alumnoRepo.findByAula());
+		centroService.borrarAula(id, idAula);
+		aulaRepo.deleteById(idAula);
 	}
 	
 	
