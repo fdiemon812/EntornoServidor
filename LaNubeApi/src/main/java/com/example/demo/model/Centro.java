@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Centro {
 	
@@ -25,7 +28,9 @@ public class Centro {
 	@OneToMany
 	private List<Aula> aulas;
 
-	public Centro(String nombre, String direccion, String tlf, String email, List<Aula> aulas) {
+	public Centro() {};
+	
+	public Centro(String nombre, String direccion, String tlf, String email, ArrayList<Aula> aulas) {
 		super();
 		this.nombre = nombre;
 		this.direccion = direccion;
