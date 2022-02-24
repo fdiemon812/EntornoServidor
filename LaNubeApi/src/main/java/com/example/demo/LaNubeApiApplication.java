@@ -2,7 +2,9 @@ package com.example.demo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,10 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.demo.model.Alumno;
 import com.example.demo.model.Aula;
+import com.example.demo.model.Centro;
 import com.example.demo.model.Profesor;
 import com.example.demo.model.Tutor;
 import com.example.demo.repository.AlumnoRepo;
 import com.example.demo.repository.AulaRepo;
+import com.example.demo.repository.CentroRepo;
 import com.example.demo.repository.UserRepo;
 
 @SpringBootApplication
@@ -37,11 +41,14 @@ public class LaNubeApiApplication {
 
 	
 	@Bean
-	CommandLineRunner iniData2 (AlumnoRepo alumnoRepo, AulaRepo aulaRepo) {
-		
+	CommandLineRunner iniData2 (AlumnoRepo alumnoRepo, AulaRepo aulaRepo, CentroRepo centroRepo) {
+		ArrayList<Aula> aulas = new ArrayList<>();
 		aulaRepo.save( new Aula("Margarita"));
 		aulaRepo.save( new Aula("Romero"));
 		aulaRepo.save( new Aula("Tulipan"));
+		
+		aulas.add(aulaRepo.getById(1));
+		centroRepo.save( new Centro("nube","Urquiza 9" , "954414986", "centro@centro.com",  aulas));
 		
 		return (args) -> {
 			alumnoRepo.saveAll(Arrays.asList(

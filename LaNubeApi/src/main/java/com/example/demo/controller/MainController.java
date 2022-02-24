@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.exception.ApiError;
+import com.example.demo.exception.AulaCentroNotFoundException;
 import com.example.demo.exception.AulaNotFoundException;
 import com.example.demo.exception.CentroNotFoundException;
 import com.example.demo.exception.AlumnoNotFoundException;
@@ -145,9 +146,65 @@ public class MainController {
 	 * Devuelve una lista de todas las aulas disponibles. 
 	 * @return
 	 */
-	@GetMapping("/aulas")
-	public List<Aula> obtenerAulas(){
-		return aulaRepo.findAll();
+	@GetMapping("centro/{id}/aulas")
+	public List<Aula> obtenerAulas(@PathVariable int id) throws Exception{
+		
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		}
+		Centro centro =centroRepo.getById(id);
+		
+		return centro.getAulas();
+	}
+	
+	
+	/**
+	 * Devuelve una lista de todas las aulas disponibles. 
+	 * @return
+	 */
+	@GetMapping("centro/{id}/aula/{idAula}")
+	public Aula obtenerAula(@PathVariable int id, @PathVariable int idAula) throws Exception{
+		
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		}
+		Centro centro =centroRepo.getById(id);
+		Aula aulaContenida = new Aula(idAula);
+		int posicion=centro.getAulas().indexOf(aulaContenida);
+		
+		
+		if(posicion==-1) {
+			throw new AulaCentroNotFoundException(idAula+"");
+		}
+		
+		return aulaRepo.getById(idAula);
+	}
+	
+	
+	/**
+	 * Crea un aula en un centro determinado
+	 * @param id
+	 * @param aula
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("/centro/{id}/aula")
+	public Aula crearAula(@PathVariable int id, @RequestBody Aula aula) throws Exception{
+		
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		}
+		
+		Centro centro = centroRepo.getById(id);
+		Aula aula2 = new Aula(aula.getNombre());
+		centro.getAulas().add(aula2);
+		aulaRepo.save(aula2);
+		centroRepo.save(centro);
+		
+		
+		return aula2;
+		
+		
 	}
 	
 	
@@ -331,6 +388,18 @@ public class MainController {
 	 */
 	@ExceptionHandler(CentroNotFoundException.class)
 	public ResponseEntity<ApiError> CentroException(CentroNotFoundException userException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+	}
+	
+	
+	/**
+	 * Gestiona si un aula buscada no existe en el centro
+	 * @param ex
+	 * @return JSON bien formado
+	 */
+	@ExceptionHandler(AulaCentroNotFoundException.class)
+	public ResponseEntity<ApiError> AulaCentroException(AulaCentroNotFoundException userException) {
 		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
 	}
