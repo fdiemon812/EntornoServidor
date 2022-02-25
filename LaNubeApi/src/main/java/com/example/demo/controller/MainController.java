@@ -19,6 +19,7 @@ import com.example.demo.exception.ApiError;
 import com.example.demo.exception.AulaCentroNotFoundException;
 import com.example.demo.exception.AulaNotFoundException;
 import com.example.demo.exception.CentroNotFoundException;
+import com.example.demo.exception.AlumnoIncompletoException;
 import com.example.demo.exception.AlumnoNotFoundException;
 import com.example.demo.model.Alumno;
 import com.example.demo.model.Aula;
@@ -33,6 +34,7 @@ import com.example.demo.repository.UserRepo;
 import com.example.demo.services.AlumnoService;
 import com.example.demo.services.AulaService;
 import com.example.demo.services.CentroService;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 
@@ -242,7 +244,7 @@ public class MainController {
 
 		}
 		
-		alumnoService.cambiarAula(id, idAula, alumnoRepo.findByAula());
+		alumnoService.cambiarAula(id, idAula, alumnoRepo.findByAula(idAula));
 		centroService.borrarAula(id, idAula);
 		aulaRepo.deleteById(idAula);
 	}
@@ -264,11 +266,7 @@ public class MainController {
 		if(posicion==-1){
 			throw new AulaCentroNotFoundException(idAula+"");
 			}
-//		
-//		Aula aulaModificada = centro.getAulas().get(posicion);
-//		aulaModificada.setNombre(aulaNueva.getNombre());
-//		aulaRepo.save(aulaModificada);
-//		
+	
 		
 		Aula aulaModificada = aulaService.actualizaAula(id, idAula, aulaNueva);
 		
@@ -283,6 +281,34 @@ public class MainController {
 		return aulaModificada;
 		
 	}
+	
+	
+	
+	
+	
+	
+	//ALUMNOS
+	
+	/**
+	 * Registra alumnos 
+	 * @param alumno
+	 * @return
+	 */
+	@PostMapping("/centro/{id}/alumno")
+	public Alumno  matricularAlumno(@RequestBody Alumno alumno , @PathVariable int id)  throws Exception{
+
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		}
+			
+
+		
+		return alumnoService.crearAlumno(alumno, id);
+	}
+	
+
+	
+	
 	
 	
 	/**
@@ -438,6 +464,17 @@ public class MainController {
 	}
 	
 	/**
+	 * Para cuando existe un error de un JSON mal formado
+	 * @param ex
+	 * @return JSON bien formado
+	 */
+	@ExceptionHandler(JsonParseException.class)
+	public ResponseEntity<ApiError> handleJsonParsegException(JsonParseException jsonException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), "JSON MAL FORMADO");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+	}
+	
+	/**
 	 * Gestiona si no existe un usuario buscado
 	 * @param ex
 	 * @return JSON bien formado
@@ -481,6 +518,20 @@ public class MainController {
 	public ResponseEntity<ApiError> AulaCentroException(AulaCentroNotFoundException userException) {
 		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+		
+		
+
+	}
+	
+	/**
+	 * Gestiona si un alumno es creado con falta de información
+	 * @param ex
+	 * @return JSON bien formado
+	 */
+	@ExceptionHandler(AlumnoIncompletoException.class)
+	public ResponseEntity<ApiError> AlumnoIncompletoException(AlumnoIncompletoException userException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 	}
 	
 	

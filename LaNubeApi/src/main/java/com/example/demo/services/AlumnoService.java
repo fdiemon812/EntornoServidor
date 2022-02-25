@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.AlumnoIncompletoException;
+import com.example.demo.exception.AulaNotFoundException;
 import com.example.demo.model.Alumno;
 import com.example.demo.model.Aula;
 import com.example.demo.model.Centro;
@@ -57,17 +59,13 @@ public class AlumnoService {
 			Alumno alumno = alumnoRepo.getById(id);
 
 			int posicion = aula.getAlumnos().indexOf(alumno);
-			alumno.setApellidos("carapapa");
 			alumno.setAula(new Aula(1));
-			System.out.println("carapapassss");
 			
 			if(aula.getAlumnos().contains(alumno)) {
 				
-				System.out.println("lo contiene");
 			aula.getAlumnos().remove(aula.getAlumnos().indexOf(alumno));
 				
 			}
-			System.out.println("ole");
 			alumnoRepo.save(alumno);
 			
 		}
@@ -75,4 +73,32 @@ public class AlumnoService {
 		
 		
 	}
+	
+	
+	
+	
+	public Alumno crearAlumno(Alumno alumno, int idCentro) throws Exception{
+		
+		
+		
+		
+		if(alumno.getApellidos()==null || alumno.getNombre()==null || alumno.getNombre()=="" || alumno.getApellidos()=="" ){
+			
+			throw new AlumnoIncompletoException();
+		
+		} else if(alumno.getAula()==null || aulaRepo.existsById(alumno.getAula().getId())) {
+			alumno.setAula(aulaRepo.getById(1));
+		} 
+			
+		
+		
+		Centro centro = centroRepo.getById(idCentro);
+		centro.getAlumnos().add(alumno);
+		alumnoRepo.save(alumno);
+		centroRepo.save(centro);
+		
+		
+		return alumno;
+	}
+	
 }

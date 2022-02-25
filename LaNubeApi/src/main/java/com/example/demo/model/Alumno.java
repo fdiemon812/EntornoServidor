@@ -39,6 +39,7 @@ public class Alumno {
 	private boolean comeEnCentro=false;
 	private String observaciones="";
 	
+	@JsonIgnore
 	@ManyToOne
 	private Aula aula;
 	

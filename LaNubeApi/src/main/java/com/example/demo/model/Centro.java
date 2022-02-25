@@ -29,6 +29,10 @@ public class Centro {
 	@JsonIgnore
 	@OneToMany
 	private List<Aula> aulas;
+	
+	@JsonIgnore
+	@OneToMany
+	private List<Alumno> alumnos;
 
 	public Centro() {};
 	
@@ -39,6 +43,7 @@ public class Centro {
 		this.tlf = tlf;
 		this.email = email;
 		this.aulas = aulas;
+		this.alumnos= new ArrayList<>();
 	}
 
 	public int getId() {
@@ -83,6 +88,10 @@ public class Centro {
 
 	public List<Aula> getAulas() {
 		return aulas;
+	}
+	
+	public List<Alumno> getAlumnos() {
+		return alumnos;
 	}
 
 	public void setAulas(List<Aula> aulas) {
