@@ -220,6 +220,12 @@ public class MainController {
 		
 	}
 	
+	/**
+	 * Borra un aula por su id de un centro por su id
+	 * @param id
+	 * @param idAula
+	 * @throws Exception
+	 */
 	@DeleteMapping("/centro/{id}/aula/{idAula}")
 	public void borrarAula(@PathVariable int id, @PathVariable int idAula) throws Exception {
 		
@@ -239,6 +245,43 @@ public class MainController {
 		alumnoService.cambiarAula(id, idAula, alumnoRepo.findByAula());
 		centroService.borrarAula(id, idAula);
 		aulaRepo.deleteById(idAula);
+	}
+	
+	
+	@PutMapping("centro/{id}/aula/{idAula}")
+	public Aula modificarAula(@PathVariable int id, @PathVariable int idAula, @RequestBody Aula aulaNueva, Integer idAlumno) throws Exception{
+		
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		}else if(!aulaRepo.existsById(idAula)) {
+			throw new AulaNotFoundException(idAula+"");
+		}
+		
+		Centro centro = centroRepo.getById(id);
+		Aula aulaContenida = new Aula(idAula);
+		int posicion=centro.getAulas().indexOf(aulaContenida);
+		
+		if(posicion==-1){
+			throw new AulaCentroNotFoundException(idAula+"");
+			}
+//		
+//		Aula aulaModificada = centro.getAulas().get(posicion);
+//		aulaModificada.setNombre(aulaNueva.getNombre());
+//		aulaRepo.save(aulaModificada);
+//		
+		
+		Aula aulaModificada = aulaService.actualizaAula(id, idAula, aulaNueva);
+		
+		
+
+		if(idAlumno!=null) {
+			
+			aulaService.addAlumno(idAula, idAlumno);
+}
+		
+		
+		return aulaModificada;
+		
 	}
 	
 	
@@ -279,6 +322,8 @@ public class MainController {
 		
 		return alumnoRepo.findAll();
 	}
+	
+	
 	
 	/**
 	 * Registra alumnos 
