@@ -86,15 +86,22 @@ public class AlumnoService {
 			
 			throw new AlumnoIncompletoException();
 		
-		} else if(alumno.getAula()==null || aulaRepo.existsById(alumno.getAula().getId())) {
+		} else if(alumno.getAula()==null || !aulaRepo.existsById(alumno.getAula().getId())) {
 			alumno.setAula(aulaRepo.getById(1));
-		} 
+		} else {
+			
+			alumno.setAula(aulaRepo.getById(alumno.getAula().getId()));
+		}
 			
 		
 		
 		Centro centro = centroRepo.getById(idCentro);
 		centro.getAlumnos().add(alumno);
+		Aula aulaPasada = aulaRepo.getById(alumno.getAula().getId());
+		aulaPasada.getAlumnos().add(alumno);
+		
 		alumnoRepo.save(alumno);
+		aulaRepo.save(aulaPasada);
 		centroRepo.save(centro);
 		
 		

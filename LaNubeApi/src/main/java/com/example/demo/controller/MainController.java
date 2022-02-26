@@ -297,12 +297,25 @@ public class MainController {
 	@PostMapping("/centro/{id}/alumno")
 	public Alumno  matricularAlumno(@RequestBody Alumno alumno , @PathVariable int id)  throws Exception{
 
+			
+		
 		if(!centroRepo.existsById(id)) {
 			throw new CentroNotFoundException(id+"");
 		}
 			
-
+		else if(!aulaRepo.existsById(alumno.getAula().getId())) {
+			throw new AulaNotFoundException(alumno.getAula().getId()+"");
+		}
 		
+		Centro centro = centroRepo.getById(id);
+		Aula aulaContenida = new Aula(alumno.getAula().getId());
+		int posicion=centro.getAulas().indexOf(aulaContenida);
+		
+		if(posicion==-1){
+			throw new AulaCentroNotFoundException(alumno.getAula().getId()+"");
+			}
+		
+
 		return alumnoService.crearAlumno(alumno, id);
 	}
 	

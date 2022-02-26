@@ -48,52 +48,54 @@ public class LaNubeApiApplication {
 		aulaRepo.save( new Aula("Romero"));
 		aulaRepo.save( new Aula("Tulipan"));
 		
+		aulas.add(aulaRepo.getById(1));
 		aulas.add(aulaRepo.getById(2));
+		aulas.add(aulaRepo.getById(3));
 		centroRepo.save( new Centro("nube","Urquiza 9" , "954414986", "centro@centro.com",  aulas));
 		
 		return (args) -> {
 			alumnoRepo.saveAll(Arrays.asList(
 					new Alumno("nombre2", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00" , "00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nombre3", "apellidos", "dni2", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nombre4", "apellidos", "dni3", "direccion5", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nombre5", "apellidos", "dni8", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nombre6", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nombre7", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nomffbre", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nomdbre", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nombre", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nombre", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nombre", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nomdbre", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(1)),
 					new Alumno("nomdbre", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(2)),
 					new Alumno("nombdfre", "apellidos", "dni", "direccion", LocalDate.now(),
-							LocalDateTime.now() , LocalDateTime.now() ,"comida",false,
+							"00:00","00:00" ,"comida",false,
 							"observaciones", aulaRepo.getById(2))
 					));
 		};

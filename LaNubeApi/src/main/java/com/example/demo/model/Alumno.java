@@ -33,13 +33,13 @@ public class Alumno {
 	private String dni="";
 	private String direccion="";
 	private LocalDate fechaNacimiento=LocalDate.now();
-	private LocalDateTime horaEntrada=LocalDateTime.now();
-	private LocalDateTime horaSalida=LocalDateTime.now();
+	private String horaEntrada="00:00";
+	private String horaSalida="00:00";
 	private String comida="";
 	private boolean comeEnCentro=false;
 	private String observaciones="";
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne
 	private Aula aula;
 	
@@ -52,7 +52,7 @@ public class Alumno {
 	private List<EstadoAlumno> estados;
 	
 	public Alumno(String nombre, String apellidos, String dni, String direccion, LocalDate fechaNacimiento,
-			LocalDateTime horaEntrada, LocalDateTime horaSalida, String comida, boolean comeEnCentro,
+			String horaEntrada, String horaSalida, String comida, boolean comeEnCentro,
 			String observaciones, Aula aula) {
 		super();
 		this.nombre = nombre;
@@ -197,7 +197,7 @@ public class Alumno {
 
 
 
-	public LocalDateTime getHoraEntrada() {
+	public String getHoraEntrada() {
 		return horaEntrada;
 	}
 
@@ -205,7 +205,7 @@ public class Alumno {
 
 
 
-	public void setHoraEntrada(LocalDateTime horaEntrada) {
+	public void setHoraEntrada(String horaEntrada) {
 		this.horaEntrada = horaEntrada;
 	}
 
@@ -213,7 +213,7 @@ public class Alumno {
 
 
 
-	public LocalDateTime getHoraSalida() {
+	public String getHoraSalida() {
 		return horaSalida;
 	}
 
@@ -221,7 +221,7 @@ public class Alumno {
 
 
 
-	public void setHoraSalida(LocalDateTime horaSalida) {
+	public void setHoraSalida(String horaSalida) {
 		this.horaSalida = horaSalida;
 	}
 
