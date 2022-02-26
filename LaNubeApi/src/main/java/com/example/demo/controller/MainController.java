@@ -19,6 +19,7 @@ import com.example.demo.exception.ApiError;
 import com.example.demo.exception.AulaCentroNotFoundException;
 import com.example.demo.exception.AulaNotFoundException;
 import com.example.demo.exception.CentroNotFoundException;
+import com.example.demo.exception.AlumnoCentroNotFoundException;
 import com.example.demo.exception.AlumnoIncompletoException;
 import com.example.demo.exception.AlumnoNotFoundException;
 import com.example.demo.model.Alumno;
@@ -319,29 +320,87 @@ public class MainController {
 		return alumnoService.crearAlumno(alumno, id);
 	}
 	
-
+	/**
+	 * Devuelve todos los alumnos de un centro
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@GetMapping("centro/{id}/alumnos")
+	public List<Alumno> listarAlumnosCentro(@PathVariable int id) throws Exception {
+		
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		}
+		
+		
+		return centroRepo.getById(id).getAlumnos();
+		
+	}
 	
+	
+	/**
+	 * Devuelve un alumno de un centro concreto
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	@GetMapping("centro/{id}/alumno/{idAlumno}")
+	public Alumno obtenerAlumnoDeCentro(@PathVariable int id, @PathVariable int idAlumno) throws Exception {
+		
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		} 
+			
+		Centro centro = centroRepo.getById(id);
+		Alumno alumno = new Alumno(idAlumno);
+		int posicion=centro.getAlumnos().indexOf(alumno);
+		if(posicion==-1){
+			throw new AlumnoCentroNotFoundException(idAlumno);
+		}
+		
+		
+		return alumnoRepo.getById(idAlumno);
+		
+	}
 	
 	
 	
 	/**
-	 * Agrega un aula a un alumno
-	 * @param alumno
+	 * Borra un alumno de un centro concreto
+	 * @param id
 	 * @return
+	 * @throws Exception
 	 */
-	@PutMapping("/aula/{idAula}")
-	public ResponseEntity<List<Alumno>>  registrarAulaAlumno(@RequestBody Alumno alumno, @PathVariable int idAula ) throws Exception{
-		System.out.println("hola aula");
-		Aula aula = aulaRepo.getById(idAula);
-				
-		ResponseEntity respuesta = ResponseEntity.ok(aula.getAlumnos());
+	@DeleteMapping("centro/{id}/alumno/{idAlumno}")
+	public Alumno borrarAlumnoDeCentro(@PathVariable int id, @PathVariable int idAlumno) throws Exception {
 		
-		aulaService.addAlumno(idAula, alumno.getId());
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		} 
+			
+		Centro centro = centroRepo.getById(id);
+		Alumno alumno = new Alumno(idAlumno);
+		int posicion=centro.getAlumnos().indexOf(alumno);
+		if(posicion==-1){
+			throw new AlumnoCentroNotFoundException(idAlumno);
+		}
+		
+		centro.getAlumnos().remove(posicion);
+		Aula aula = aulaRepo.getById(alumnoRepo.getById(idAlumno).getAula().getId());
+		int posicionAula = aula.getAlumnos().indexOf(alumno);
+		aula.getAlumnos().remove(posicionAula);
+		
+		aulaRepo.save(aula);
+		centroRepo.save(centro);
+		alumnoRepo.deleteById(idAlumno);
 		
 		
+		return null;
 		
-		return respuesta;
 	}
+	
+	
 	
 	
 	
@@ -363,19 +422,6 @@ public class MainController {
 	}
 	
 	
-	
-	/**
-	 * Registra alumnos 
-	 * @param alumno
-	 * @return
-	 */
-	@PostMapping("/alumno")
-	public Alumno  registrarAlumno(@RequestBody Alumno alumno )  throws Exception{
-
-		alumnoRepo.save(alumno);
-		
-		return alumno;
-	}
 	
 	
 	
@@ -545,6 +591,19 @@ public class MainController {
 	public ResponseEntity<ApiError> AlumnoIncompletoException(AlumnoIncompletoException userException) {
 		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+	}
+	
+	
+	
+	/**
+	 * Gestiona si un alumno es creado con falta de información
+	 * @param ex
+	 * @return JSON bien formado
+	 */
+	@ExceptionHandler(AlumnoCentroNotFoundException.class)
+	public ResponseEntity<ApiError> AlumnoCentroNotFoundException(AlumnoCentroNotFoundException userException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
 	}
 	
 	

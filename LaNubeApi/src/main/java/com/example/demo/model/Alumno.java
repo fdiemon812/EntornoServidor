@@ -51,6 +51,11 @@ public class Alumno {
 	@OneToMany
 	private List<EstadoAlumno> estados;
 	
+	
+	public Alumno(int id) {
+		this.id=id;
+	}
+	
 	public Alumno(String nombre, String apellidos, String dni, String direccion, LocalDate fechaNacimiento,
 			String horaEntrada, String horaSalida, String comida, boolean comeEnCentro,
 			String observaciones, Aula aula) {
@@ -321,13 +326,9 @@ public class Alumno {
 		this.estados = estados;
 	}
 
-
-
-
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(dni);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -339,8 +340,14 @@ public class Alumno {
 		if (getClass() != obj.getClass())
 			return false;
 		Alumno other = (Alumno) obj;
-		return Objects.equals(dni, other.dni);
+		return id == other.id;
 	}
+
+
+
+
+
+	
 	
 	
 	
