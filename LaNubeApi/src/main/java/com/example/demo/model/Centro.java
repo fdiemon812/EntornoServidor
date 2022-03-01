@@ -34,15 +34,19 @@ public class Centro {
 	@OneToMany
 	private List<Alumno> alumnos;
 
-	public Centro() {};
+	public Centro() {
+		
+		this.aulas = new ArrayList<>();
+		this.alumnos= new ArrayList<>();
+	};
 	
-	public Centro(String nombre, String direccion, String tlf, String email, ArrayList<Aula> aulas) {
+	public Centro(String nombre, String direccion, String tlf, String email) {
 		super();
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.tlf = tlf;
 		this.email = email;
-		this.aulas = aulas;
+		this.aulas = new ArrayList<>();
 		this.alumnos= new ArrayList<>();
 	}
 

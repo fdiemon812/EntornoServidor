@@ -80,6 +80,9 @@ public class MainController {
 	@PostMapping("/centro")
 	public Centro creaCentro(@RequestBody Centro centro) {
 		
+		Aula aula = new Aula("Sin aula");
+		centro.getAulas().add(aula);
+		aulaRepo.save(aula);
 		centroRepo.save(centro);
 		
 		return centro;
@@ -365,6 +368,26 @@ public class MainController {
 	}
 	
 	
+	@PutMapping("centro/{id}/alumno/{idAlumno}")
+	public Alumno editarAlumno(@RequestBody Alumno alumno2, @PathVariable int id, @PathVariable int idAlumno) throws Exception{
+		
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		} 
+		
+		Centro centro = centroRepo.getById(id);
+		Alumno alumno = new Alumno(idAlumno);
+		int posicion=centro.getAlumnos().indexOf(alumno);
+		if(posicion==-1){
+			throw new AlumnoCentroNotFoundException(idAlumno);
+		}
+		
+		
+		return 		alumnoService.actualizaAlumno(centro, idAlumno, alumno);
+
+	}
+	
+	
 	
 	/**
 	 * Borra un alumno de un centro concreto
@@ -373,7 +396,7 @@ public class MainController {
 	 * @throws Exception
 	 */
 	@DeleteMapping("centro/{id}/alumno/{idAlumno}")
-	public Alumno borrarAlumnoDeCentro(@PathVariable int id, @PathVariable int idAlumno) throws Exception {
+	public void borrarAlumnoDeCentro(@PathVariable int id, @PathVariable int idAlumno) throws Exception {
 		
 		if(!centroRepo.existsById(id)) {
 			throw new CentroNotFoundException(id+"");
@@ -386,17 +409,11 @@ public class MainController {
 			throw new AlumnoCentroNotFoundException(idAlumno);
 		}
 		
-		centro.getAlumnos().remove(posicion);
-		Aula aula = aulaRepo.getById(alumnoRepo.getById(idAlumno).getAula().getId());
-		int posicionAula = aula.getAlumnos().indexOf(alumno);
-		aula.getAlumnos().remove(posicionAula);
 		
-		aulaRepo.save(aula);
-		centroRepo.save(centro);
-		alumnoRepo.deleteById(idAlumno);
+		alumnoService.borrarAlumno(centro, idAlumno);
 		
+
 		
-		return null;
 		
 	}
 	
@@ -461,7 +478,7 @@ public class MainController {
 	
 	
 	/**
-	 * Agrega un tutor a un alumno
+	 * Borra un tutor a un alumno
 	 * @param alumno
 	 * @return
 	 */
@@ -489,12 +506,20 @@ public class MainController {
 	}
 	
 	
+
 	
 	
 	
 	
 	
 	
+	
+	
+	/**
+	 * Devuelve true o false si el mail existe en la bbdd. 
+	 * @param email
+	 * @return
+	 */
 	@GetMapping("/usuario")
 	public boolean isUsuario(String email){
 		boolean respuesta = false;

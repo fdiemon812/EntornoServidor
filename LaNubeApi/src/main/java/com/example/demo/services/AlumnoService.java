@@ -32,6 +32,13 @@ public class AlumnoService {
 	public CentroRepo centroRepo;
 	
 	
+	
+	/**
+	 * Añade tutores a los alumnos
+	 * @param idAlumno
+	 * @param idTutor
+	 * @return
+	 */
 	public boolean addTutor(int idAlumno, int idTutor){
 	
 		Alumno alumno = alumnoRepo.getById(idAlumno);
@@ -44,7 +51,12 @@ public class AlumnoService {
 		return false;
 	}
 
-
+/**
+ * Recibe un id aula, IdCentro y una lista de alumnos. Cambia a todos los alumnos de aula a "SinAula"
+ * @param idCentro
+ * @param idAula
+ * @param findByAula
+ */
 	public void cambiarAula(int idCentro, int idAula, List findByAula) {
 
 			Centro centro = centroRepo.getById(idCentro);
@@ -76,7 +88,13 @@ public class AlumnoService {
 	
 	
 	
-	
+	/**
+	 * Recibe un alumno y el id de un centro. Crea un alumno. 
+	 * @param alumno
+	 * @param idCentro
+	 * @return
+	 * @throws Exception
+	 */
 	public Alumno crearAlumno(Alumno alumno, int idCentro) throws Exception{
 		
 		
@@ -106,6 +124,41 @@ public class AlumnoService {
 		
 		
 		return alumno;
+	}
+	
+	
+	public void borrarAlumno(Centro centro, int idAlumno) {
+		
+		Alumno alumno = new Alumno(idAlumno);
+		int posicion=centro.getAlumnos().indexOf(alumno);
+		centro.getAlumnos().remove(posicion);
+		Aula aula = aulaRepo.getById(alumnoRepo.getById(idAlumno).getAula().getId());
+		int posicionAula = aula.getAlumnos().indexOf(alumno);
+		aula.getAlumnos().remove(posicionAula);
+		
+		aulaRepo.save(aula);
+		centroRepo.save(centro);
+		alumnoRepo.deleteById(idAlumno);
+	}
+
+	public Alumno actualizaAlumno(Centro centro, int idAlumno, Alumno alumno) {
+
+		Alumno alumnoAntiguo = alumnoRepo.getById(idAlumno);
+		
+		alumnoAntiguo.setApellidos(alumno.getApellidos());
+		alumnoAntiguo.setDireccion(alumno.getDireccion());
+		alumnoAntiguo.setDni(alumno.getDni());
+		alumnoAntiguo.setFechaNacimiento(alumno.getFechaNacimiento());
+		alumnoAntiguo.setObservaciones(alumno.getObservaciones());
+		alumnoAntiguo.setComida(alumno.getComida());
+		alumnoAntiguo.setNombre(alumno.getNombre());
+		alumnoAntiguo.setHoraEntrada(alumno.getHoraEntrada());
+		alumnoAntiguo.setHoraSalida(alumno.getHoraSalida());
+		alumnoAntiguo.setComeEnCentro(alumno.isComeEnCentro());
+		alumnoRepo.save(alumnoAntiguo);
+		
+		
+		return alumnoAntiguo;
 	}
 	
 }
