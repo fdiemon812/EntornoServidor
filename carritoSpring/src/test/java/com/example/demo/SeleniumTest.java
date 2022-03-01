@@ -52,7 +52,7 @@ class SeleniumTest {
 		String titulo = driver.getCurrentUrl();
 		System.out.println(titulo);
 		assertTrue(titulo.equals("http://localhost:8080/login/seleccion"));
-		driver.quit();
+//		driver.quit();
 		
 	}
 
