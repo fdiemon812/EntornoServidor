@@ -2,9 +2,11 @@ package com.example.demo.controller;
 
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -35,7 +37,7 @@ public class AuthController {
     @Autowired private JWTUtil jwtUtil;
     @Autowired private AuthenticationManager authManager;
     @Autowired private PasswordEncoder passwordEncoder;
-    
+    @Autowired private UserRepo usuRepo;
     
     private final String PROFESOR ="PROFESOR";
     private final String ADMINISTRADOR ="ADMINISTRADOR";
@@ -93,9 +95,35 @@ public class AuthController {
             throw new RuntimeException("Invalid Login Credentials");
         }
     }
+   
+	
+	
+	/**
+	 * Devuelve el usuario al logarse. 
+	 */
+	@GetMapping("/home/usuario")
+    public ResponseEntity<Usuario>  compruebaRol() {
+		
+		
+		
+	ResponseEntity<Usuario> respuesta = ResponseEntity.badRequest().build();
+		
+	String correo= (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	Usuario usuario=usuRepo.findByEmail(correo).orElse(null);
+	
+	if(usuario!=null) {
+	 respuesta = ResponseEntity.ok(usuario);
+	}
+	
+    return respuesta;		
+		
+		
+		
+	}
+	
+	
     
-    
-    /**
+	/**
 	 * Si el token es valido no devuelve nada. Si el token no es válido devuelve error. 
 	 */
 	@GetMapping("/home/token")
@@ -104,5 +132,25 @@ public class AuthController {
 	
     
 
+    
+	/**
+	 * Devuelve true o false si el mail existe en la bbdd. 
+	 * @param email
+	 * @return
+	 */
+	@GetMapping("/usuario")
+	public boolean isUsuario(String email){
+		boolean respuesta = false;
+		Usuario usuario=usuRepo.findByEmail(email).orElse(null);
+
+		
+		if(usuario==null) {
+			respuesta=true;
+		}
+		
+		
+		return respuesta;
+		
+	}
 
 }

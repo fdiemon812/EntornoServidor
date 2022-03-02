@@ -19,6 +19,7 @@ import com.example.demo.exception.ApiError;
 import com.example.demo.exception.AulaCentroNotFoundException;
 import com.example.demo.exception.AulaNotFoundException;
 import com.example.demo.exception.CentroNotFoundException;
+import com.example.demo.exception.ComidaInvalidException;
 import com.example.demo.exception.AlumnoCentroNotFoundException;
 import com.example.demo.exception.AlumnoIncompletoException;
 import com.example.demo.exception.AlumnoNotFoundException;
@@ -515,25 +516,7 @@ public class MainController {
 	
 	
 	
-	/**
-	 * Devuelve true o false si el mail existe en la bbdd. 
-	 * @param email
-	 * @return
-	 */
-	@GetMapping("/usuario")
-	public boolean isUsuario(String email){
-		boolean respuesta = false;
-		Usuario usuario=usuarioRepo.findByEmail(email).orElse(null);
-
-		
-		if(usuario==null) {
-			respuesta=true;
-		}
-		
-		
-		return respuesta;
-		
-	}
+	
 	
 	
 	/**
@@ -629,6 +612,18 @@ public class MainController {
 	public ResponseEntity<ApiError> AlumnoCentroNotFoundException(AlumnoCentroNotFoundException userException) {
 		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+	}
+	
+	
+	/**
+	 * Gestiona si se intenta crear un alumno con comida invalida
+	 * @param ex
+	 * @return JSON bien formado
+	 */
+	@ExceptionHandler(ComidaInvalidException.class)
+	public ResponseEntity<ApiError> ComidaInvalidException(ComidaInvalidException userException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
 	}
 	
 	

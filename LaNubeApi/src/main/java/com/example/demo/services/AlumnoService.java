@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.exception.AlumnoIncompletoException;
 import com.example.demo.exception.AulaNotFoundException;
+import com.example.demo.exception.ComidaInvalidException;
 import com.example.demo.model.Alumno;
 import com.example.demo.model.Aula;
 import com.example.demo.model.Centro;
@@ -106,6 +107,9 @@ public class AlumnoService {
 		
 		} else if(alumno.getAula()==null || !aulaRepo.existsById(alumno.getAula().getId())) {
 			alumno.setAula(aulaRepo.getById(1));
+			
+		}else if(!(alumno.getComida().equals("Comida" ) || !alumno.getComida().equals("Biberón" ) || alumno.getComida().equals("Biberón + Comida" ))){
+			throw new ComidaInvalidException();
 		} else {
 			
 			alumno.setAula(aulaRepo.getById(alumno.getAula().getId()));
