@@ -202,6 +202,32 @@ public class MainController {
 	
 	
 	/**
+	 * Devuelve una lista de los alumn os de un aula. 
+	 * @return
+	 */
+	@GetMapping("centro/{id}/aula/{idAula}/alumnos")
+	public List<Alumno> obtenerAlumnosAula(@PathVariable int id, @PathVariable int idAula) throws Exception{
+		
+		if(!centroRepo.existsById(id)) {
+			throw new CentroNotFoundException(id+"");
+		}
+		Centro centro =centroRepo.getById(id);
+		Aula aulaContenida = new Aula(idAula);
+		int posicion=centro.getAulas().indexOf(aulaContenida);
+		
+		
+		if(posicion==-1) {
+			throw new AulaCentroNotFoundException(idAula+"");
+		}
+		
+		
+		Aula aula1 = aulaRepo.getById(idAula);
+		
+		return aula1.getAlumnos();
+		}
+	
+	
+	/**
 	 * Crea un aula en un centro determinado
 	 * @param id
 	 * @param aula
