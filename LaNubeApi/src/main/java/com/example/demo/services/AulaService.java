@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,29 +47,35 @@ public class AulaService {
 		Aula aula = aulaRepo.getById(idAula);
 		Alumno alumno = alumnoRepo.getById(idAlumno);
 		
-		System.out.println("Borrando aula");
 		
 		Aula aulaOld = aulaRepo.getById(alumnoRepo.getById(idAlumno).getAula().getId());
-		System.out.println(aulaOld.getNombre());
-		
-		Alumno alumnoOld= new Alumno(idAlumno);
-		
-		int posicionAula = aula.getAlumnos().indexOf(alumnoOld);
-		
-		System.out.println(posicionAula);
-		
-		aulaOld.getAlumnos().remove(posicionAula);
 	
-		System.out.println("guardando alumno");
-
+		int i=0;
+		int posicionAula=-1;
 		
-		alumno.setAula(aula);
-		alumnoRepo.save(alumno);
-		
-		
-		aulaRepo.save(aulaOld);
-		aula.getAlumnos().add(alumno);
-		aulaRepo.save(aula);
+	    Iterator<Alumno> alumn = aulaOld.getAlumnos().iterator();
+	    System.out.println(aula.getAlumnos().size());
+		while (alumn.hasNext() && posicionAula==-1) {	
+			Alumno alum =  alumn.next();
+			if(alum.getId() ==idAlumno) {
+				posicionAula=i;
+			}
+			i++;
+		}
+		if(posicionAula!=-1) {
+			
+			aulaOld.getAlumnos().remove(posicionAula);
+			
+			
+			
+			alumno.setAula(aula);
+			alumnoRepo.save(alumno);
+			
+			
+			aulaRepo.save(aulaOld);
+			aula.getAlumnos().add(alumno);
+			aulaRepo.save(aula);
+		}
 
 		
 
