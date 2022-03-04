@@ -58,7 +58,11 @@ public class CentroService {
 		return centro1;
 		
 	}
-
+	/**
+	 * Borra un aula en un centro
+	 * @param id
+	 * @param idAula
+	 */
 	public void borrarAula(int id, int idAula) {
 
 

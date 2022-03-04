@@ -7,6 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Clase para registrar estados del alumno
+ * @author estudiante
+ *
+ */
 @Entity
 public class EstadoAlumno {
 	

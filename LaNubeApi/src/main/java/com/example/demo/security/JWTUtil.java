@@ -12,12 +12,26 @@ import org.springframework.stereotype.Component;
 import java.util.Calendar;
 import java.util.Date;
 
+
+/**
+ * Clase para generar y validar token
+ * @author estudiante
+ *
+ */
 @Component
 public class JWTUtil {
 
     @Value("${jwt_secret}")
     private String secret;
 
+    
+    /**
+     * Genera el token
+     * @param email
+     * @return
+     * @throws IllegalArgumentException
+     * @throws JWTCreationException
+     */
     public String generateToken(String email) throws IllegalArgumentException, JWTCreationException {
     	
         Calendar calendar = Calendar.getInstance();
@@ -35,6 +49,13 @@ public class JWTUtil {
                 .sign(Algorithm.HMAC256(secret));
     }
 
+    
+    /**
+     * Valida el token
+     * @param token
+     * @return
+     * @throws JWTVerificationException
+     */
     public String validateTokenAndRetrieveSubject(String token)throws JWTVerificationException {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret))
                 .withSubject("User Details")

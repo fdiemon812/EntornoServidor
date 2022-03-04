@@ -16,7 +16,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.demo.repository.UserRepo;
 
-//@EnableWebSecurity
+/**
+ * Clase para configurar permisos CORS
+ * @author estudiante
+ *
+ */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

@@ -7,6 +7,12 @@ import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
+
+/**
+ * Clase para dar formato a errores
+ * @author estudiante
+ *
+ */
 public class ApiError {
 	
 

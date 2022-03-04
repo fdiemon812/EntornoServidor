@@ -5,7 +5,11 @@ package com.example.demo.model;
 
 
 	
-	
+	/**
+	 * DTO para recibir credenciales al logarse
+	 * @author estudiante
+	 *
+	 */
 	public class LoginCredentials {
 
 	    private String email;

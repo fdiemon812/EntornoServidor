@@ -14,11 +14,19 @@ import org.springframework.stereotype.Component;
 import com.example.demo.model.Usuario;
 import com.example.demo.repository.UserRepo;
 
+/**
+ * Clase para gestionear el login y roles del usuario
+ * @author estudiante
+ *
+ */
 @Component
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired private UserRepo userRepo;
 
+    /**
+     * Carga el usuario por el email
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Usuario> userRes = userRepo.findByEmail(email);

@@ -1,5 +1,11 @@
 package com.example.demo.exception;
 
+
+/**
+ * Gestiona un centro no encontrado
+ * @author estudiante
+ *
+ */
 public class CentroNotFoundException extends RuntimeException{
 	
 	public  CentroNotFoundException(String id) {

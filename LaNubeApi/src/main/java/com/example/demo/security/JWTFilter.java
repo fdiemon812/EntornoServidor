@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Clase filtros para la seguridad
+ * @author estudiante
+ *
+ */
 @Component
 public class JWTFilter extends OncePerRequestFilter {
 

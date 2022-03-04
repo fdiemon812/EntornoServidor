@@ -11,7 +11,11 @@ import com.example.demo.repository.AlumnoRepo;
 import com.example.demo.repository.AulaRepo;
 import com.example.demo.repository.CentroRepo;
 
-
+/**
+ * Servicio para trabajar con aulas
+ * @author estudiante
+ *
+ */
 @Service
 public class AulaService {
 
@@ -23,7 +27,13 @@ public class AulaService {
 	@Autowired
 	private CentroRepo centroRepo;
 	
-	
+	/**
+	 * Añade un alumno a un aula
+	 * @param idAula
+	 * @param idAlumno
+	 * @return
+	 * @throws Exception
+	 */
 	public boolean addAlumno(int idAula, int idAlumno) throws Exception{
 
 		if(!alumnoRepo.existsById(idAlumno)) {
@@ -44,7 +54,13 @@ public class AulaService {
 		
 	}
 	
-	
+	/**
+	 * Actualiza los datos de un aula
+	 * @param idCentro
+	 * @param idAula
+	 * @param aula
+	 * @return
+	 */
 	public Aula actualizaAula(int idCentro, int idAula, Aula aula) {
 		
 		Centro centro = centroRepo.getById(idCentro);

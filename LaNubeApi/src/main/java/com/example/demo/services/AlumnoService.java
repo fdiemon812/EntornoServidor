@@ -17,6 +17,12 @@ import com.example.demo.repository.AulaRepo;
 import com.example.demo.repository.CentroRepo;
 import com.example.demo.repository.TutorRepo;
 
+
+/**
+ * Metodos para trabajar con alumno
+ * @author estudiante
+ *
+ */
 @Service
 public class AlumnoService {
 
@@ -130,7 +136,11 @@ public class AlumnoService {
 		return alumno;
 	}
 	
-	
+	/**
+	 * Borra un alumno dentro de un centro
+	 * @param centro
+	 * @param idAlumno
+	 */
 	public void borrarAlumno(Centro centro, int idAlumno) {
 		
 		Alumno alumno = new Alumno(idAlumno);
@@ -145,6 +155,13 @@ public class AlumnoService {
 		alumnoRepo.deleteById(idAlumno);
 	}
 
+	/**
+	 * Actualiza los datos de un alumno
+	 * @param centro
+	 * @param idAlumno
+	 * @param alumno
+	 * @return
+	 */
 	public Alumno actualizaAlumno(Centro centro, int idAlumno, Alumno alumno) {
 
 		Alumno alumnoAntiguo = alumnoRepo.getById(idAlumno);

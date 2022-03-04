@@ -7,6 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
+/**
+ * Clase entidad Profesor. Es un tipo de usuario. 
+ * @author estudiante
+ *
+ */
 @Entity
 public class Profesor  extends Usuario{
 

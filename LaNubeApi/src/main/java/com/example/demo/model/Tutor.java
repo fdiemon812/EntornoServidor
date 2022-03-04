@@ -10,7 +10,11 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+/**
+ * Clase tutor. Es un tipo de usuario
+ * @author estudiante
+ *
+ */
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Tutor extends Usuario {

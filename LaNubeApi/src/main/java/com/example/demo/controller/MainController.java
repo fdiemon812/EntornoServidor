@@ -281,6 +281,15 @@ public class MainController {
 	}
 	
 	
+	/**
+	 * Actualiza los datos de un aula
+	 * @param id
+	 * @param idAula
+	 * @param aulaNueva
+	 * @param idAlumno
+	 * @return
+	 * @throws Exception
+	 */
 	@PutMapping("centro/{id}/aula/{idAula}")
 	public Aula modificarAula(@PathVariable int id, @PathVariable int idAula, @RequestBody Aula aulaNueva, Integer idAlumno) throws Exception{
 		
@@ -395,6 +404,14 @@ public class MainController {
 	}
 	
 	
+	/**
+	 * Actualiza los datos de un alumno
+	 * @param alumno2
+	 * @param id
+	 * @param idAlumno
+	 * @return
+	 * @throws Exception
+	 */
 	@PutMapping("centro/{id}/alumno/{idAlumno}")
 	public Alumno editarAlumno(@RequestBody Alumno alumno2, @PathVariable int id, @PathVariable int idAlumno) throws Exception{
 		

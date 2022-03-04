@@ -9,6 +9,12 @@ import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+/**
+ * Clase usuario
+ * @author estudiante
+ *
+ */
 @Entity
 public class Usuario {
 
