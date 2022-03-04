@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,11 +15,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exception.ApiError;
+import com.example.demo.exception.ComidaInvalidException;
+import com.example.demo.exception.LoginInvalidException;
 import com.example.demo.model.LoginCredentials;
 import com.example.demo.model.Profesor;
 import com.example.demo.model.Tutor;
@@ -92,7 +98,8 @@ public class AuthController {
 
             return Collections.singletonMap("jwt_token", token);
         }catch (AuthenticationException authExc){
-            throw new RuntimeException("Invalid Login Credentials");
+//            throw new RuntimeException("Invalid Login Credentials");
+        	throw new LoginInvalidException();
         }
     }
    
@@ -152,5 +159,18 @@ public class AuthController {
 		return respuesta;
 		
 	}
+	
+	
+	/**
+	 * Gestiona si se intenta logar con login invalido
+	 * @param ex
+	 * @return JSON bien formado
+	 */
+	@ExceptionHandler(LoginInvalidException.class)
+	public ResponseEntity<ApiError> LoginInvalidException(LoginInvalidException userException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+	}
+	
 
 }

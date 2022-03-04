@@ -34,21 +34,44 @@ public class AulaService {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean addAlumno(int idAula, int idAlumno) throws Exception{
+	public Alumno addAlumno(int idAula, int idAlumno) throws Exception{
 
 		if(!alumnoRepo.existsById(idAlumno)) {
 			throw new AlumnoNotFoundException(idAlumno+"");
 		}
 		
+		
+		
 		Aula aula = aulaRepo.getById(idAula);
 		Alumno alumno = alumnoRepo.getById(idAlumno);
+		
+		System.out.println("Borrando aula");
+		
+		Aula aulaOld = aulaRepo.getById(alumnoRepo.getById(idAlumno).getAula().getId());
+		System.out.println(aulaOld.getNombre());
+		
+		Alumno alumnoOld= new Alumno(idAlumno);
+		
+		int posicionAula = aula.getAlumnos().indexOf(alumnoOld);
+		
+		System.out.println(posicionAula);
+		
+		aulaOld.getAlumnos().remove(posicionAula);
+	
+		System.out.println("guardando alumno");
+
 		
 		alumno.setAula(aula);
 		alumnoRepo.save(alumno);
 		
+		
+		aulaRepo.save(aulaOld);
 		aula.getAlumnos().add(alumno);
 		aulaRepo.save(aula);
-		return false;
+
+		
+
+		return alumno;
 		
 		
 		

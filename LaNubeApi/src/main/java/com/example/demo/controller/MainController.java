@@ -311,9 +311,10 @@ public class MainController {
 		Aula aulaModificada = aulaService.actualizaAula(id, idAula, aulaNueva);
 		
 		
+		System.out.println(idAlumno);
 
 		if(idAlumno!=null) {
-			
+			System.out.println("hola");
 			aulaService.addAlumno(idAula, idAlumno);
 }
 		
