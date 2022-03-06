@@ -208,6 +208,8 @@ public class MainController {
 	@GetMapping("centro/{id}/aula/{idAula}/alumnos")
 	public List<Alumno> obtenerAlumnosAula(@PathVariable int id, @PathVariable int idAula) throws Exception{
 		
+		
+		
 		if(!centroRepo.existsById(id)) {
 			throw new CentroNotFoundException(id+"");
 		}
@@ -222,6 +224,8 @@ public class MainController {
 		
 		
 		Aula aula1 = aulaRepo.getById(idAula);
+		
+		
 		
 		return aula1.getAlumnos();
 		}
@@ -469,26 +473,26 @@ public class MainController {
 	
 	
 	
-	
-	
-	/**
-	 * Devuelve una lista completa de alumnos en el centro. 
-	 * @return
-	 */
-	@GetMapping("/alumno")
-	public List<Alumno> listarAlumnos(){
-		
-		return alumnoRepo.findAll();
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+//	
+//	
+//	/**
+//	 * Devuelve una lista completa de alumnos en el centro. 
+//	 * @return
+//	 */
+//	@GetMapping("/alumno")
+//	public List<Alumno> listarAlumnos(){
+//		
+//		return alumnoRepo.findAll();
+//	}
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
 	/**
 	 * Agrega un tutor a un alumno
 	 * @param alumno
@@ -516,42 +520,42 @@ public class MainController {
 		
 		return respuesta;
 	}
-	
-	
-	
-	
-	/**
-	 * Borra un tutor a un alumno
-	 * @param alumno
-	 * @return
-	 */
-	@DeleteMapping("/alumno/{idAlumno}")
-	public ResponseEntity<List<Alumno>>  BorrarAlumno(@RequestBody Tutor tutor, @PathVariable int idAlumno ) throws Exception{
-		
-		
-	
-		
-		Tutor tutor2=tutorRepo.findByEmail(tutor.getEmail());
-	
-		if(tutor2==null) {
-			throw new AlumnoNotFoundException(idAlumno+"");
-		}
-
-		Alumno alumno = alumnoRepo.getById(idAlumno);
-				
-		
-		alumnoService.addTutor(idAlumno, tutor2.getId());
-		ResponseEntity respuesta = ResponseEntity.ok(alumno.getTutores());
-		
-		
-		
-		return respuesta;
-	}
-	
-	
-
-	
-	
+//	
+//	
+//	
+//	
+//	/**
+//	 * Borra un tutor a un alumno
+//	 * @param alumno
+//	 * @return
+//	 */
+//	@DeleteMapping("/alumno/{idAlumno}")
+//	public ResponseEntity<List<Alumno>>  BorrarAlumno(@RequestBody Tutor tutor, @PathVariable int idAlumno ) throws Exception{
+//		
+//		
+//	
+//		
+//		Tutor tutor2=tutorRepo.findByEmail(tutor.getEmail());
+//	
+//		if(tutor2==null) {
+//			throw new AlumnoNotFoundException(idAlumno+"");
+//		}
+//
+//		Alumno alumno = alumnoRepo.getById(idAlumno);
+//				
+//		
+//		alumnoService.addTutor(idAlumno, tutor2.getId());
+//		ResponseEntity respuesta = ResponseEntity.ok(alumno.getTutores());
+//		
+//		
+//		
+//		return respuesta;
+//	}
+//	
+//	
+//
+//	
+//	
 	
 	
 	
