@@ -114,7 +114,7 @@ public class AlumnoService {
 		} else if(alumno.getAula()==null || !aulaRepo.existsById(alumno.getAula().getId())) {
 			alumno.setAula(aulaRepo.getById(1));
 			
-		}else if(alumno.getComida()==null || !( alumno.getComida().equals("Comida" ) || alumno.getComida().equals("Biberón" ) || alumno.getComida().equals("Biberón + Comida" ))){
+		}else if(alumno.getComida()==null || !( alumno.getComida().equals("Comida" ) || alumno.getComida().equals("Biberón" ) || alumno.getComida().equals("Biberón y Comida" ))){
 			throw new ComidaInvalidException();
 		} else {
 			
@@ -171,6 +171,7 @@ public class AlumnoService {
 		alumnoAntiguo.setDni(alumno.getDni());
 		alumnoAntiguo.setFechaNacimiento(alumno.getFechaNacimiento());
 		alumnoAntiguo.setObservaciones(alumno.getObservaciones());
+		
 		alumnoAntiguo.setComida(alumno.getComida());
 		alumnoAntiguo.setNombre(alumno.getNombre());
 		alumnoAntiguo.setHoraEntrada(alumno.getHoraEntrada());

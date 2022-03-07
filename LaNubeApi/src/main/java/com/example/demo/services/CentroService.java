@@ -42,12 +42,12 @@ public class CentroService {
 		aulas.addAll(centro1.getAulas());
 		
 //		System.out.println(aulas.contains(centro2.getAulas().get(0)));
-		
-		if(!aulas.contains(centro2.getAulas().get(0))) {
-			
-			aulas.add(centro2.getAulas().get(0));
-		}
-		
+//		
+//		if(!aulas.contains(centro2.getAulas().get(0))) {
+//			
+//			aulas.add(centro2.getAulas().get(0));
+//		}
+//		
 		centro1.setAulas(aulas);
 		centro1.setDireccion(centro2.getDireccion());
 		centro1.setEmail(centro2.getEmail());

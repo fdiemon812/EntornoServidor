@@ -55,11 +55,29 @@ public class Alumno {
 	@OneToMany
 	private List<EstadoAlumno> estados;
 	
-	
+	/**
+	 * Constructor Alumno con parametro ID
+	 * @param id
+	 */
 	public Alumno(int id) {
 		this.id=id;
 	}
 	
+	
+	/** 
+	 * Constructor Alumno con todos los parametros
+	 * @param nombre
+	 * @param apellidos
+	 * @param dni
+	 * @param direccion
+	 * @param fechaNacimiento
+	 * @param horaEntrada
+	 * @param horaSalida
+	 * @param comida
+	 * @param comeEnCentro
+	 * @param observaciones
+	 * @param aula
+	 */
 	public Alumno(String nombre, String apellidos, String dni, String direccion, LocalDate fechaNacimiento,
 			String horaEntrada, String horaSalida, String comida, boolean comeEnCentro,
 			String observaciones, Aula aula) {
@@ -85,7 +103,12 @@ public class Alumno {
 
 
 
-
+	/**
+	 * Cosntructor Alumno
+	 * @param nombre
+	 * @param apellidos
+	 * @param dni
+	 */
 	public Alumno(String nombre, String apellidos, String dni) {
 		super();
 		this.nombre = nombre;
@@ -100,7 +123,9 @@ public class Alumno {
 
 
 
-
+	/**
+	 * Constructor Alumno
+	 */
 	public Alumno() {
 		this.tutores=new ArrayList<Tutor>();
 		this.estados=new ArrayList<EstadoAlumno>();
@@ -109,7 +134,7 @@ public class Alumno {
 	
 
 	
-
+	
 	public String getNombre() {
 		return nombre;
 	}

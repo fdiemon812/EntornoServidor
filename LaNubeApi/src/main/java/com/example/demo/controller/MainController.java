@@ -130,10 +130,10 @@ public class MainController {
 		
 		Centro centroModificado = centroRepo.getById(id);
 		
-		if(!aulaRepo.existsById(centroNuevo.getAulas().get(0).getId())) {
-
-			throw new AulaNotFoundException(centroNuevo.getAulas().get(0).getId()+"");
-		}
+//		if(centroNuevo.getAulas().size()>0 && !aulaRepo.existsById(centroNuevo.getAulas().get(0).getId())) {
+//
+//			throw new AulaNotFoundException(centroNuevo.getAulas().get(0).getId()+"");
+//		}
 		centroService.modificarCentro(centroModificado, centroNuevo);
 		centroRepo.save(centroModificado);
 		
@@ -418,6 +418,7 @@ public class MainController {
 	@PutMapping("centro/{id}/alumno/{idAlumno}")
 	public Alumno editarAlumno(@RequestBody Alumno alumno2, @PathVariable int id, @PathVariable int idAlumno) throws Exception{
 		
+		
 		if(!centroRepo.existsById(id)) {
 			throw new CentroNotFoundException(id+"");
 		} 
@@ -430,7 +431,7 @@ public class MainController {
 		}
 		
 		
-		return 		alumnoService.actualizaAlumno(centro, idAlumno, alumno);
+		return 		alumnoService.actualizaAlumno(centro, idAlumno, alumno2);
 
 	}
 	
