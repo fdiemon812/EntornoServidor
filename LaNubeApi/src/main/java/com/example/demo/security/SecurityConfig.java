@@ -47,12 +47,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/centro").hasRole("ADMINISTRADOR")
                 .antMatchers("/centro/{id}").hasRole("ADMINISTRADOR")
                 .antMatchers("/centros").hasRole("ADMINISTRADOR")
-                .antMatchers("/centro/{id}/aulas").hasRole("ADMINISTRADOR")
+                .antMatchers("/centro/{id}/aulas").hasAnyRole("ADMINISTRADOR", "PROFESOR")
                 .antMatchers("/centro/{id}/aula/{idAula}").hasRole("ADMINISTRADOR")
                 .antMatchers("/centro/{id}/aula/{idAula}/alumnos").hasAnyRole("ADMINISTRADOR", "PROFESOR")
                 .antMatchers("/centro/{id}/aula").hasRole("ADMINISTRADOR")
                 .antMatchers("/centro/{id}/alumno").hasRole("ADMINISTRADOR")
-                .antMatchers("/centro/{id}/alumnos").hasRole("ADMINISTRADOR")
+                .antMatchers("/centro/{id}/alumnos").hasAnyRole("ADMINISTRADOR", "PROFESOR")
                 .antMatchers("/centro/{id}/alumno/{idAlumno}").hasRole("ADMINISTRADOR")
                 
 

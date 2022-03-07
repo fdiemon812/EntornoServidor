@@ -95,7 +95,6 @@ public class AuthController {
             authManager.authenticate(authInputToken);
 
             String token = jwtUtil.generateToken(body.getEmail());
-
             return Collections.singletonMap("jwt_token", token);
         }catch (AuthenticationException authExc){
 //            throw new RuntimeException("Invalid Login Credentials");
