@@ -58,20 +58,19 @@ public class AuthController {
     public Map<String, Object> registerHandler(@RequestBody Usuario user){
         String encodedPass = passwordEncoder.encode(user.getPassword());
         
-        
         Map<String, Object> map=null;
-        if(user.getRole().equals(PROFESOR)) {
+        if(user.getRole().equals(PROFESOR) || user.getRole().equals(ADMINISTRADOR) ) {
         	Profesor profe = new Profesor( user);
         	profe.setPassword(encodedPass);
         	profe = userRepo.save(profe);
-             String token = jwtUtil.generateToken(profe.getEmail());
+             String token = jwtUtil.generateToken(profe.getEmail(), profe.getRole());
              map= Collections.singletonMap("jwt_token", token);
 
         }else if(user.getRole().equals(TUTOR)){
         	Tutor tutor = new Tutor( user);
         	tutor.setPassword(encodedPass);
         	tutor = userRepo.save(tutor);
-            String token = jwtUtil.generateToken(tutor.getEmail());
+            String token = jwtUtil.generateToken(tutor.getEmail(), tutor.getRole());
             map= Collections.singletonMap("jwt_token", token);
             
         }
@@ -93,8 +92,9 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 
             authManager.authenticate(authInputToken);
-
-            String token = jwtUtil.generateToken(body.getEmail());
+            
+            String rol = userRepo.findByEmail(body.getEmail()).get().getRole();
+            String token = jwtUtil.generateToken(body.getEmail(), rol );
             return Collections.singletonMap("jwt_token", token);
         }catch (AuthenticationException authExc){
 //            throw new RuntimeException("Invalid Login Credentials");

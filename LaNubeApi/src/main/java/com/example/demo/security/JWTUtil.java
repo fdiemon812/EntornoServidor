@@ -32,7 +32,7 @@ public class JWTUtil {
      * @throws IllegalArgumentException
      * @throws JWTCreationException
      */
-    public String generateToken(String email) throws IllegalArgumentException, JWTCreationException {
+    public String generateToken(String email, String rol) throws IllegalArgumentException, JWTCreationException {
     	
         Calendar calendar = Calendar.getInstance();
 
@@ -44,6 +44,7 @@ public class JWTUtil {
                 .withSubject("User Details")
                 .withExpiresAt(date)   //Para darle caducidad
                 .withClaim("email", email)
+                .withClaim("rol", rol)
                 .withIssuedAt(new Date())
                 .withIssuer("YOUR APPLICATION/PROJECT/COMPANY NAME")
                 .sign(Algorithm.HMAC256(secret));
