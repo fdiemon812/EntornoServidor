@@ -1,0 +1,9 @@
+Link de la web desplegada : https://fdiemon812.github.io/herokuFront2/login
+
+user: admin@admin.com
+pass: admin
+
+Puedes ver la escala de grises dandole al boton. Si nada mas entrar no
+se ve correctamente, pulsando F11 se arregla. No sé porque pasa pero en algunos PCS la imagen hace algo raro, es algo que estoy viendo con Joaquin. 
+
+

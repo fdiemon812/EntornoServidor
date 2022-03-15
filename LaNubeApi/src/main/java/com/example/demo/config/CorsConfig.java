@@ -13,6 +13,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 	
+	
+	private String url = "http://localhost:4200/";
+	
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
@@ -20,13 +23,13 @@ public class CorsConfig implements WebMvcConfigurer {
 			public void addCorsMappings(CorsRegistry registry) {
 				
 				registry.addMapping("/login")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH", "Content-Type","X-Requested-With",
 						"accept","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/register")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
@@ -35,92 +38,92 @@ public class CorsConfig implements WebMvcConfigurer {
 				
 				//Estos comprueban token AUTHORIZATION
 				registry.addMapping("/home/token")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/home/usuario")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/centro")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				
 				registry.addMapping("/centro/{id}")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","DELETE","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/centros")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","DELETE","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/centro/{id}/aulas")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","DELETE","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/centro/{id}/aula")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","DELETE","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/centro/{id}/alumno")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","DELETE","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				
 				registry.addMapping("/centro/{id}/alumnos")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","DELETE","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				
 				registry.addMapping("/centro/{id}/alumno/{idAlumno}")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.allowedMethods("PUT", "DELETE","OPTIONS", "GET", "POST", "HEAD")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/centro/{id}/aula/{idAula}")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","DELETE","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				
 				registry.addMapping("/centro/{id}/aula/{idAula}/alumnos")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedHeaders("GET","POST","OPTIONS","DELETE","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				
 				registry.addMapping("/alumno")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/alumno/{idAlumno}")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method:PUT, OPTIONS","Access-Control-Request-Headers")
@@ -129,7 +132,7 @@ public class CorsConfig implements WebMvcConfigurer {
 				
 				
 				registry.addMapping("/aula")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 //				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method:PUT, OPTIONS","Access-Control-Request-Headers")
@@ -139,14 +142,14 @@ public class CorsConfig implements WebMvcConfigurer {
 		
 				
 				registry.addMapping("/aula/{id}")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method:PUT, OPTIONS","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
 				
 				registry.addMapping("/aulas")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method:PUT, OPTIONS","Access-Control-Request-Headers")
@@ -154,12 +157,11 @@ public class CorsConfig implements WebMvcConfigurer {
 				
 				
 				registry.addMapping("/usuario")
-				.allowedOrigins("http://localhost:4200")
+				.allowedOrigins(url)
 				.allowedMethods("PUT", "OPTIONS", "GET", "POST", "HEAD")
 				.allowedHeaders("GET","POST","OPTIONS","PUT" ,"HEAD", "PATCH","Content-Type","X-Requested-With",
 						"accept","Authorization","Origin","Access-Control-Request-Method:PUT, OPTIONS","Access-Control-Request-Headers")
 				.exposedHeaders("Access-Control-Allow-Origin","Access-Control-Allow-Credentials");
-				
 				
 //				registry.addMapping("/alumno/{idAlumno}")
 //				.allowedOrigins("http://localhost:4200")
