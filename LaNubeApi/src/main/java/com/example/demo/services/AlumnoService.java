@@ -150,9 +150,15 @@ public class AlumnoService {
 		int posicionAula = aula.getAlumnos().indexOf(alumno);
 		aula.getAlumnos().remove(posicionAula);
 		
+		
+		
+		
 		aulaRepo.save(aula);
 		centroRepo.save(centro);
 		alumnoRepo.deleteById(idAlumno);
+		
+		
+		
 	}
 
 	/**

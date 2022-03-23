@@ -54,6 +54,10 @@ public class Centro {
 		
 		this.aulas = new ArrayList<>();
 		this.alumnos= new ArrayList<>();
+		this.tutores= new ArrayList<>();
+		this.profesores= new ArrayList<>();
+
+
 	};
 	
 	public Centro(String nombre, String direccion, String tlf, String email) {
@@ -64,6 +68,8 @@ public class Centro {
 		this.email = email;
 		this.aulas = new ArrayList<>();
 		this.alumnos= new ArrayList<>();
+		this.tutores= new ArrayList<>();
+		this.profesores= new ArrayList<>();
 	}
 
 	public int getId() {
@@ -116,6 +122,14 @@ public class Centro {
 
 	public void setAulas(List<Aula> aulas) {
 		this.aulas = aulas;
+	}
+
+	public List<Profesor> getProfesores() {
+		return profesores;
+	}
+
+	public List<Tutor> getTutores() {
+		return tutores;
 	}
 
 	@Override
