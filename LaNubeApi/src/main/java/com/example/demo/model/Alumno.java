@@ -34,6 +34,7 @@ public class Alumno {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private int id;
+	private boolean isAlta=true;
 	private String dni="";
 	private String direccion="";
 	private LocalDate fechaNacimiento=LocalDate.now();
@@ -86,7 +87,7 @@ public class Alumno {
 		this.apellidos = apellidos;
 		this.dni = dni;
 		this.direccion = direccion;
-		this.fechaNacimiento = fechaNacimiento;
+		this.fechaNacimiento = fechaNacimiento; 
 		this.horaEntrada = horaEntrada;
 		this.horaSalida = horaSalida;
 		this.comida = comida;
@@ -95,6 +96,7 @@ public class Alumno {
 		this.aula = aula;
 		this.tutores=new ArrayList<Tutor>();
 		this.estados=new ArrayList<EstadoAlumno>();
+		this.setAlta(true);
 
 	}
 	
@@ -370,6 +372,16 @@ public class Alumno {
 			return false;
 		Alumno other = (Alumno) obj;
 		return id == other.id;
+	}
+
+
+	public boolean isAlta() {
+		return isAlta;
+	}
+
+
+	public void setAlta(boolean isAlta) {
+		this.isAlta = isAlta;
 	}
 
 

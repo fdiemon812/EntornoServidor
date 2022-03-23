@@ -177,6 +177,7 @@ public class AlumnoService {
 		alumnoAntiguo.setHoraEntrada(alumno.getHoraEntrada());
 		alumnoAntiguo.setHoraSalida(alumno.getHoraSalida());
 		alumnoAntiguo.setComeEnCentro(alumno.isComeEnCentro());
+		alumnoAntiguo.setAlta(alumno.isAlta());
 		alumnoRepo.save(alumnoAntiguo);
 		
 		

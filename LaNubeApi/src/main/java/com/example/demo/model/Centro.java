@@ -39,6 +39,16 @@ public class Centro {
 	@JsonIgnore
 	@OneToMany
 	private List<Alumno> alumnos;
+	
+	@JsonIgnore
+	@OneToMany
+	private List<Profesor> profesores;
+
+	
+	@JsonIgnore
+	@OneToMany
+	private List<Tutor> tutores;
+
 
 	public Centro() {
 		
