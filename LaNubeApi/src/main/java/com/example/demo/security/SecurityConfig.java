@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/centro/{id}").hasRole("ADMINISTRADOR")
                 .antMatchers("/centros").hasAnyRole("ADMINISTRADOR", "PROFESOR")
                 .antMatchers("/centro/{id}/aulas").hasAnyRole("ADMINISTRADOR", "PROFESOR")
+                .antMatchers("/centro/{id}/tutores").hasRole("ADMINISTRADOR")
                 .antMatchers("/centro/{id}/aula/{idAula}").hasRole("ADMINISTRADOR")
                 .antMatchers("/centro/{id}/aula/{idAula}/alumnos").hasAnyRole("ADMINISTRADOR", "PROFESOR")
                 .antMatchers("/centro/{id}/aula").hasRole("ADMINISTRADOR")

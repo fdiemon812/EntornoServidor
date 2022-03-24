@@ -91,7 +91,7 @@ public class AuthController {
         	centro.getTutores().add(tutor);
         	tutor = userRepo.save(tutor);
         	centroRepo.save(centro);
-            String token = jwtUtil.generateToken(tutor.getEmail(), tutor.getRole());
+            String token = jwtUtil.generateTokenID(tutor.getEmail(), tutor.getRole(), tutor.getId());
             map= Collections.singletonMap("jwt_token", token);
             
         }

@@ -52,6 +52,33 @@ public class JWTUtil {
 
     
     /**
+     * Genera el token
+     * @param email
+     * @return
+     * @throws IllegalArgumentException
+     * @throws JWTCreationException
+     */
+    public String generateTokenID(String email, String rol, int id) throws IllegalArgumentException, JWTCreationException {
+    	
+        Calendar calendar = Calendar.getInstance();
+
+              calendar.setTime(new Date());  
+              calendar.add(Calendar.MILLISECOND, 1200000);  
+              Date date= calendar.getTime();
+    	
+        return JWT.create()
+                .withSubject("User Details")
+//                .withExpiresAt(date)   //Para darle caducidad
+                .withClaim("email", email)
+                .withClaim("rol", rol)
+                .withClaim("id", id)
+                .withIssuedAt(new Date())
+                .withIssuer("YOUR APPLICATION/PROJECT/COMPANY NAME")
+                .sign(Algorithm.HMAC256(secret));
+    }
+    
+    
+    /**
      * Valida el token
      * @param token
      * @return

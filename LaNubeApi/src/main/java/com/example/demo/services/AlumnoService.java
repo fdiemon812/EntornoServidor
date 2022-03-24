@@ -53,7 +53,10 @@ public class AlumnoService {
 		
 		
 		alumno.getTutores().add(tutor);
+		tutor.getAlumnos().add(alumno);
+		
 		alumnoRepo.save(alumno);
+		tutorRepo.save(tutor);
 		
 		return false;
 	}
@@ -149,6 +152,9 @@ public class AlumnoService {
 		Aula aula = aulaRepo.getById(alumnoRepo.getById(idAlumno).getAula().getId());
 		int posicionAula = aula.getAlumnos().indexOf(alumno);
 		aula.getAlumnos().remove(posicionAula);
+		
+		
+		
 		
 		
 		

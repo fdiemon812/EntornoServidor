@@ -50,6 +50,14 @@ public class Tutor extends Usuario {
 		super();
 		super.setEmail(email);
 	}
+
+	public List<Alumno> getAlumnos() {
+		return alumnos;
+	}
+
+	public void setAlumnos(List<Alumno> alumnos) {
+		this.alumnos = alumnos;
+	}
 	
 	
 	

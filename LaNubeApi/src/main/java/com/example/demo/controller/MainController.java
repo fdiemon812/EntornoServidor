@@ -20,6 +20,7 @@ import com.example.demo.exception.AulaCentroNotFoundException;
 import com.example.demo.exception.AulaNotFoundException;
 import com.example.demo.exception.CentroNotFoundException;
 import com.example.demo.exception.ComidaInvalidException;
+import com.example.demo.exception.TutorNotFoundException;
 import com.example.demo.exception.AlumnoCentroNotFoundException;
 import com.example.demo.exception.AlumnoIncompletoException;
 import com.example.demo.exception.AlumnoNotFoundException;
@@ -470,93 +471,51 @@ public class MainController {
 	
 	
 	
+	@GetMapping("centro/{idCentro}/tutores")
+	public List<Tutor> listarTutores(@PathVariable int idCentro) throws Exception{
+	
+		if(!centroRepo.existsById(idCentro)) {
+			
+			throw new CentroNotFoundException(idCentro+"");
+		}
 		
+		return 	tutorRepo.findAllTutoresByCentro(idCentro);
+
+	}
 	
 	
 	
-//	
-//	
-//	/**
-//	 * Devuelve una lista completa de alumnos en el centro. 
-//	 * @return
-//	 */
-//	@GetMapping("/alumno")
-//	public List<Alumno> listarAlumnos(){
-//		
-//		return alumnoRepo.findAll();
-//	}
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
+
 	/**
 	 * Agrega un tutor a un alumno
 	 * @param alumno
 	 * @return
 	 */
 	@PutMapping("/alumno/{idAlumno}")
-	public ResponseEntity<List<Alumno>>  registrarTutorAlumno(@RequestBody Tutor tutor, @PathVariable int idAlumno ) throws Exception{
+	public Tutor  registrarTutorAlumno(@RequestBody Tutor tutor, @PathVariable int idAlumno ) throws Exception{
 		
 		
 	
-		
-		Tutor tutor2=tutorRepo.findByEmail(tutor.getEmail());
-	
-		if(tutor2==null) {
-			throw new AlumnoNotFoundException(idAlumno+"");
+		if(!tutorRepo.existsById(tutor.getId())) {
+			throw new TutorNotFoundException(idAlumno);
+
 		}
+		
+		Tutor tutor2=tutorRepo.getById(tutor.getId());
+
+	
 
 		Alumno alumno = alumnoRepo.getById(idAlumno);
 				
 		
 		alumnoService.addTutor(idAlumno, tutor2.getId());
-		ResponseEntity respuesta = ResponseEntity.ok(alumno.getTutores());
+		Tutor respuesta = tutor ;
 		
 		
 		
 		return respuesta;
 	}
-//	
-//	
-//	
-//	
-//	/**
-//	 * Borra un tutor a un alumno
-//	 * @param alumno
-//	 * @return
-//	 */
-//	@DeleteMapping("/alumno/{idAlumno}")
-//	public ResponseEntity<List<Alumno>>  BorrarAlumno(@RequestBody Tutor tutor, @PathVariable int idAlumno ) throws Exception{
-//		
-//		
-//	
-//		
-//		Tutor tutor2=tutorRepo.findByEmail(tutor.getEmail());
-//	
-//		if(tutor2==null) {
-//			throw new AlumnoNotFoundException(idAlumno+"");
-//		}
-//
-//		Alumno alumno = alumnoRepo.getById(idAlumno);
-//				
-//		
-//		alumnoService.addTutor(idAlumno, tutor2.getId());
-//		ResponseEntity respuesta = ResponseEntity.ok(alumno.getTutores());
-//		
-//		
-//		
-//		return respuesta;
-//	}
-//	
-//	
-//
-//	
-//	
+	
 	
 	
 	
@@ -618,6 +577,17 @@ public class MainController {
 	 */
 	@ExceptionHandler(CentroNotFoundException.class)
 	public ResponseEntity<ApiError> CentroException(CentroNotFoundException userException) {
+		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+	}
+	
+	/**
+	 * Gestiona si no existe un tutor buscado
+	 * @param ex
+	 * @return JSON bien formado
+	 */
+	@ExceptionHandler(TutorNotFoundException.class)
+	public ResponseEntity<ApiError> CentroException(TutorNotFoundException userException) {
 		ApiError apiError = new ApiError(LocalDateTime.now(), userException.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
 	}
