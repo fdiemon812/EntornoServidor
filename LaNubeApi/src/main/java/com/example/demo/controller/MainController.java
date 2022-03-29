@@ -432,7 +432,7 @@ public class MainController {
 		}
 		
 		
-		return 		alumnoService.actualizaAlumno(centro, idAlumno, alumno2);
+		return 	alumnoService.actualizaAlumno(centro, idAlumno, alumno2);
 
 	}
 	

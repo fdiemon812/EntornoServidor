@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,12 +147,33 @@ public class AlumnoService {
 	 */
 	public void borrarAlumno(Centro centro, int idAlumno) {
 		
+		
 		Alumno alumno = new Alumno(idAlumno);
+		Alumno alumnoBbdd = alumnoRepo.getById(idAlumno);
+		List<Tutor> tutores = alumnoBbdd.getTutores();
+		
+		for (Tutor tutor: tutores) {
+			
+			System.out.println(tutor.getId());
+			int posicionAlumno = tutor.getAlumnos().indexOf(alumno);
+			
+			System.out.println(posicionAlumno);
+			
+			tutor.getAlumnos().remove(posicionAlumno);
+			tutorRepo.save(tutor);
+			
+		}
+		
+		
+		
 		int posicion=centro.getAlumnos().indexOf(alumno);
 		centro.getAlumnos().remove(posicion);
 		Aula aula = aulaRepo.getById(alumnoRepo.getById(idAlumno).getAula().getId());
 		int posicionAula = aula.getAlumnos().indexOf(alumno);
 		aula.getAlumnos().remove(posicionAula);
+		
+		
+		
 		
 		
 		
