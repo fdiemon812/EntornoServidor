@@ -472,14 +472,23 @@ public class MainController {
 	
 	
 	@GetMapping("centro/{idCentro}/tutores")
-	public List<Tutor> listarTutores(@PathVariable int idCentro) throws Exception{
+	public List<Tutor> listarTutores(@PathVariable int idCentro, Integer idAlumno) throws Exception{
 	
+		System.out.println(idAlumno);
 		if(!centroRepo.existsById(idCentro)) {
 			
 			throw new CentroNotFoundException(idCentro+"");
 		}
 		
-		return 	tutorRepo.findAllTutoresByCentro(idCentro);
+		List<Tutor> tutores = tutorRepo.findAllTutoresByCentro(idCentro);
+		
+		if(idAlumno!=null) {
+			
+			tutores= tutorRepo.findAllTutoresByAlumno(idAlumno);
+			
+		}
+		
+		return 	tutores;
 
 	}
 	
